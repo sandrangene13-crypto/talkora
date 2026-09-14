@@ -1,0 +1,2519 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Talkora — Connect & Chat</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #176b5b;
+            --primary-light: #229477;
+            --accent: #31b58c;
+            --background: #edf2f0;
+            --panel: #ffffff;
+            --text: #17221f;
+            --muted: #71807b;
+            --border: #e1e8e5;
+            --message-me: #d9f5e8;
+            --message-other: #ffffff;
+            --hover: #f1f6f4;
+            --input: #f1f5f3;
+            --danger: #d64545;
+        }
+
+        body.dark {
+            --background: #101817;
+            --panel: #17201e;
+            --text: #f0f5f3;
+            --muted: #9aa9a5;
+            --border: #293532;
+            --message-me: #124f41;
+            --message-other: #202b28;
+            --hover: #202b28;
+            --input: #202b28;
+        }
+
+        html,
+        body {
+            width: 100%;
+            height: 100%;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background: var(--background);
+            color: var(--text);
+            overflow: hidden;
+        }
+
+        button,
+        input {
+            font-family: inherit;
+        }
+
+        button {
+            cursor: pointer;
+        }
+
+        /* =========================
+           AUTH SCREEN
+        ========================= */
+
+        .auth-screen {
+            position: fixed;
+            inset: 0;
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background:
+                radial-gradient(circle at top left, #31b58c55, transparent 35%),
+                var(--background);
+            padding: 20px;
+        }
+
+        .auth-card {
+            width: 100%;
+            max-width: 430px;
+            background: var(--panel);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 32px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, .12);
+        }
+
+        .auth-logo {
+            width: 68px;
+            height: 68px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            font-weight: bold;
+            margin: 0 auto 15px;
+        }
+
+        .auth-card h1 {
+            text-align: center;
+            margin-bottom: 8px;
+        }
+
+        .auth-subtitle {
+            text-align: center;
+            color: var(--muted);
+            margin-bottom: 25px;
+        }
+
+        .auth-form {
+            display: flex;
+            flex-direction: column;
+            gap: 13px;
+        }
+
+        .auth-form input {
+            width: 100%;
+            height: 48px;
+            border: 1px solid var(--border);
+            border-radius: 11px;
+            background: var(--input);
+            color: var(--text);
+            outline: none;
+            padding: 0 14px;
+            font-size: 14px;
+        }
+
+        .auth-form input:focus {
+            border-color: var(--primary-light);
+        }
+
+        .auth-button {
+            height: 48px;
+            border: none;
+            border-radius: 11px;
+            background: var(--primary);
+            color: white;
+            font-size: 15px;
+            font-weight: bold;
+            margin-top: 5px;
+        }
+
+        .auth-button:hover {
+            background: var(--primary-light);
+        }
+
+        .auth-switch {
+            text-align: center;
+            margin-top: 20px;
+            color: var(--muted);
+            font-size: 14px;
+        }
+
+        .auth-switch button {
+            border: none;
+            background: none;
+            color: var(--primary-light);
+            font-weight: bold;
+        }
+
+        .auth-error {
+            display: none;
+            background: #d6454515;
+            color: var(--danger);
+            border: 1px solid #d6454535;
+            padding: 10px;
+            border-radius: 9px;
+            font-size: 13px;
+            text-align: center;
+        }
+
+        .auth-error.show {
+            display: block;
+        }
+
+        /* =========================
+           APP
+        ========================= */
+
+        .app {
+            width: 100%;
+            height: 100vh;
+            display: none;
+        }
+
+        .app.logged-in {
+            display: flex;
+        }
+
+        /* =========================
+           SIDEBAR
+        ========================= */
+
+        .sidebar {
+            width: 370px;
+            min-width: 300px;
+            height: 100vh;
+            background: var(--panel);
+            border-right: 1px solid var(--border);
+            display: flex;
+            flex-direction: column;
+            z-index: 5;
+        }
+
+        .sidebar-header {
+            height: 72px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 18px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo {
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 21px;
+            font-weight: bold;
+        }
+
+        .brand-name {
+            font-size: 21px;
+            font-weight: 700;
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 7px;
+        }
+
+        .icon-btn {
+            width: 38px;
+            height: 38px;
+            border: none;
+            border-radius: 50%;
+            background: transparent;
+            color: var(--text);
+            cursor: pointer;
+            font-size: 19px;
+            transition: .2s;
+        }
+
+        .icon-btn:hover {
+            background: var(--hover);
+        }
+
+        /* =========================
+           SEARCH
+        ========================= */
+
+        .search-area {
+            padding: 12px;
+        }
+
+        .search-box {
+            height: 44px;
+            width: 100%;
+            background: var(--input);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            padding: 0 13px;
+            gap: 10px;
+        }
+
+        .search-box span {
+            font-size: 17px;
+            color: var(--muted);
+        }
+
+        .search-box input {
+            flex: 1;
+            border: none;
+            outline: none;
+            background: transparent;
+            color: var(--text);
+            font-size: 14px;
+        }
+
+        /* =========================
+           CHAT LIST
+        ========================= */
+
+        .chat-list {
+            flex: 1;
+            overflow-y: auto;
+        }
+
+        .chat-item {
+            min-height: 76px;
+            padding: 9px 15px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            cursor: pointer;
+            transition: .2s;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .chat-item:hover,
+        .chat-item.active {
+            background: var(--hover);
+        }
+
+        .avatar {
+            width: 52px;
+            height: 52px;
+            min-width: 52px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #2d8b75, #73c9ad);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 18px;
+            position: relative;
+        }
+
+        .online-dot {
+            width: 12px;
+            height: 12px;
+            background: #39c979;
+            border: 2px solid var(--panel);
+            border-radius: 50%;
+            position: absolute;
+            right: 0;
+            bottom: 1px;
+        }
+
+        .chat-info {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .chat-top {
+            display: flex;
+            justify-content: space-between;
+            gap: 5px;
+        }
+
+        .chat-name {
+            font-weight: 600;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .chat-time {
+            color: var(--muted);
+            font-size: 11px;
+            white-space: nowrap;
+        }
+
+        .chat-bottom {
+            margin-top: 6px;
+        }
+
+        .last-message {
+            color: var(--muted);
+            font-size: 13px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .empty-users {
+            text-align: center;
+            color: var(--muted);
+            padding: 35px 20px;
+            font-size: 14px;
+        }
+
+        /* =========================
+           MAIN CHAT
+        ========================= */
+
+        .chat-window {
+            flex: 1;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            background: var(--background);
+            position: relative;
+        }
+
+        .empty-chat {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: var(--muted);
+        }
+
+        .empty-chat-inner {
+            max-width: 400px;
+            padding: 20px;
+        }
+
+        .empty-logo {
+            width: 90px;
+            height: 90px;
+            border-radius: 50%;
+            margin: auto auto 20px;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 42px;
+        }
+
+        .empty-chat h2 {
+            color: var(--text);
+            margin-bottom: 10px;
+        }
+
+        /* =========================
+           CHAT HEADER
+        ========================= */
+
+        .chat-header {
+            height: 72px;
+            background: var(--panel);
+            border-bottom: 1px solid var(--border);
+            display: none;
+            align-items: center;
+            padding: 0 18px;
+            gap: 12px;
+        }
+
+        .chat-window.active .chat-header {
+            display: flex;
+        }
+
+        .back-btn {
+            display: none;
+        }
+
+        .chat-header-info {
+            flex: 1;
+        }
+
+        .chat-header-name {
+            font-weight: 700;
+        }
+
+        .chat-status {
+            color: var(--muted);
+            font-size: 12px;
+            margin-top: 3px;
+        }
+
+        /* =========================
+           MESSAGES
+        ========================= */
+
+        .messages {
+            flex: 1;
+            overflow-y: auto;
+            padding: 25px 7%;
+            display: none;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .chat-window.active .messages {
+            display: flex;
+        }
+
+        .date-divider {
+            text-align: center;
+            margin: 10px 0;
+        }
+
+        .date-divider span {
+            background: var(--panel);
+            color: var(--muted);
+            padding: 6px 13px;
+            border-radius: 20px;
+            font-size: 11px;
+        }
+
+        .message {
+            max-width: 65%;
+            padding: 9px 12px 7px;
+            border-radius: 12px;
+            line-height: 1.4;
+            font-size: 14px;
+            word-wrap: break-word;
+            white-space: pre-wrap;
+        }
+
+        .message.received {
+            background: var(--message-other);
+            align-self: flex-start;
+            border-top-left-radius: 3px;
+        }
+
+        .message.sent {
+            background: var(--message-me);
+            align-self: flex-end;
+            border-top-right-radius: 3px;
+        }
+
+        .message-time {
+            color: var(--muted);
+            font-size: 10px;
+            float: right;
+            margin-left: 10px;
+            margin-top: 5px;
+        }
+
+        .checks {
+            color: var(--primary-light);
+            margin-left: 3px;
+        }
+
+        /* =========================
+           TYPING
+        ========================= */
+
+        .typing {
+            display: none;
+            align-self: flex-start;
+            background: var(--message-other);
+            padding: 9px 13px;
+            border-radius: 15px;
+        }
+
+        .typing.show {
+            display: block;
+        }
+
+        .typing span {
+            display: inline-block;
+            width: 6px;
+            height: 6px;
+            background: var(--muted);
+            border-radius: 50%;
+            margin: 0 2px;
+            animation: typing 1s infinite;
+        }
+
+        .typing span:nth-child(2) {
+            animation-delay: .15s;
+        }
+
+        .typing span:nth-child(3) {
+            animation-delay: .3s;
+        }
+
+        @keyframes typing {
+            0%, 60%, 100% {
+                transform: translateY(0);
+            }
+
+            30% {
+                transform: translateY(-5px);
+            }
+        }
+
+        /* =========================
+           COMPOSER
+        ========================= */
+
+        .composer {
+            display: none;
+            min-height: 68px;
+            background: var(--panel);
+            border-top: 1px solid var(--border);
+            padding: 11px 16px;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .chat-window.active .composer {
+            display: flex;
+        }
+
+        .composer-input {
+            flex: 1;
+            background: var(--input);
+            border-radius: 25px;
+            min-height: 45px;
+            display: flex;
+            align-items: center;
+            padding: 0 14px;
+        }
+
+        .composer-input input {
+            width: 100%;
+            border: none;
+            outline: none;
+            background: transparent;
+            color: var(--text);
+            font-size: 14px;
+        }
+
+        .send-btn {
+            background: var(--primary);
+            color: white;
+        }
+
+        .send-btn:hover {
+            background: var(--primary-light);
+        }
+
+        /* =========================
+           PROFILE PANEL
+        ========================= */
+
+        .profile-panel {
+            position: fixed;
+            right: -350px;
+            top: 0;
+            width: 350px;
+            height: 100vh;
+            background: var(--panel);
+            z-index: 20;
+            box-shadow: -5px 0 20px rgba(0,0,0,.15);
+            transition: right .3s ease;
+        }
+
+        .profile-panel.open {
+            right: 0;
+        }
+
+        .profile-title {
+            height: 72px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 0 18px;
+            border-bottom: 1px solid var(--border);
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .profile-content {
+            text-align: center;
+            padding: 35px 20px;
+        }
+
+        .profile-avatar {
+            width: 130px;
+            height: 130px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 50px;
+            font-weight: bold;
+            margin: 0 auto 20px;
+        }
+
+        .profile-content h2 {
+            margin-bottom: 7px;
+        }
+
+        .profile-content p {
+            color: var(--muted);
+        }
+
+        .logout-btn {
+            width: 100%;
+            height: 45px;
+            margin-top: 30px;
+            border: none;
+            border-radius: 10px;
+            background: #d64545;
+            color: white;
+            font-weight: bold;
+        }
+
+        /* =========================
+           MOBILE
+        ========================= */
+
+        @media (max-width: 700px) {
+
+            .sidebar {
+                width: 100%;
+                min-width: 100%;
+            }
+
+            .chat-window {
+                position: fixed;
+                inset: 0;
+                transform: translateX(100%);
+                transition: transform .25s ease;
+                z-index: 10;
+            }
+
+            .chat-window.mobile-open {
+                transform: translateX(0);
+            }
+
+            .back-btn {
+                display: block;
+            }
+
+            .messages {
+                padding: 18px 12px;
+            }
+
+            .message {
+                max-width: 82%;
+            }
+
+            .profile-panel {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<!-- =========================
+     AUTH SCREEN
+========================== -->
+
+<div class="auth-screen" id="authScreen">
+
+    <div class="auth-card">
+
+        <div class="auth-logo">T</div>
+
+        <h1 id="authTitle">Welcome to Talkora</h1>
+
+        <p class="auth-subtitle" id="authSubtitle">
+            Sign in to continue chatting
+        </p>
+
+        <div class="auth-error" id="authError"></div>
+
+        <!-- LOGIN -->
+
+        <form class="auth-form" id="loginForm">
+
+            <input
+                type="email"
+                id="loginEmail"
+                placeholder="Email address"
+                autocomplete="email"
+                required
+            >
+
+            <input
+                type="password"
+                id="loginPassword"
+                placeholder="Password"
+                autocomplete="current-password"
+                required
+            >
+
+            <button
+                type="submit"
+                class="auth-button"
+            >
+                Sign In
+            </button>
+
+        </form>
+
+        <!-- REGISTER -->
+
+        <form
+            class="auth-form"
+            id="registerForm"
+            style="display:none;"
+        >
+
+            <input
+                type="text"
+                id="registerUsername"
+                placeholder="Username"
+                minlength="3"
+                maxlength="30"
+                autocomplete="username"
+                required
+            >
+
+            <input
+                type="email"
+                id="registerEmail"
+                placeholder="Email address"
+                autocomplete="email"
+                required
+            >
+
+            <input
+                type="password"
+                id="registerPassword"
+                placeholder="Password (8+ characters)"
+                minlength="8"
+                maxlength="128"
+                autocomplete="new-password"
+                required
+            >
+
+            <button
+                type="submit"
+                class="auth-button"
+            >
+                Create Account
+            </button>
+
+        </form>
+
+        <div class="auth-switch">
+
+            <span id="switchText">
+                Don't have an account?
+            </span>
+
+            <button
+                type="button"
+                id="switchAuth"
+            >
+                Create account
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- =========================
+     MAIN APP
+========================== -->
+
+<div class="app" id="app">
+
+    <!-- SIDEBAR -->
+
+    <aside class="sidebar">
+
+        <div class="sidebar-header">
+
+            <div class="brand">
+
+                <div class="logo">T</div>
+
+                <div class="brand-name">
+                    Talkora
+                </div>
+
+            </div>
+
+            <div class="header-actions">
+
+                <button
+                    class="icon-btn"
+                    id="themeBtn"
+                    title="Change theme"
+                >
+                    🌙
+                </button>
+
+                <button
+                    class="icon-btn"
+                    id="profileBtn"
+                    title="Profile"
+                >
+                    👤
+                </button>
+
+            </div>
+
+        </div>
+
+        <div class="search-area">
+
+            <div class="search-box">
+
+                <span>🔍</span>
+
+                <input
+                    type="text"
+                    id="searchInput"
+                    placeholder="Search users..."
+                    autocomplete="off"
+                >
+
+            </div>
+
+        </div>
+
+        <div
+            class="chat-list"
+            id="chatList"
+        ></div>
+
+    </aside>
+
+
+    <!-- CHAT WINDOW -->
+
+    <main
+        class="chat-window"
+        id="chatWindow"
+    >
+
+        <div
+            class="empty-chat"
+            id="emptyChat"
+        >
+
+            <div class="empty-chat-inner">
+
+                <div class="empty-logo">
+                    T
+                </div>
+
+                <h2>
+                    Welcome to Talkora
+                </h2>
+
+                <p>
+                    Select a user and start chatting
+                    in real time.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <!-- CHAT HEADER -->
+
+        <header class="chat-header">
+
+            <button
+                class="icon-btn back-btn"
+                id="backBtn"
+            >
+                ←
+            </button>
+
+            <div
+                class="avatar"
+                id="headerAvatar"
+            >
+                T
+            </div>
+
+            <div class="chat-header-info">
+
+                <div
+                    class="chat-header-name"
+                    id="headerName"
+                >
+                    Contact
+                </div>
+
+                <div
+                    class="chat-status"
+                    id="headerStatus"
+                >
+                    offline
+                </div>
+
+            </div>
+
+        </header>
+
+
+        <!-- MESSAGES -->
+
+        <section
+            class="messages"
+            id="messages"
+        ></section>
+
+
+        <!-- TYPING -->
+
+        <div
+            class="typing"
+            id="typingIndicator"
+        >
+
+            <span></span>
+            <span></span>
+            <span></span>
+
+        </div>
+
+
+        <!-- COMPOSER -->
+
+        <div class="composer">
+
+            <button
+                class="icon-btn"
+                id="emojiBtn"
+                title="Emoji"
+            >
+                😊
+            </button>
+
+            <div class="composer-input">
+
+                <input
+                    type="text"
+                    id="messageInput"
+                    placeholder="Type a message..."
+                    autocomplete="off"
+                    maxlength="2000"
+                >
+
+            </div>
+
+            <button
+                class="icon-btn send-btn"
+                id="sendBtn"
+                title="Send"
+            >
+                ➤
+            </button>
+
+        </div>
+
+    </main>
+
+</div>
+
+
+<!-- =========================
+     PROFILE PANEL
+========================== -->
+
+<div
+    class="profile-panel"
+    id="profilePanel"
+>
+
+    <div class="profile-title">
+
+        <button
+            class="icon-btn"
+            id="closeProfile"
+        >
+            ←
+        </button>
+
+        My Profile
+
+    </div>
+
+    <div class="profile-content">
+
+        <div
+            class="profile-avatar"
+            id="profileAvatar"
+        >
+            T
+        </div>
+
+        <h2 id="profileName">
+            User
+        </h2>
+
+        <p id="profileUsername">
+            @user
+        </p>
+
+        <p style="margin-top:10px;">
+            Available on Talkora
+        </p>
+
+        <button
+            class="logout-btn"
+            id="logoutBtn"
+        >
+            Log Out
+        </button>
+
+    </div>
+
+</div>
+
+
+<!-- SOCKET.IO -->
+
+<script src="/socket.io/socket.io.js"></script>
+
+<script>
+"use strict";
+
+/* =========================================
+   TALKORA REAL-TIME FRONTEND
+========================================= */
+
+const API = "/api";
+
+let token = localStorage.getItem("talkoraToken");
+let currentUser = null;
+let users = [];
+let selectedUser = null;
+let socket = null;
+let typingTimer = null;
+
+
+/* =========================================
+   ELEMENTS
+========================================= */
+
+const authScreen =
+    document.getElementById("authScreen");
+
+const app =
+    document.getElementById("app");
+
+const loginForm =
+    document.getElementById("loginForm");
+
+const registerForm =
+    document.getElementById("registerForm");
+
+const switchAuth =
+    document.getElementById("switchAuth");
+
+const switchText =
+    document.getElementById("switchText");
+
+const authTitle =
+    document.getElementById("authTitle");
+
+const authSubtitle =
+    document.getElementById("authSubtitle");
+
+const authError =
+    document.getElementById("authError");
+
+const chatList =
+    document.getElementById("chatList");
+
+const chatWindow =
+    document.getElementById("chatWindow");
+
+const emptyChat =
+    document.getElementById("emptyChat");
+
+const messagesContainer =
+    document.getElementById("messages");
+
+const headerName =
+    document.getElementById("headerName");
+
+const headerStatus =
+    document.getElementById("headerStatus");
+
+const headerAvatar =
+    document.getElementById("headerAvatar");
+
+const messageInput =
+    document.getElementById("messageInput");
+
+const sendBtn =
+    document.getElementById("sendBtn");
+
+const searchInput =
+    document.getElementById("searchInput");
+
+const themeBtn =
+    document.getElementById("themeBtn");
+
+const profileBtn =
+    document.getElementById("profileBtn");
+
+const profilePanel =
+    document.getElementById("profilePanel");
+
+const closeProfile =
+    document.getElementById("closeProfile");
+
+const logoutBtn =
+    document.getElementById("logoutBtn");
+
+const profileAvatar =
+    document.getElementById("profileAvatar");
+
+const profileName =
+    document.getElementById("profileName");
+
+const profileUsername =
+    document.getElementById("profileUsername");
+
+const backBtn =
+    document.getElementById("backBtn");
+
+const emojiBtn =
+    document.getElementById("emojiBtn");
+
+const typingIndicator =
+    document.getElementById("typingIndicator");
+
+
+/* =========================================
+   AUTH MODE
+========================================= */
+
+let registerMode = false;
+
+switchAuth.addEventListener(
+    "click",
+    () => {
+
+        registerMode = !registerMode;
+
+        authError.classList.remove("show");
+
+        if (registerMode) {
+
+            loginForm.style.display = "none";
+            registerForm.style.display = "flex";
+
+            authTitle.textContent =
+                "Create your Talkora account";
+
+            authSubtitle.textContent =
+                "Join Talkora and start chatting";
+
+            switchText.textContent =
+                "Already have an account?";
+
+            switchAuth.textContent =
+                "Sign in";
+
+        } else {
+
+            loginForm.style.display = "flex";
+            registerForm.style.display = "none";
+
+            authTitle.textContent =
+                "Welcome to Talkora";
+
+            authSubtitle.textContent =
+                "Sign in to continue chatting";
+
+            switchText.textContent =
+                "Don't have an account?";
+
+            switchAuth.textContent =
+                "Create account";
+        }
+    }
+);
+
+
+/* =========================================
+   AUTH ERROR
+========================================= */
+
+function showAuthError(message) {
+
+    authError.textContent = message;
+    authError.classList.add("show");
+
+}
+
+
+/* =========================================
+   REGISTER
+========================================= */
+
+registerForm.addEventListener(
+    "submit",
+    async event => {
+
+        event.preventDefault();
+
+        const username =
+            document
+                .getElementById("registerUsername")
+                .value
+                .trim();
+
+        const email =
+            document
+                .getElementById("registerEmail")
+                .value
+                .trim();
+
+        const password =
+            document
+                .getElementById("registerPassword")
+                .value;
+
+        try {
+
+            const response =
+                await fetch(
+                    `${API}/auth/register`,
+                    {
+                        method: "POST",
+
+                        headers: {
+                            "Content-Type":
+                                "application/json"
+                        },
+
+                        body: JSON.stringify({
+                            username,
+                            email,
+                            password
+                        })
+                    }
+                );
+
+            const data =
+                await response.json();
+
+            if (!response.ok) {
+
+                showAuthError(
+                    data.error ||
+                    "Registration failed."
+                );
+
+                return;
+            }
+
+            token = data.token;
+
+            localStorage.setItem(
+                "talkoraToken",
+                token
+            );
+
+            currentUser = data.user;
+
+            await startApplication();
+
+        } catch (error) {
+
+            showAuthError(
+                "Cannot connect to Talkora server."
+            );
+
+        }
+    }
+);
+
+
+/* =========================================
+   LOGIN
+========================================= */
+
+loginForm.addEventListener(
+    "submit",
+    async event => {
+
+        event.preventDefault();
+
+        const email =
+            document
+                .getElementById("loginEmail")
+                .value
+                .trim();
+
+        const password =
+            document
+                .getElementById("loginPassword")
+                .value;
+
+        try {
+
+            const response =
+                await fetch(
+                    `${API}/auth/login`,
+                    {
+                        method: "POST",
+
+                        headers: {
+                            "Content-Type":
+                                "application/json"
+                        },
+
+                        body: JSON.stringify({
+                            email,
+                            password
+                        })
+                    }
+                );
+
+            const data =
+                await response.json();
+
+            if (!response.ok) {
+
+                showAuthError(
+                    data.error ||
+                    "Login failed."
+                );
+
+                return;
+            }
+
+            token = data.token;
+
+            localStorage.setItem(
+                "talkoraToken",
+                token
+            );
+
+            currentUser = data.user;
+
+            await startApplication();
+
+        } catch (error) {
+
+            showAuthError(
+                "Cannot connect to Talkora server."
+            );
+
+        }
+    }
+);
+
+
+/* =========================================
+   API REQUEST
+========================================= */
+
+async function apiRequest(
+    url,
+    options = {}
+) {
+
+    const headers = {
+        ...(options.headers || {}),
+        Authorization:
+            `Bearer ${token}`
+    };
+
+    const response =
+        await fetch(
+            url,
+            {
+                ...options,
+                headers
+            }
+        );
+
+    if (response.status === 401) {
+
+        logout();
+
+        throw new Error(
+            "Session expired."
+        );
+    }
+
+    return response;
+
+}
+
+
+/* =========================================
+   START APPLICATION
+========================================= */
+
+async function startApplication() {
+
+    try {
+
+        const meResponse =
+            await apiRequest(
+                `${API}/me`
+            );
+
+        if (!meResponse.ok) {
+            throw new Error(
+                "Unable to load account."
+            );
+        }
+
+        const meData =
+            await meResponse.json();
+
+        currentUser =
+            meData.user;
+
+        authScreen.style.display =
+            "none";
+
+        app.classList.add(
+            "logged-in"
+        );
+
+        updateProfile();
+
+        await loadUsers();
+
+        connectSocket();
+
+    } catch (error) {
+
+        console.error(error);
+
+        logout();
+
+    }
+}
+
+
+/* =========================================
+   LOAD USERS
+========================================= */
+
+async function loadUsers() {
+
+    try {
+
+        const response =
+            await apiRequest(
+                `${API}/users`
+            );
+
+        const data =
+            await response.json();
+
+        users =
+            data.users || [];
+
+        renderUserList(users);
+
+    } catch (error) {
+
+        console.error(
+            "Could not load users:",
+            error
+        );
+    }
+}
+
+
+/* =========================================
+   USER INITIALS
+========================================= */
+
+function getInitials(username) {
+
+    if (!username) {
+        return "?";
+    }
+
+    return username
+        .slice(0, 2)
+        .toUpperCase();
+
+}
+
+
+/* =========================================
+   RENDER USERS
+========================================= */
+
+function renderUserList(list) {
+
+    chatList.innerHTML = "";
+
+    if (!list.length) {
+
+        chatList.innerHTML = `
+            <div class="empty-users">
+                No other Talkora users yet.
+                <br><br>
+                Create another account to test chatting.
+            </div>
+        `;
+
+        return;
+    }
+
+    list.forEach(user => {
+
+        const item =
+            document.createElement("div");
+
+        item.className =
+            "chat-item";
+
+        if (
+            selectedUser &&
+            selectedUser.id === user.id
+        ) {
+
+            item.classList.add(
+                "active"
+            );
+        }
+
+        const initials =
+            getInitials(user.username);
+
+        item.innerHTML = `
+            <div class="avatar">
+                ${escapeHTML(initials)}
+                ${
+                    user.online
+                    ? '<span class="online-dot"></span>'
+                    : ''
+                }
+            </div>
+
+            <div class="chat-info">
+
+                <div class="chat-top">
+
+                    <div class="chat-name">
+                        ${escapeHTML(user.username)}
+                    </div>
+
+                </div>
+
+                <div class="chat-bottom">
+
+                    <div class="last-message">
+                        ${
+                            user.online
+                            ? "Online"
+                            : "Offline"
+                        }
+                    </div>
+
+                </div>
+
+            </div>
+        `;
+
+        item.addEventListener(
+            "click",
+            () => openChat(user.id)
+        );
+
+        chatList.appendChild(item);
+
+    });
+
+}
+
+
+/* =========================================
+   ONLINE USERS
+========================================= */
+
+function updateOnlineUsers(ids) {
+
+    users.forEach(user => {
+
+        user.online =
+            ids.includes(user.id);
+
+    });
+
+    renderUserList(
+        getFilteredUsers()
+    );
+
+    updateSelectedStatus();
+
+}
+
+
+/* =========================================
+   FILTER USERS
+========================================= */
+
+function getFilteredUsers() {
+
+    const query =
+        searchInput.value
+            .toLowerCase()
+            .trim();
+
+    if (!query) {
+        return users;
+    }
+
+    return users.filter(
+        user =>
+            user.username
+                .toLowerCase()
+                .includes(query)
+    );
+
+}
+
+
+/* =========================================
+   SEARCH
+========================================= */
+
+searchInput.addEventListener(
+    "input",
+    () => {
+
+        renderUserList(
+            getFilteredUsers()
+        );
+
+    }
+);
+
+
+/* =========================================
+   OPEN CHAT
+========================================= */
+
+async function openChat(userId) {
+
+    const user =
+        users.find(
+            item => item.id === userId
+        );
+
+    if (!user) {
+        return;
+    }
+
+    selectedUser = user;
+
+    emptyChat.style.display =
+        "none";
+
+    chatWindow.classList.add(
+        "active"
+    );
+
+    chatWindow.classList.add(
+        "mobile-open"
+    );
+
+    headerName.textContent =
+        user.username;
+
+    headerAvatar.textContent =
+        getInitials(user.username);
+
+    updateSelectedStatus();
+
+    await loadMessages(user.id);
+
+    renderUserList(
+        getFilteredUsers()
+    );
+
+    messageInput.focus();
+
+}
+
+
+/* =========================================
+   UPDATE STATUS
+========================================= */
+
+function updateSelectedStatus() {
+
+    if (!selectedUser) {
+        return;
+    }
+
+    selectedUser =
+        users.find(
+            user =>
+                user.id === selectedUser.id
+        ) || selectedUser;
+
+    headerStatus.textContent =
+        selectedUser.online
+        ? "online"
+        : "offline";
+
+}
+
+
+/* =========================================
+   LOAD MESSAGES
+========================================= */
+
+async function loadMessages(userId) {
+
+    try {
+
+        const response =
+            await apiRequest(
+                `${API}/messages/${userId}`
+            );
+
+        const data =
+            await response.json();
+
+        renderMessages(
+            data.messages || []
+        );
+
+    } catch (error) {
+
+        console.error(
+            "Could not load messages:",
+            error
+        );
+
+    }
+}
+
+
+/* =========================================
+   RENDER MESSAGES
+========================================= */
+
+function renderMessages(messages) {
+
+    messagesContainer.innerHTML = "";
+
+    const divider =
+        document.createElement("div");
+
+    divider.className =
+        "date-divider";
+
+    divider.innerHTML =
+        "<span>Conversation</span>";
+
+    messagesContainer.appendChild(
+        divider
+    );
+
+    messages.forEach(
+        message => {
+
+            addMessageToScreen(
+                message
+            );
+
+        }
+    );
+
+    scrollMessages();
+
+}
+
+
+/* =========================================
+   ADD MESSAGE
+========================================= */
+
+function addMessageToScreen(message) {
+
+    const element =
+        document.createElement("div");
+
+    const mine =
+        Number(message.sender_id) ===
+        Number(currentUser.id);
+
+    element.className =
+        `message ${
+            mine
+            ? "sent"
+            : "received"
+        }`;
+
+    const time =
+        formatTime(
+            message.created_at
+        );
+
+    element.innerHTML = `
+        ${escapeHTML(message.content)}
+
+        <span class="message-time">
+
+            ${escapeHTML(time)}
+
+            ${
+                mine
+                ? '<span class="checks">✓✓</span>'
+                : ""
+            }
+
+        </span>
+    `;
+
+    messagesContainer.appendChild(
+        element
+    );
+
+}
+
+
+/* =========================================
+   SEND MESSAGE
+========================================= */
+
+function sendMessage() {
+
+    if (
+        !selectedUser ||
+        !socket ||
+        !socket.connected
+    ) {
+        return;
+    }
+
+    const content =
+        messageInput.value.trim();
+
+    if (!content) {
+        return;
+    }
+
+    socket.emit(
+        "send_message",
+        {
+            receiverId:
+                selectedUser.id,
+
+            content
+        },
+        result => {
+
+            if (
+                result &&
+                result.error
+            ) {
+
+                console.error(
+                    result.error
+                );
+
+                return;
+            }
+
+            messageInput.value = "";
+
+            stopTyping();
+
+        }
+    );
+
+}
+
+
+/* =========================================
+   RECEIVE MESSAGE
+========================================= */
+
+function handleNewMessage(message) {
+
+    const isCurrentConversation =
+        selectedUser &&
+        (
+            Number(message.sender_id) ===
+                Number(selectedUser.id)
+
+            ||
+
+            Number(message.receiver_id) ===
+                Number(selectedUser.id)
+        );
+
+    if (isCurrentConversation) {
+
+        addMessageToScreen(
+            message
+        );
+
+        scrollMessages();
+
+    }
+
+}
+
+
+/* =========================================
+   SOCKET.IO
+========================================= */
+
+function connectSocket() {
+
+    if (socket) {
+
+        socket.disconnect();
+
+    }
+
+    socket =
+        io({
+            auth: {
+                token
+            }
+        });
+
+    socket.on(
+        "connect",
+        () => {
+
+            console.log(
+                "Connected to Talkora real-time server."
+            );
+
+        }
+    );
+
+    socket.on(
+        "connect_error",
+        error => {
+
+            console.error(
+                "Socket connection error:",
+                error.message
+            );
+
+        }
+    );
+
+    socket.on(
+        "online_users",
+        ids => {
+
+            updateOnlineUsers(
+                ids.map(Number)
+            );
+
+        }
+    );
+
+    socket.on(
+        "new_message",
+        message => {
+
+            handleNewMessage(
+                message
+            );
+
+        }
+    );
+
+    socket.on(
+        "user_typing",
+        data => {
+
+            if (
+                selectedUser &&
+                Number(data.userId) ===
+                Number(selectedUser.id)
+            ) {
+
+                typingIndicator.classList.add(
+                    "show"
+                );
+
+                scrollMessages();
+
+            }
+
+        }
+    );
+
+    socket.on(
+        "user_stopped_typing",
+        data => {
+
+            if (
+                selectedUser &&
+                Number(data.userId) ===
+                Number(selectedUser.id)
+            ) {
+
+                typingIndicator.classList.remove(
+                    "show"
+                );
+
+            }
+
+        }
+    );
+
+}
+
+
+/* =========================================
+   TYPING
+========================================= */
+
+messageInput.addEventListener(
+    "input",
+    () => {
+
+        if (
+            !selectedUser ||
+            !socket ||
+            !socket.connected
+        ) {
+            return;
+        }
+
+        socket.emit(
+            "typing",
+            {
+                receiverId:
+                    selectedUser.id
+            }
+        );
+
+        clearTimeout(
+            typingTimer
+        );
+
+        typingTimer =
+            setTimeout(
+                stopTyping,
+                1000
+            );
+
+    }
+);
+
+
+function stopTyping() {
+
+    clearTimeout(
+        typingTimer
+    );
+
+    if (
+        selectedUser &&
+        socket &&
+        socket.connected
+    ) {
+
+        socket.emit(
+            "stop_typing",
+            {
+                receiverId:
+                    selectedUser.id
+            }
+        );
+
+    }
+
+}
+
+
+/* =========================================
+   SEND BUTTON
+========================================= */
+
+sendBtn.addEventListener(
+    "click",
+    sendMessage
+);
+
+
+/* =========================================
+   ENTER TO SEND
+========================================= */
+
+messageInput.addEventListener(
+    "keydown",
+    event => {
+
+        if (
+            event.key === "Enter" &&
+            !event.shiftKey
+        ) {
+
+            event.preventDefault();
+
+            sendMessage();
+
+        }
+
+    }
+);
+
+
+/* =========================================
+   EMOJI
+========================================= */
+
+emojiBtn.addEventListener(
+    "click",
+    () => {
+
+        const emojis = [
+            "😀",
+            "😂",
+            "😍",
+            "😊",
+            "👍",
+            "❤️",
+            "🔥",
+            "🎉"
+        ];
+
+        const emoji =
+            emojis[
+                Math.floor(
+                    Math.random() *
+                    emojis.length
+                )
+            ];
+
+        messageInput.value +=
+            emoji;
+
+        messageInput.focus();
+
+    }
+);
+
+
+/* =========================================
+   THEME
+========================================= */
+
+themeBtn.addEventListener(
+    "click",
+    () => {
+
+        document.body.classList.toggle(
+            "dark"
+        );
+
+        const dark =
+            document.body.classList.contains(
+                "dark"
+            );
+
+        localStorage.setItem(
+            "talkoraTheme",
+            dark
+                ? "dark"
+                : "light"
+        );
+
+        themeBtn.textContent =
+            dark
+            ? "☀️"
+            : "🌙";
+
+    }
+);
+
+
+const savedTheme =
+    localStorage.getItem(
+        "talkoraTheme"
+    );
+
+if (savedTheme === "dark") {
+
+    document.body.classList.add(
+        "dark"
+    );
+
+    themeBtn.textContent =
+        "☀️";
+
+}
+
+
+/* =========================================
+   PROFILE
+========================================= */
+
+function updateProfile() {
+
+    if (!currentUser) {
+        return;
+    }
+
+    const initials =
+        getInitials(
+            currentUser.username
+        );
+
+    profileAvatar.textContent =
+        initials;
+
+    profileName.textContent =
+        currentUser.username;
+
+    profileUsername.textContent =
+        "@" + currentUser.username;
+
+}
+
+
+profileBtn.addEventListener(
+    "click",
+    () => {
+
+        updateProfile();
+
+        profilePanel.classList.add(
+            "open"
+        );
+
+    }
+);
+
+
+closeProfile.addEventListener(
+    "click",
+    () => {
+
+        profilePanel.classList.remove(
+            "open"
+        );
+
+    }
+);
+
+
+/* =========================================
+   LOGOUT
+========================================= */
+
+logoutBtn.addEventListener(
+    "click",
+    logout
+);
+
+
+function logout() {
+
+    if (socket) {
+
+        socket.disconnect();
+
+        socket = null;
+
+    }
+
+    localStorage.removeItem(
+        "talkoraToken"
+    );
+
+    token = null;
+    currentUser = null;
+    users = [];
+    selectedUser = null;
+
+    app.classList.remove(
+        "logged-in"
+    );
+
+    app.style.display =
+        "none";
+
+    authScreen.style.display =
+        "flex";
+
+    loginForm.reset();
+    registerForm.reset();
+
+    registerMode = false;
+
+    loginForm.style.display =
+        "flex";
+
+    registerForm.style.display =
+        "none";
+
+    authTitle.textContent =
+        "Welcome to Talkora";
+
+    authSubtitle.textContent =
+        "Sign in to continue chatting";
+
+    switchText.textContent =
+        "Don't have an account?";
+
+    switchAuth.textContent =
+        "Create account";
+
+    profilePanel.classList.remove(
+        "open"
+    );
+
+}
+
+
+/* =========================================
+   MOBILE BACK
+========================================= */
+
+backBtn.addEventListener(
+    "click",
+    () => {
+
+        chatWindow.classList.remove(
+            "mobile-open"
+        );
+
+    }
+);
+
+
+/* =========================================
+   SCROLL
+========================================= */
+
+function scrollMessages() {
+
+    messagesContainer.scrollTop =
+        messagesContainer.scrollHeight;
+
+}
+
+
+/* =========================================
+   FORMAT TIME
+========================================= */
+
+function formatTime(dateString) {
+
+    const date =
+        new Date(
+            dateString
+        );
+
+    if (
+        Number.isNaN(
+            date.getTime()
+        )
+    ) {
+
+        return "";
+
+    }
+
+    return date.toLocaleTimeString(
+        [],
+        {
+            hour: "numeric",
+            minute: "2-digit"
+        }
+    );
+
+}
+
+
+/* =========================================
+   ESCAPE HTML
+========================================= */
+
+function escapeHTML(value) {
+
+    const div =
+        document.createElement(
+            "div"
+        );
+
+    div.textContent =
+        String(value ?? "");
+
+    return div.innerHTML;
+
+}
+
+
+/* =========================================
+   STARTUP
+========================================= */
+
+async function initialize() {
+
+    if (!token) {
+
+        authScreen.style.display =
+            "flex";
+
+        return;
+
+    }
+
+    await startApplication();
+
+}
+
+initialize();
+
+</script>
+
+</body>
+</html>
