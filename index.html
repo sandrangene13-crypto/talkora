@@ -3,7 +3,6 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#176b5b">
   <title>TAVLIK</title>
 
   <style>
@@ -11,24 +10,14 @@
       --primary: #176b5b;
       --primary-dark: #0f5145;
       --accent: #31b58c;
-      --background: #f4f7f6;
+      --bg: #f4f7f6;
       --surface: #ffffff;
       --surface-2: #eef3f1;
       --text: #17201e;
-      --muted: #6f7d79;
+      --muted: #71807b;
       --border: #dce5e1;
       --danger: #d64545;
-      --shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
-    }
-
-    body.dark {
-      --background: #101715;
-      --surface: #17211e;
-      --surface-2: #202c28;
-      --text: #edf5f2;
-      --muted: #9baaa5;
-      --border: #30403a;
-      --shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+      --online: #31b58c;
     }
 
     * {
@@ -45,7 +34,7 @@
 
     body {
       font-family: Arial, Helvetica, sans-serif;
-      background: var(--background);
+      background: var(--bg);
       color: var(--text);
       overflow: hidden;
     }
@@ -63,9 +52,9 @@
       display: none !important;
     }
 
-    /* =====================================================
+    /* =========================
        AUTH
-    ===================================================== */
+    ========================= */
 
     .auth-screen {
       min-height: 100vh;
@@ -73,9 +62,7 @@
       align-items: center;
       justify-content: center;
       padding: 20px;
-      background:
-        radial-gradient(circle at top right, rgba(49, 181, 140, 0.22), transparent 35%),
-        var(--background);
+      background: var(--bg);
     }
 
     .auth-card {
@@ -83,9 +70,9 @@
       max-width: 430px;
       background: var(--surface);
       border: 1px solid var(--border);
-      border-radius: 22px;
+      border-radius: 20px;
       padding: 30px;
-      box-shadow: var(--shadow);
+      box-shadow: 0 12px 35px rgba(0, 0, 0, 0.08);
     }
 
     .brand {
@@ -107,14 +94,14 @@
     .auth-tabs {
       display: flex;
       gap: 8px;
-      margin-bottom: 22px;
+      margin-bottom: 20px;
     }
 
     .auth-tab {
       flex: 1;
       border: none;
-      padding: 12px;
       border-radius: 10px;
+      padding: 12px;
       background: var(--surface-2);
       color: var(--muted);
       font-weight: bold;
@@ -138,7 +125,7 @@
 
     .form-group input {
       width: 100%;
-      padding: 13px 14px;
+      padding: 13px;
       border: 1px solid var(--border);
       border-radius: 10px;
       outline: none;
@@ -152,13 +139,12 @@
 
     .primary-btn {
       width: 100%;
-      border: none;
       padding: 13px;
+      border: none;
       border-radius: 10px;
       background: var(--primary);
       color: white;
       font-weight: bold;
-      margin-top: 5px;
     }
 
     .primary-btn:hover {
@@ -166,15 +152,15 @@
     }
 
     .auth-error {
+      min-height: 18px;
+      margin-bottom: 10px;
       color: var(--danger);
       font-size: 14px;
-      margin-bottom: 12px;
-      min-height: 18px;
     }
 
-    /* =====================================================
-       MAIN APP
-    ===================================================== */
+    /* =========================
+       APP
+    ========================= */
 
     .app {
       width: 100%;
@@ -186,14 +172,18 @@
       display: flex;
     }
 
+    /* =========================
+       SIDEBAR
+    ========================= */
+
     .sidebar {
       width: 370px;
       height: 100%;
-      background: var(--surface);
-      border-right: 1px solid var(--border);
       display: flex;
       flex-direction: column;
       flex-shrink: 0;
+      background: var(--surface);
+      border-right: 1px solid var(--border);
     }
 
     .sidebar-header {
@@ -209,9 +199,9 @@
     }
 
     .sidebar-brand {
+      color: var(--primary);
       font-size: 25px;
       font-weight: bold;
-      color: var(--primary);
       letter-spacing: 1px;
     }
 
@@ -230,15 +220,12 @@
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      font-size: 18px;
+      font-size: 14px;
+      font-weight: bold;
     }
 
     .icon-btn:hover {
       background: var(--border);
-    }
-
-    .search-box {
-      position: relative;
     }
 
     .search-box input {
@@ -246,9 +233,9 @@
       padding: 12px 14px;
       border: 1px solid var(--border);
       border-radius: 12px;
+      outline: none;
       background: var(--surface-2);
       color: var(--text);
-      outline: none;
     }
 
     .user-list {
@@ -257,10 +244,10 @@
     }
 
     .user-item {
-      padding: 13px 17px;
       display: flex;
       align-items: center;
       gap: 12px;
+      padding: 13px 17px;
       border-bottom: 1px solid var(--border);
       cursor: pointer;
     }
@@ -273,19 +260,19 @@
     .avatar {
       width: 46px;
       height: 46px;
+      flex-shrink: 0;
       border-radius: 50%;
-      background: var(--primary);
-      color: white;
       display: flex;
       align-items: center;
       justify-content: center;
+      background: var(--primary);
+      color: white;
       font-weight: bold;
-      flex-shrink: 0;
     }
 
     .user-info {
-      min-width: 0;
       flex: 1;
+      min-width: 0;
     }
 
     .user-name {
@@ -299,29 +286,26 @@
       color: var(--muted);
       font-size: 13px;
       margin-top: 4px;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
     }
 
     .empty-users {
-      text-align: center;
-      color: var(--muted);
       padding: 35px 20px;
+      color: var(--muted);
+      text-align: center;
       line-height: 1.5;
     }
 
-    /* =====================================================
+    /* =========================
        CHAT
-    ===================================================== */
+    ========================= */
 
     .chat {
       flex: 1;
-      height: 100%;
       min-width: 0;
+      height: 100%;
       display: flex;
       flex-direction: column;
-      background: var(--background);
+      background: var(--bg);
     }
 
     .chat-empty {
@@ -339,14 +323,16 @@
       margin-bottom: 8px;
     }
 
+    /* Chat header */
+
     .chat-header {
-      height: 70px;
+      min-height: 70px;
       padding: 10px 16px;
-      background: var(--surface);
-      border-bottom: 1px solid var(--border);
       display: flex;
       align-items: center;
       gap: 10px;
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
     }
 
     .back-btn {
@@ -359,15 +345,53 @@
     }
 
     .chat-user-name {
-      font-weight: bold;
       font-size: 17px;
+      font-weight: bold;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
 
     .chat-user-status {
+      margin-top: 3px;
       color: var(--muted);
       font-size: 12px;
-      margin-top: 3px;
     }
+
+    /* Call controls */
+
+    .call-buttons {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+    }
+
+    .call-btn {
+      height: 38px;
+      padding: 0 13px;
+      border: 1px solid var(--border);
+      border-radius: 9px;
+      background: var(--surface-2);
+      color: var(--text);
+      font-size: 12px;
+      font-weight: bold;
+    }
+
+    .call-btn:hover {
+      background: var(--border);
+    }
+
+    .call-btn.voice {
+      color: var(--primary);
+    }
+
+    .call-btn.video {
+      color: var(--primary);
+    }
+
+    /* =========================
+       MESSAGES
+    ========================= */
 
     .messages {
       flex: 1;
@@ -379,8 +403,8 @@
     }
 
     .message-row {
-      display: flex;
       width: 100%;
+      display: flex;
     }
 
     .message-row.mine {
@@ -393,7 +417,6 @@
       border-radius: 15px;
       background: var(--surface);
       border: 1px solid var(--border);
-      word-wrap: break-word;
       overflow-wrap: anywhere;
     }
 
@@ -409,10 +432,10 @@
     }
 
     .message-image {
+      display: block;
       max-width: 280px;
       max-height: 350px;
       border-radius: 10px;
-      display: block;
     }
 
     .voice-player {
@@ -435,14 +458,14 @@
       font-size: 12px;
     }
 
-    /* =====================================================
+    /* =========================
        COMPOSER
-    ===================================================== */
+    ========================= */
 
     .composer {
+      padding: 10px;
       background: var(--surface);
       border-top: 1px solid var(--border);
-      padding: 10px;
     }
 
     .composer-row {
@@ -473,18 +496,31 @@
       border-radius: 50%;
       background: var(--primary);
       color: white;
-      font-size: 18px;
+      font-size: 13px;
+      font-weight: bold;
+    }
+
+    .media-btn {
+      width: 40px;
+      height: 40px;
+      border: none;
+      border-radius: 50%;
+      background: var(--surface-2);
+      color: var(--text);
+      font-size: 11px;
+      font-weight: bold;
     }
 
     .recording {
       background: var(--danger) !important;
+      color: white !important;
     }
 
     .image-preview {
-      padding: 10px;
       display: none;
       align-items: center;
       gap: 10px;
+      padding: 10px;
     }
 
     .image-preview.show {
@@ -504,49 +540,49 @@
       font-size: 13px;
     }
 
-    /* =====================================================
-       PROFILE MODAL
-    ===================================================== */
+    /* =========================
+       PROFILE
+    ========================= */
 
     .modal {
       position: fixed;
       inset: 0;
-      background: rgba(0, 0, 0, 0.55);
+      z-index: 1000;
       display: flex;
       align-items: center;
       justify-content: center;
       padding: 20px;
-      z-index: 1000;
+      background: rgba(0, 0, 0, 0.55);
     }
 
     .modal-card {
       width: 100%;
       max-width: 420px;
-      background: var(--surface);
-      border-radius: 18px;
       padding: 25px;
-      box-shadow: var(--shadow);
+      border-radius: 18px;
+      background: var(--surface);
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
     }
 
     .modal-header {
       display: flex;
-      justify-content: space-between;
       align-items: center;
+      justify-content: space-between;
       margin-bottom: 20px;
     }
 
     .profile-avatar {
       width: 90px;
       height: 90px;
+      margin: 0 auto 18px;
       border-radius: 50%;
-      background: var(--primary);
-      color: white;
       display: flex;
       align-items: center;
       justify-content: center;
+      background: var(--primary);
+      color: white;
       font-size: 32px;
       font-weight: bold;
-      margin: 0 auto 18px;
     }
 
     .profile-info {
@@ -565,40 +601,49 @@
       font-weight: bold;
     }
 
-    /* =====================================================
-       CALL UI
-    ===================================================== */
+    /* =========================
+       CALL SCREEN
+    ========================= */
 
     .call-overlay {
       position: fixed;
       inset: 0;
       z-index: 2000;
-      background: rgba(0, 0, 0, 0.88);
-      color: white;
       display: none;
       flex-direction: column;
       align-items: center;
       justify-content: center;
       padding: 20px;
+      background: #111;
+      color: white;
     }
 
     .call-overlay.show {
       display: flex;
     }
 
-    .call-title {
-      font-size: 22px;
+    .call-type {
       margin-bottom: 8px;
+      font-size: 14px;
+      color: #b7c5c0;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .call-title {
+      margin-bottom: 7px;
+      font-size: 24px;
     }
 
     .call-status {
-      color: #c9d5d1;
       margin-bottom: 20px;
+      color: #b7c5c0;
     }
 
     #remoteVideo {
       width: min(900px, 95vw);
       max-height: 65vh;
+      display: none;
       background: #000;
       border-radius: 15px;
       object-fit: contain;
@@ -610,9 +655,24 @@
       bottom: 100px;
       width: 180px;
       max-width: 30vw;
-      border-radius: 12px;
+      display: none;
       background: #000;
       border: 2px solid white;
+      border-radius: 12px;
+    }
+
+    .voice-call-display {
+      width: 160px;
+      height: 160px;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      background: var(--primary);
+      color: white;
+      font-size: 20px;
+      font-weight: bold;
+      text-align: center;
     }
 
     .call-actions {
@@ -623,9 +683,9 @@
 
     .call-action {
       min-width: 110px;
+      padding: 12px 18px;
       border: none;
       border-radius: 25px;
-      padding: 12px 18px;
       color: white;
       font-weight: bold;
     }
@@ -639,23 +699,64 @@
       background: var(--danger);
     }
 
-    /* =====================================================
+    /* =========================
+       INCOMING CALL
+    ========================= */
+
+    .incoming-call {
+      position: fixed;
+      left: 50%;
+      top: 30px;
+      z-index: 2500;
+      width: min(400px, calc(100% - 30px));
+      padding: 20px;
+      transform: translateX(-50%);
+      display: none;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 15px;
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.25);
+      text-align: center;
+    }
+
+    .incoming-call.show {
+      display: block;
+    }
+
+    .incoming-call-title {
+      font-size: 18px;
+      font-weight: bold;
+    }
+
+    .incoming-call-text {
+      margin-top: 7px;
+      color: var(--muted);
+    }
+
+    .incoming-actions {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin-top: 18px;
+    }
+
+    /* =========================
        TOAST
-    ===================================================== */
+    ========================= */
 
     .toast {
       position: fixed;
       left: 50%;
       bottom: 25px;
+      z-index: 3000;
+      padding: 12px 18px;
       transform: translateX(-50%) translateY(100px);
       background: #222;
       color: white;
-      padding: 12px 18px;
       border-radius: 10px;
-      z-index: 3000;
       opacity: 0;
-      transition: 0.25s;
       pointer-events: none;
+      transition: 0.25s;
     }
 
     .toast.show {
@@ -663,9 +764,9 @@
       opacity: 1;
     }
 
-    /* =====================================================
+    /* =========================
        MOBILE
-    ===================================================== */
+    ========================= */
 
     @media (max-width: 700px) {
       .sidebar {
@@ -692,6 +793,20 @@
         display: inline-flex;
       }
 
+      .chat-header {
+        padding: 9px 10px;
+      }
+
+      .call-buttons {
+        gap: 4px;
+      }
+
+      .call-btn {
+        height: 36px;
+        padding: 0 8px;
+        font-size: 10px;
+      }
+
       .message-bubble {
         max-width: 85%;
       }
@@ -705,22 +820,56 @@
       .auth-card {
         padding: 22px;
       }
+
+      .composer-row {
+        gap: 4px;
+      }
+
+      .composer-input {
+        min-width: 0;
+      }
+
+      .media-btn {
+        width: 36px;
+        height: 36px;
+      }
+
+      .send-btn {
+        width: 40px;
+        height: 40px;
+      }
+    }
+
+    @media (max-width: 430px) {
+      .call-btn {
+        width: 34px;
+        padding: 0;
+        font-size: 9px;
+      }
+
+      .chat-user-name {
+        font-size: 15px;
+      }
+
+      .chat-user-status {
+        font-size: 11px;
+      }
     }
   </style>
 </head>
 
 <body>
 
-  <!-- =====================================================
+  <!-- =========================
        AUTH SCREEN
-  ====================================================== -->
+  ========================= -->
 
   <section id="authScreen" class="auth-screen">
     <div class="auth-card">
 
       <div class="brand">
         <h1>TAVLIK</h1>
-        <p>Private messaging made simple</p>
+        <p>Private real-time messaging</p>
       </div>
 
       <div class="auth-tabs">
@@ -733,55 +882,31 @@
         </button>
       </div>
 
-      <div id="authError" class="auth-error"></div>
+      <form id="authForm">
 
-      <!-- LOGIN -->
-
-      <form id="loginForm">
-        <div class="form-group">
-          <label for="loginIdentifier">Username or Email</label>
+        <div id="usernameGroup" class="form-group hidden">
+          <label for="username">Username</label>
           <input
-            id="loginIdentifier"
+            id="username"
             type="text"
-            autocomplete="username"
-            required
-          >
-        </div>
-
-        <div class="form-group">
-          <label for="loginPassword">Password</label>
-          <input
-            id="loginPassword"
-            type="password"
-            autocomplete="current-password"
-            required
-          >
-        </div>
-
-        <button class="primary-btn" type="submit">
-          Login
-        </button>
-      </form>
-
-      <!-- REGISTER -->
-
-      <form id="registerForm" class="hidden">
-        <div class="form-group">
-          <label for="registerUsername">Username</label>
-          <input
-            id="registerUsername"
-            type="text"
-            autocomplete="username"
-            minlength="3"
             maxlength="30"
-            required
+            autocomplete="username"
+          >
+        </div>
+
+        <div id="emailGroup" class="form-group hidden">
+          <label for="email">Email</label>
+          <input
+            id="email"
+            type="email"
+            autocomplete="email"
           >
         </div>
 
         <div class="form-group">
-          <label for="registerEmail">Email</label>
+          <label for="authEmail">Email</label>
           <input
-            id="registerEmail"
+            id="authEmail"
             type="email"
             autocomplete="email"
             required
@@ -789,30 +914,31 @@
         </div>
 
         <div class="form-group">
-          <label for="registerPassword">Password</label>
+          <label for="password">Password</label>
           <input
-            id="registerPassword"
+            id="password"
             type="password"
-            autocomplete="new-password"
-            minlength="8"
+            minlength="6"
+            autocomplete="current-password"
             required
           >
         </div>
 
-        <button class="primary-btn" type="submit">
-          Create Account
-        </button>
-      </form>
+        <div id="authError" class="auth-error"></div>
 
+        <button class="primary-btn" type="submit">
+          Login
+        </button>
+
+      </form>
     </div>
   </section>
 
-
-  <!-- =====================================================
+  <!-- =========================
        MAIN APP
-  ====================================================== -->
+  ========================= -->
 
-  <section id="app" class="app">
+  <main id="app" class="app">
 
     <!-- SIDEBAR -->
 
@@ -821,34 +947,39 @@
       <div class="sidebar-header">
 
         <div class="sidebar-top">
-          <div class="sidebar-brand">TAVLIK</div>
+
+          <div class="sidebar-brand">
+            TAVLIK
+          </div>
 
           <div class="header-actions">
-            <button
-              id="themeButton"
-              class="icon-btn"
-              type="button"
-              title="Toggle theme"
-            >
-              ◐
-            </button>
 
             <button
-              id="profileButton"
+              id="profileBtn"
               class="icon-btn"
               type="button"
               title="Profile"
             >
-              ●
+              Profile
             </button>
+
+            <button
+              id="themeBtn"
+              class="icon-btn"
+              type="button"
+              title="Change theme"
+            >
+              Theme
+            </button>
+
           </div>
         </div>
 
         <div class="search-box">
           <input
-            id="searchInput"
+            id="userSearch"
             type="search"
-            placeholder="Search username..."
+            placeholder="Search users"
             autocomplete="off"
           >
         </div>
@@ -857,176 +988,189 @@
 
       <div id="userList" class="user-list">
         <div class="empty-users">
-          Search for a username to start a private conversation.
+          Search for a user to start a private conversation.
         </div>
       </div>
 
     </aside>
 
-
     <!-- CHAT -->
 
-    <main class="chat">
+    <section class="chat">
 
       <div id="chatEmpty" class="chat-empty">
         <div>
           <h2>Welcome to TAVLIK</h2>
-          <p>Select a person to start a private conversation.</p>
+          <p>Select a user to start a private conversation.</p>
         </div>
       </div>
 
-      <div id="chatContent" class="hidden" style="height:100%;display:flex;flex-direction:column;">
+      <div id="chatContent" class="hidden" style="height:100%; display:flex; flex-direction:column;">
+
+        <!-- CHAT HEADER -->
 
         <header class="chat-header">
 
           <button
-            id="backButton"
+            id="backBtn"
             class="icon-btn back-btn"
             type="button"
+            title="Back"
           >
-            ←
+            Back
           </button>
 
-          <div id="chatAvatar" class="avatar">
-            ?
+          <div class="avatar" id="chatAvatar">
+            U
           </div>
 
           <div class="chat-user">
+
             <div id="chatUserName" class="chat-user-name">
               User
             </div>
 
             <div id="chatUserStatus" class="chat-user-status">
-              Private conversation
+              Offline
             </div>
+
           </div>
 
-          <button
-            id="videoCallButton"
-            class="icon-btn"
-            type="button"
-            title="Video call"
-          >
-            ▣
-          </button>
+          <!-- CALL BUTTONS -->
+          <div class="call-buttons">
+
+            <button
+              id="voiceCallBtn"
+              class="call-btn voice"
+              type="button"
+              title="Start voice call"
+            >
+              Voice Call
+            </button>
+
+            <button
+              id="videoCallBtn"
+              class="call-btn video"
+              type="button"
+              title="Start video call"
+            >
+              Video Call
+            </button>
+
+          </div>
 
         </header>
 
+        <!-- MESSAGES -->
 
         <div id="messages" class="messages"></div>
 
-        <div id="typingIndicator" class="typing"></div>
+        <div id="typing" class="typing"></div>
 
+        <!-- COMPOSER -->
 
         <div class="composer">
 
           <div id="imagePreview" class="image-preview">
-            <img id="previewImage" alt="Selected image">
+            <img id="previewImage" src="" alt="Selected image">
             <div id="previewName" class="preview-name"></div>
 
             <button
-              id="cancelImageButton"
+              id="cancelImageBtn"
               class="icon-btn"
               type="button"
             >
-              ×
+              Remove
             </button>
           </div>
 
           <div class="composer-row">
 
             <input
-              id="messageInput"
-              class="composer-input"
-              type="text"
-              maxlength="2000"
-              placeholder="Type a message..."
-              autocomplete="off"
-            >
-
-            <input
               id="imageInput"
               type="file"
-              accept="image/jpeg,image/png,image/webp,image/gif"
+              accept="image/*"
               class="hidden"
             >
 
             <button
-              id="imageButton"
-              class="icon-btn"
+              id="imageBtn"
+              class="media-btn"
               type="button"
               title="Send photo"
             >
-              ▧
+              Photo
             </button>
 
             <button
-              id="voiceButton"
-              class="icon-btn"
+              id="voiceMessageBtn"
+              class="media-btn"
               type="button"
-              title="Record voice"
+              title="Record voice message"
             >
-              🎙
+              Voice
             </button>
 
+            <input
+              id="messageInput"
+              class="composer-input"
+              type="text"
+              maxlength="2000"
+              placeholder="Type a message"
+              autocomplete="off"
+            >
+
             <button
-              id="sendButton"
+              id="sendBtn"
               class="send-btn"
               type="button"
-              title="Send"
+              title="Send message"
             >
-              ➤
+              Send
             </button>
 
           </div>
-
         </div>
 
       </div>
 
-    </main>
+    </section>
 
-  </section>
+  </main>
 
-
-  <!-- =====================================================
+  <!-- =========================
        PROFILE MODAL
-  ====================================================== -->
+  ========================= -->
 
   <div id="profileModal" class="modal hidden">
 
     <div class="modal-card">
 
       <div class="modal-header">
-        <h2>My Profile</h2>
+
+        <h2>Profile</h2>
 
         <button
-          id="closeProfileButton"
+          id="closeProfileBtn"
           class="icon-btn"
           type="button"
         >
-          ×
+          Close
         </button>
+
       </div>
 
       <div id="profileAvatar" class="profile-avatar">
-        ?
+        U
       </div>
 
       <div class="profile-info">
-        <div>
-          <strong>Username:</strong>
-          <span id="profileUsername"></span>
-        </div>
-
-        <div>
-          <strong>Email:</strong>
-          <span id="profileEmail"></span>
-        </div>
+        <div id="profileUsername"></div>
+        <div id="profileEmail"></div>
       </div>
 
       <button
-        id="logoutButton"
+        id="logoutBtn"
         class="logout-btn"
         type="button"
       >
@@ -1037,56 +1181,26 @@
 
   </div>
 
+  <!-- =========================
+       CALL OVERLAY
+  ========================= -->
 
-  <!-- =====================================================
-       INCOMING CALL
-  ====================================================== -->
+  <div id="callOverlay" class="call-overlay">
 
-  <div id="incomingCall" class="call-overlay">
-
-    <div class="call-title">
-      Incoming video call
+    <div id="callType" class="call-type">
+      Voice Call
     </div>
-
-    <div id="incomingCallerName" class="call-status">
-      Someone is calling...
-    </div>
-
-    <div class="call-actions">
-
-      <button
-        id="acceptCallButton"
-        class="call-action accept-call"
-        type="button"
-      >
-        Accept
-      </button>
-
-      <button
-        id="rejectCallButton"
-        class="call-action reject-call"
-        type="button"
-      >
-        Reject
-      </button>
-
-    </div>
-
-  </div>
-
-
-  <!-- =====================================================
-       ACTIVE CALL
-  ====================================================== -->
-
-  <div id="callScreen" class="call-overlay">
 
     <div id="callTitle" class="call-title">
-      Video call
+      Calling
     </div>
 
     <div id="callStatus" class="call-status">
-      Connecting...
+      Connecting
+    </div>
+
+    <div id="voiceCallDisplay" class="voice-call-display">
+      Voice Call
     </div>
 
     <video
@@ -1105,28 +1219,60 @@
     <div class="call-actions">
 
       <button
-        id="endCallButton"
+        id="endCallBtn"
         class="call-action end-call"
         type="button"
       >
-        End call
+        End Call
       </button>
 
     </div>
 
   </div>
 
+  <!-- =========================
+       INCOMING CALL
+  ========================= -->
 
-  <!-- =====================================================
+  <div id="incomingCall" class="incoming-call">
+
+    <div id="incomingCallTitle" class="incoming-call-title">
+      Incoming Call
+    </div>
+
+    <div id="incomingCallText" class="incoming-call-text">
+      Someone is calling you.
+    </div>
+
+    <div class="incoming-actions">
+
+      <button
+        id="acceptCallBtn"
+        class="call-action accept-call"
+        type="button"
+      >
+        Accept
+      </button>
+
+      <button
+        id="rejectCallBtn"
+        class="call-action reject-call"
+        type="button"
+      >
+        Decline
+      </button>
+
+    </div>
+
+  </div>
+
+  <!-- =========================
        TOAST
-  ====================================================== -->
+  ========================= -->
 
   <div id="toast" class="toast"></div>
 
-
-  <!-- =====================================================
-       SOCKET.IO
-  ====================================================== -->
+  <!-- SOCKET.IO -->
 
   <script src="/socket.io/socket.io.js"></script>
 
@@ -1137,178 +1283,171 @@
        STATE
     ===================================================== */
 
-    const TOKEN_KEY = "tavlik_token";
+    const state = {
+      token: localStorage.getItem("tavlik_token"),
+      currentUser: null,
+      selectedUser: null,
+      users: [],
+      socket: null,
 
-    let token = localStorage.getItem(TOKEN_KEY);
-    let currentUser = null;
-    let socket = null;
+      mediaRecorder: null,
+      recordingChunks: [],
 
-    let selectedUser = null;
-    let users = [];
+      peerConnection: null,
+      localStream: null,
+      remoteStream: null,
 
-    let typingTimer = null;
-    let isTyping = false;
-
-    let selectedImageData = null;
-
-    let mediaRecorder = null;
-    let recordedChunks = [];
-    let isRecording = false;
-
-    let localStream = null;
-    let peerConnection = null;
-
-    let incomingCallerId = null;
-    let incomingCallerName = "";
-    let incomingOffer = null;
-
-    const peerConfig = {
-      iceServers: [
-        {
-          urls: "stun:stun.l.google.com:19302"
-        }
-      ]
+      currentCall: null,
+      incomingCall: null
     };
 
-
     /* =====================================================
-       DOM
+       ELEMENTS
     ===================================================== */
 
     const authScreen = document.getElementById("authScreen");
     const app = document.getElementById("app");
 
+    const authForm = document.getElementById("authForm");
     const loginTab = document.getElementById("loginTab");
     const registerTab = document.getElementById("registerTab");
 
-    const loginForm = document.getElementById("loginForm");
-    const registerForm = document.getElementById("registerForm");
+    const usernameGroup = document.getElementById("usernameGroup");
+    const emailGroup = document.getElementById("emailGroup");
+
+    const usernameInput = document.getElementById("username");
+    const emailInput = document.getElementById("email");
+    const authEmailInput = document.getElementById("authEmail");
+    const passwordInput = document.getElementById("password");
 
     const authError = document.getElementById("authError");
 
-    const loginIdentifier = document.getElementById("loginIdentifier");
-    const loginPassword = document.getElementById("loginPassword");
-
-    const registerUsername = document.getElementById("registerUsername");
-    const registerEmail = document.getElementById("registerEmail");
-    const registerPassword = document.getElementById("registerPassword");
-
-    const searchInput = document.getElementById("searchInput");
+    const userSearch = document.getElementById("userSearch");
     const userList = document.getElementById("userList");
 
     const chatEmpty = document.getElementById("chatEmpty");
     const chatContent = document.getElementById("chatContent");
 
-    const backButton = document.getElementById("backButton");
-
     const chatAvatar = document.getElementById("chatAvatar");
     const chatUserName = document.getElementById("chatUserName");
     const chatUserStatus = document.getElementById("chatUserStatus");
 
-    const messagesContainer = document.getElementById("messages");
-    const typingIndicator = document.getElementById("typingIndicator");
+    const messages = document.getElementById("messages");
+    const typing = document.getElementById("typing");
 
     const messageInput = document.getElementById("messageInput");
-    const sendButton = document.getElementById("sendButton");
+    const sendBtn = document.getElementById("sendBtn");
 
+    const imageBtn = document.getElementById("imageBtn");
     const imageInput = document.getElementById("imageInput");
-    const imageButton = document.getElementById("imageButton");
+
+    const voiceMessageBtn = document.getElementById("voiceMessageBtn");
 
     const imagePreview = document.getElementById("imagePreview");
     const previewImage = document.getElementById("previewImage");
     const previewName = document.getElementById("previewName");
-    const cancelImageButton = document.getElementById("cancelImageButton");
+    const cancelImageBtn = document.getElementById("cancelImageBtn");
 
-    const voiceButton = document.getElementById("voiceButton");
+    const voiceCallBtn = document.getElementById("voiceCallBtn");
+    const videoCallBtn = document.getElementById("videoCallBtn");
 
-    const themeButton = document.getElementById("themeButton");
+    const profileBtn = document.getElementById("profileBtn");
+    const themeBtn = document.getElementById("themeBtn");
+    const backBtn = document.getElementById("backBtn");
 
-    const profileButton = document.getElementById("profileButton");
     const profileModal = document.getElementById("profileModal");
-    const closeProfileButton = document.getElementById("closeProfileButton");
-
+    const closeProfileBtn = document.getElementById("closeProfileBtn");
     const profileAvatar = document.getElementById("profileAvatar");
     const profileUsername = document.getElementById("profileUsername");
     const profileEmail = document.getElementById("profileEmail");
+    const logoutBtn = document.getElementById("logoutBtn");
 
-    const logoutButton = document.getElementById("logoutButton");
-
-    const videoCallButton = document.getElementById("videoCallButton");
-
-    const incomingCall = document.getElementById("incomingCall");
-    const incomingCallerNameElement =
-      document.getElementById("incomingCallerName");
-
-    const acceptCallButton = document.getElementById("acceptCallButton");
-    const rejectCallButton = document.getElementById("rejectCallButton");
-
-    const callScreen = document.getElementById("callScreen");
+    const callOverlay = document.getElementById("callOverlay");
+    const callType = document.getElementById("callType");
     const callTitle = document.getElementById("callTitle");
     const callStatus = document.getElementById("callStatus");
+
+    const voiceCallDisplay = document.getElementById("voiceCallDisplay");
 
     const remoteVideo = document.getElementById("remoteVideo");
     const localVideo = document.getElementById("localVideo");
 
-    const endCallButton = document.getElementById("endCallButton");
+    const endCallBtn = document.getElementById("endCallBtn");
+
+    const incomingCall = document.getElementById("incomingCall");
+    const incomingCallTitle = document.getElementById("incomingCallTitle");
+    const incomingCallText = document.getElementById("incomingCallText");
+
+    const acceptCallBtn = document.getElementById("acceptCallBtn");
+    const rejectCallBtn = document.getElementById("rejectCallBtn");
 
     const toast = document.getElementById("toast");
 
-
     /* =====================================================
-       HELPERS
+       AUTH MODE
     ===================================================== */
 
-    function showToast(message) {
-      toast.textContent = message;
-      toast.classList.add("show");
+    let authMode = "login";
 
-      setTimeout(() => {
-        toast.classList.remove("show");
-      }, 2500);
-    }
+    function setAuthMode(mode) {
+      authMode = mode;
 
-    function showAuthError(message) {
-      authError.textContent = message || "";
-    }
+      authError.textContent = "";
 
-    function getInitial(username) {
-      if (!username) return "?";
-      return username.charAt(0).toUpperCase();
-    }
+      if (mode === "login") {
+        loginTab.classList.add("active");
+        registerTab.classList.remove("active");
 
-    function escapeHtml(value) {
-      return String(value || "")
-        .replaceAll("&", "&amp;")
-        .replaceAll("<", "&lt;")
-        .replaceAll(">", "&gt;")
-        .replaceAll('"', "&quot;")
-        .replaceAll("'", "&#039;");
-    }
+        usernameGroup.classList.add("hidden");
+        emailGroup.classList.add("hidden");
 
-    function formatTime(dateString) {
-      const date = new Date(dateString);
+        authForm.querySelector(".primary-btn").textContent = "Login";
 
-      if (Number.isNaN(date.getTime())) {
-        return "";
+        usernameInput.required = false;
+        emailInput.required = false;
+        authEmailInput.required = true;
+
+        passwordInput.autocomplete = "current-password";
+      } else {
+        loginTab.classList.remove("active");
+        registerTab.classList.add("active");
+
+        usernameGroup.classList.remove("hidden");
+        emailGroup.classList.remove("hidden");
+
+        authForm.querySelector(".primary-btn").textContent = "Create Account";
+
+        usernameInput.required = true;
+        emailInput.required = true;
+        authEmailInput.required = false;
+
+        passwordInput.autocomplete = "new-password";
       }
-
-      return date.toLocaleTimeString([], {
-        hour: "2-digit",
-        minute: "2-digit"
-      });
     }
+
+    loginTab.addEventListener("click", () => setAuthMode("login"));
+    registerTab.addEventListener("click", () => setAuthMode("register"));
+
+    /* =====================================================
+       API
+    ===================================================== */
 
     async function api(url, options = {}) {
       const headers = {
         ...(options.headers || {})
       };
 
-      if (!(options.body instanceof FormData)) {
-        headers["Content-Type"] = "application/json";
+      if (state.token) {
+        headers.Authorization = `Bearer ${state.token}`;
       }
 
-      if (token) {
-        headers.Authorization = `Bearer ${token}`;
+      if (
+        options.body &&
+        typeof options.body === "object" &&
+        !(options.body instanceof FormData)
+      ) {
+        headers["Content-Type"] = "application/json";
+        options.body = JSON.stringify(options.body);
       }
 
       const response = await fetch(url, {
@@ -1316,258 +1455,135 @@
         headers
       });
 
-      let data = {};
+      let data = null;
 
       try {
         data = await response.json();
       } catch {
-        data = {};
+        data = null;
       }
 
       if (!response.ok) {
-        throw new Error(data.error || "Request failed.");
+        throw new Error(
+          data?.error ||
+          data?.message ||
+          "Request failed"
+        );
       }
 
       return data;
     }
 
-
     /* =====================================================
-       AUTH TABS
+       AUTH
     ===================================================== */
 
-    loginTab.addEventListener("click", () => {
-      loginTab.classList.add("active");
-      registerTab.classList.remove("active");
-
-      loginForm.classList.remove("hidden");
-      registerForm.classList.add("hidden");
-
-      showAuthError("");
-    });
-
-    registerTab.addEventListener("click", () => {
-      registerTab.classList.add("active");
-      loginTab.classList.remove("active");
-
-      registerForm.classList.remove("hidden");
-      loginForm.classList.add("hidden");
-
-      showAuthError("");
-    });
-
-
-    /* =====================================================
-       LOGIN
-    ===================================================== */
-
-    loginForm.addEventListener("submit", async (event) => {
+    authForm.addEventListener("submit", async (event) => {
       event.preventDefault();
 
-      showAuthError("");
+      authError.textContent = "";
 
       try {
-        const data = await api("/api/auth/login", {
-          method: "POST",
-          body: JSON.stringify({
-            identifier: loginIdentifier.value.trim(),
-            password: loginPassword.value
-          })
-        });
+        if (authMode === "login") {
+          const data = await api("/api/auth/login", {
+            method: "POST",
+            body: {
+              email: authEmailInput.value.trim(),
+              password: passwordInput.value
+            }
+          });
 
-        token = data.token;
+          state.token = data.token;
 
-        localStorage.setItem(TOKEN_KEY, token);
+          localStorage.setItem(
+            "tavlik_token",
+            state.token
+          );
 
-        await startApp();
+          await startApplication();
+        } else {
+          const data = await api("/api/auth/register", {
+            method: "POST",
+            body: {
+              username: usernameInput.value.trim(),
+              email: emailInput.value.trim(),
+              password: passwordInput.value
+            }
+          });
 
-        loginForm.reset();
+          state.token = data.token;
+
+          localStorage.setItem(
+            "tavlik_token",
+            state.token
+          );
+
+          await startApplication();
+        }
       } catch (error) {
-        showAuthError(error.message);
+        authError.textContent = error.message;
       }
     });
-
-
-    /* =====================================================
-       REGISTER
-    ===================================================== */
-
-    registerForm.addEventListener("submit", async (event) => {
-      event.preventDefault();
-
-      showAuthError("");
-
-      try {
-        const data = await api("/api/auth/register", {
-          method: "POST",
-          body: JSON.stringify({
-            username: registerUsername.value.trim(),
-            email: registerEmail.value.trim(),
-            password: registerPassword.value
-          })
-        });
-
-        token = data.token;
-
-        localStorage.setItem(TOKEN_KEY, token);
-
-        await startApp();
-
-        registerForm.reset();
-      } catch (error) {
-        showAuthError(error.message);
-      }
-    });
-
 
     /* =====================================================
        START APP
     ===================================================== */
 
-    async function startApp() {
+    async function startApplication() {
       try {
         const data = await api("/api/me");
 
-        currentUser = data.user;
+        state.currentUser =
+          data.user ||
+          data;
 
-        authScreen.classList.add("hidden");
+        authScreen.style.display = "none";
         app.classList.add("logged-in");
 
         updateProfile();
 
         connectSocket();
 
+        await loadUsers();
       } catch (error) {
-        localStorage.removeItem(TOKEN_KEY);
-        token = null;
-        currentUser = null;
-
-        authScreen.classList.remove("hidden");
+        localStorage.removeItem("tavlik_token");
+        state.token = null;
+        authScreen.style.display = "flex";
         app.classList.remove("logged-in");
-
-        showAuthError("Your session has expired. Please log in again.");
+        authError.textContent = "Please login again.";
       }
     }
 
-
     /* =====================================================
-       SOCKET CONNECTION
+       USERS
     ===================================================== */
 
-    function connectSocket() {
-      if (socket) {
-        socket.disconnect();
-      }
-
-      socket = io({
-        auth: {
-          token
-        }
-      });
-
-      socket.on("connect", () => {
-        console.log("Connected to TAVLIK server.");
-      });
-
-      socket.on("connect_error", (error) => {
-        console.error("Socket connection error:", error.message);
-
-        if (error.message.toLowerCase().includes("authentication")) {
-          logout();
-        }
-      });
-
-      socket.on("new_message", (message) => {
-        handleIncomingMessage(message);
-      });
-
-      socket.on("user_typing", ({ userId }) => {
-        if (
-          selectedUser &&
-          Number(selectedUser.id) === Number(userId)
-        ) {
-          typingIndicator.textContent = `${selectedUser.username} is typing...`;
-        }
-      });
-
-      socket.on("user_stopped_typing", ({ userId }) => {
-        if (
-          selectedUser &&
-          Number(selectedUser.id) === Number(userId)
-        ) {
-          typingIndicator.textContent = "";
-        }
-      });
-
-      socket.on("incoming_call", (payload) => {
-        handleIncomingCall(payload);
-      });
-
-      socket.on("call_accepted", async (payload) => {
-        await handleCallAccepted(payload);
-      });
-
-      socket.on("ice_candidate", async (payload) => {
-        await handleIceCandidate(payload);
-      });
-
-      socket.on("call_rejected", () => {
-        callStatus.textContent = "Call rejected.";
-        setTimeout(closeCallScreen, 1500);
-      });
-
-      socket.on("end_call", () => {
-        closeCallScreen();
-      });
-    }
-
-
-    /* =====================================================
-       SEARCH USERS
-    ===================================================== */
-
-    let searchTimer = null;
-
-    searchInput.addEventListener("input", () => {
-      clearTimeout(searchTimer);
-
-      searchTimer = setTimeout(() => {
-        searchUsers(searchInput.value.trim());
-      }, 250);
-    });
-
-    async function searchUsers(query) {
-      if (!query) {
-        users = [];
-
-        userList.innerHTML = `
-          <div class="empty-users">
-            Search for a username to start a private conversation.
-          </div>
-        `;
-
-        return;
-      }
-
+    async function loadUsers(search = "") {
       try {
+        const query =
+          encodeURIComponent(search.trim());
+
         const data = await api(
-          `/api/users/search?q=${encodeURIComponent(query)}`
+          `/api/users/search?q=${query}`
         );
 
-        users = data.users || [];
+        state.users =
+          data.users ||
+          data ||
+          [];
 
         renderUsers();
       } catch (error) {
         userList.innerHTML = `
           <div class="empty-users">
-            ${escapeHtml(error.message)}
+            Could not load users.
           </div>
         `;
       }
     }
 
     function renderUsers() {
-      if (!users.length) {
+      if (!state.users.length) {
         userList.innerHTML = `
           <div class="empty-users">
             No users found.
@@ -1579,997 +1595,1603 @@
 
       userList.innerHTML = "";
 
-      users.forEach((user) => {
-        const item = document.createElement("div");
+      state.users.forEach((user) => {
+        if (
+          state.currentUser &&
+          Number(user.id) === Number(state.currentUser.id)
+        ) {
+          return;
+        }
+
+        const item =
+          document.createElement("div");
 
         item.className = "user-item";
 
         if (
-          selectedUser &&
-          Number(selectedUser.id) === Number(user.id)
+          state.selectedUser &&
+          Number(state.selectedUser.id) === Number(user.id)
         ) {
           item.classList.add("active");
         }
 
-        item.innerHTML = `
-          <div class="avatar">
-            ${escapeHtml(getInitial(user.username))}
-          </div>
+        const avatar =
+          document.createElement("div");
 
-          <div class="user-info">
-            <div class="user-name">
-              ${escapeHtml(user.username)}
-            </div>
+        avatar.className = "avatar";
 
-            <div class="user-subtitle">
-              Private conversation
-            </div>
-          </div>
-        `;
+        avatar.textContent =
+          getInitial(user.username);
+
+        const info =
+          document.createElement("div");
+
+        info.className = "user-info";
+
+        const name =
+          document.createElement("div");
+
+        name.className = "user-name";
+
+        name.textContent =
+          user.username;
+
+        const subtitle =
+          document.createElement("div");
+
+        subtitle.className =
+          "user-subtitle";
+
+        subtitle.textContent =
+          isUserOnline(user.id)
+            ? "Online"
+            : "Offline";
+
+        info.appendChild(name);
+        info.appendChild(subtitle);
+
+        item.appendChild(avatar);
+        item.appendChild(info);
 
         item.addEventListener("click", () => {
-          openChat(user);
+          selectUser(user);
         });
 
         userList.appendChild(item);
       });
     }
 
+    function getInitial(name) {
+      if (!name) return "U";
+
+      return name
+        .trim()
+        .charAt(0)
+        .toUpperCase();
+    }
+
+    userSearch.addEventListener(
+      "input",
+      debounce(() => {
+        loadUsers(userSearch.value);
+      }, 300)
+    );
 
     /* =====================================================
-       OPEN PRIVATE CHAT
+       SELECT USER
     ===================================================== */
 
-    async function openChat(user) {
-      if (!user || !user.id) {
-        return;
-      }
-
-      selectedUser = {
+    async function selectUser(user) {
+      state.selectedUser = {
         id: Number(user.id),
-        username: user.username,
-        email: user.email || ""
+        username: user.username
       };
 
       chatEmpty.classList.add("hidden");
       chatContent.classList.remove("hidden");
 
-      chatContent.style.display = "flex";
+      app.classList.add("chat-open");
 
-      chatAvatar.textContent = getInitial(selectedUser.username);
-      chatUserName.textContent = selectedUser.username;
-      chatUserStatus.textContent = "Private conversation";
+      chatUserName.textContent =
+        user.username;
 
-      messagesContainer.innerHTML = `
-        <div class="empty-users">
-          Loading messages...
-        </div>
-      `;
+      chatAvatar.textContent =
+        getInitial(user.username);
 
-      typingIndicator.textContent = "";
+      updateChatStatus();
 
       renderUsers();
 
-      app.classList.add("chat-open");
+      await loadMessages(user.id);
+    }
+
+    backBtn.addEventListener("click", () => {
+      app.classList.remove("chat-open");
+      state.selectedUser = null;
+    });
+
+    /* =====================================================
+       MESSAGES
+    ===================================================== */
+
+    async function loadMessages(userId) {
+      messages.innerHTML = "";
 
       try {
         const data = await api(
-          `/api/messages/${encodeURIComponent(selectedUser.id)}`
+          `/api/messages/${userId}`
         );
 
-        /*
-          Only render messages belonging to this exact conversation.
-        */
+        const list =
+          data.messages ||
+          data ||
+          [];
 
-        const safeMessages = (data.messages || []).filter((message) => {
-          const sender = Number(message.sender_id);
-          const receiver = Number(message.receiver_id);
-          const other = Number(selectedUser.id);
-          const me = Number(currentUser.id);
-
-          return (
-            (sender === me && receiver === other) ||
-            (sender === other && receiver === me)
-          );
+        list.forEach((message) => {
+          if (isMessageForCurrentChat(message)) {
+            renderMessage(message);
+          }
         });
 
-        renderMessages(safeMessages);
-      } catch (error) {
-        messagesContainer.innerHTML = `
-          <div class="empty-users">
-            ${escapeHtml(error.message)}
-          </div>
-        `;
+        scrollMessages();
+      } catch {
+        showToast("Could not load messages.");
       }
     }
 
-
-    /* =====================================================
-       RENDER MESSAGES
-    ===================================================== */
-
-    function renderMessages(messages) {
-      messagesContainer.innerHTML = "";
-
-      if (!messages.length) {
-        messagesContainer.innerHTML = `
-          <div class="empty-users">
-            No messages yet. Say hello!
-          </div>
-        `;
-
-        return;
+    function isMessageForCurrentChat(message) {
+      if (
+        !state.currentUser ||
+        !state.selectedUser
+      ) {
+        return false;
       }
 
-      messages.forEach((message) => {
-        renderMessage(message, false);
-      });
+      const me =
+        Number(state.currentUser.id);
 
-      scrollMessages();
+      const other =
+        Number(state.selectedUser.id);
+
+      const sender =
+        Number(message.sender_id);
+
+      const receiver =
+        Number(message.receiver_id);
+
+      return (
+        (sender === me && receiver === other) ||
+        (sender === other && receiver === me)
+      );
     }
 
-    function renderMessage(message, scroll = true) {
-      if (!selectedUser || !currentUser) {
+    function renderMessage(message) {
+      if (!isMessageForCurrentChat(message)) {
         return;
       }
 
-      const senderId = Number(message.sender_id);
-      const receiverId = Number(message.receiver_id);
+      const row =
+        document.createElement("div");
 
-      const me = Number(currentUser.id);
-      const other = Number(selectedUser.id);
+      const mine =
+        Number(message.sender_id) ===
+        Number(state.currentUser.id);
 
-      /*
-        Extra client-side protection:
-        never render a message from an unrelated conversation.
-      */
+      row.className =
+        `message-row${mine ? " mine" : ""}`;
 
-      const belongsToConversation =
-        (senderId === me && receiverId === other) ||
-        (senderId === other && receiverId === me);
+      const bubble =
+        document.createElement("div");
 
-      if (!belongsToConversation) {
-        return;
-      }
+      bubble.className =
+        "message-bubble";
 
-      const row = document.createElement("div");
+      const type =
+        message.message_type ||
+        message.type ||
+        "text";
 
-      row.className = "message-row";
+      if (
+        type === "image" &&
+        message.media_url
+      ) {
+        const img =
+          document.createElement("img");
 
-      if (senderId === me) {
-        row.classList.add("mine");
-      }
+        img.className =
+          "message-image";
 
-      const bubble = document.createElement("div");
+        img.src =
+          message.media_url;
 
-      bubble.className = "message-bubble";
+        img.alt =
+          "Photo message";
 
-      const type = message.message_type || "text";
+        img.loading = "lazy";
 
-      if (type === "image" && message.media_url) {
-        const image = document.createElement("img");
+        bubble.appendChild(img);
+      } else if (
+        type === "audio" &&
+        message.media_url
+      ) {
+        const audio =
+          document.createElement("audio");
 
-        image.className = "message-image";
-        image.src = message.media_url;
-        image.alt = "Photo";
-        image.loading = "lazy";
+        audio.className =
+          "voice-player";
 
-        bubble.appendChild(image);
-
-      } else if (type === "voice" && message.media_url) {
-        const audio = document.createElement("audio");
-
-        audio.className = "voice-player";
         audio.controls = true;
-        audio.preload = "metadata";
-        audio.src = message.media_url;
+
+        audio.src =
+          message.media_url;
 
         bubble.appendChild(audio);
-
       } else {
-        const text = document.createElement("div");
+        const text =
+          document.createElement("div");
 
-        text.textContent = message.content || "";
+        text.textContent =
+          message.content || "";
 
         bubble.appendChild(text);
       }
 
-      const time = document.createElement("span");
+      if (message.created_at) {
+        const time =
+          document.createElement("span");
 
-      time.className = "message-time";
-      time.textContent = formatTime(message.created_at);
+        time.className =
+          "message-time";
 
-      bubble.appendChild(time);
-      row.appendChild(bubble);
-      messagesContainer.appendChild(row);
+        time.textContent =
+          formatTime(message.created_at);
 
-      if (scroll) {
-        scrollMessages();
+        bubble.appendChild(time);
       }
+
+      row.appendChild(bubble);
+
+      messages.appendChild(row);
+    }
+
+    function formatTime(value) {
+      const date =
+        new Date(value);
+
+      if (Number.isNaN(date.getTime())) {
+        return "";
+      }
+
+      return date.toLocaleTimeString([], {
+        hour: "2-digit",
+        minute: "2-digit"
+      });
     }
 
     function scrollMessages() {
-      requestAnimationFrame(() => {
-        messagesContainer.scrollTop =
-          messagesContainer.scrollHeight;
-      });
+      messages.scrollTop =
+        messages.scrollHeight;
     }
 
-
     /* =====================================================
-       SEND TEXT MESSAGE
+       SEND TEXT
     ===================================================== */
 
-    sendButton.addEventListener("click", sendTextMessage);
+    async function sendTextMessage() {
+      const content =
+        messageInput.value.trim();
 
-    messageInput.addEventListener("keydown", (event) => {
-      if (event.key === "Enter" && !event.shiftKey) {
-        event.preventDefault();
-        sendTextMessage();
-      }
-    });
+      if (!content) return;
 
-    messageInput.addEventListener("input", () => {
-      if (!socket || !selectedUser) {
+      if (!state.selectedUser) {
+        showToast("Select a user first.");
         return;
       }
 
-      if (!isTyping) {
-        isTyping = true;
-
-        socket.emit("typing", {
-          receiverId: selectedUser.id
-        });
-      }
-
-      clearTimeout(typingTimer);
-
-      typingTimer = setTimeout(() => {
-        isTyping = false;
-
-        socket.emit("stop_typing", {
-          receiverId: selectedUser.id
-        });
-      }, 900);
-    });
-
-    function sendTextMessage() {
-      const content = messageInput.value.trim();
-
-      if (!content || !selectedUser || !socket) {
+      if (!state.socket) {
+        showToast("Not connected to server.");
         return;
       }
 
-      if (content.length > 2000) {
-        showToast("Message is too long.");
-        return;
-      }
+      state.socket.emit(
+        "send_message",
+        {
+          receiverId:
+            Number(state.selectedUser.id),
 
-      socket.emit("send_message", {
-        receiverId: selectedUser.id,
-        content
-      });
-
-      messageInput.value = "";
-
-      if (isTyping) {
-        isTyping = false;
-
-        socket.emit("stop_typing", {
-          receiverId: selectedUser.id
-        });
-      }
-
-      messageInput.focus();
-    }
-
-
-    /* =====================================================
-       INCOMING MESSAGE
-    ===================================================== */
-
-    function handleIncomingMessage(message) {
-      if (!selectedUser || !currentUser) {
-        return;
-      }
-
-      const senderId = Number(message.sender_id);
-      const receiverId = Number(message.receiver_id);
-
-      const me = Number(currentUser.id);
-      const other = Number(selectedUser.id);
-
-      const belongsToCurrentConversation =
-        (senderId === me && receiverId === other) ||
-        (senderId === other && receiverId === me);
-
-      if (!belongsToCurrentConversation) {
-        return;
-      }
-
-      /*
-        Remove empty-state text if it is present.
-      */
-
-      const emptyMessage = messagesContainer.querySelector(
-        ".empty-users"
+          content
+        }
       );
 
-      if (emptyMessage) {
-        emptyMessage.remove();
-      }
-
-      renderMessage(message, true);
+      messageInput.value = "";
+      typing.textContent = "";
     }
 
-
-    /* =====================================================
-       IMAGE UPLOAD
-    ===================================================== */
-
-    imageButton.addEventListener("click", () => {
-      if (!selectedUser) {
-        showToast("Select a person first.");
-        return;
-      }
-
-      imageInput.click();
-    });
-
-    imageInput.addEventListener("change", async () => {
-      const file = imageInput.files?.[0];
-
-      if (!file) {
-        return;
-      }
-
-      if (!file.type.startsWith("image/")) {
-        showToast("Please select an image.");
-        imageInput.value = "";
-        return;
-      }
-
-      if (file.size > 5 * 1024 * 1024) {
-        showToast("Image must be 5MB or smaller.");
-        imageInput.value = "";
-        return;
-      }
-
-      try {
-        selectedImageData = await readFileAsDataURL(file);
-
-        previewImage.src = selectedImageData;
-        previewName.textContent = file.name;
-
-        imagePreview.classList.add("show");
-
-        await uploadSelectedImage();
-
-      } catch (error) {
-        console.error(error);
-        showToast("Could not upload image.");
-        clearImageSelection();
-      }
-    });
-
-    async function uploadSelectedImage() {
-      if (!selectedImageData || !selectedUser || !socket) {
-        return;
-      }
-
-      try {
-        showToast("Uploading photo...");
-
-        const data = await api("/api/media", {
-          method: "POST",
-          body: JSON.stringify({
-            data: selectedImageData,
-            type: "image"
-          })
-        });
-
-        socket.emit("send_media_message", {
-          receiverId: selectedUser.id,
-          mediaUrl: data.url,
-          type: "image"
-        });
-
-        showToast("Photo sent.");
-
-      } catch (error) {
-        console.error(error);
-        showToast(error.message || "Photo upload failed.");
-      } finally {
-        clearImageSelection();
-      }
-    }
-
-    function clearImageSelection() {
-      selectedImageData = null;
-      imageInput.value = "";
-      previewImage.removeAttribute("src");
-      previewName.textContent = "";
-      imagePreview.classList.remove("show");
-    }
-
-    cancelImageButton.addEventListener(
+    sendBtn.addEventListener(
       "click",
-      clearImageSelection
+      sendTextMessage
     );
 
+    messageInput.addEventListener(
+      "keydown",
+      (event) => {
+        if (
+          event.key === "Enter" &&
+          !event.shiftKey
+        ) {
+          event.preventDefault();
+          sendTextMessage();
+        }
+      }
+    );
 
     /* =====================================================
-       FILE READER
+       TYPING
     ===================================================== */
 
-    function readFileAsDataURL(file) {
-      return new Promise((resolve, reject) => {
-        const reader = new FileReader();
+    let typingTimer = null;
 
-        reader.onload = () => resolve(reader.result);
-        reader.onerror = reject;
-
-        reader.readAsDataURL(file);
-      });
-    }
-
-
-    /* =====================================================
-       VOICE RECORDING
-    ===================================================== */
-
-    voiceButton.addEventListener("click", async () => {
-      if (!selectedUser) {
-        showToast("Select a person first.");
-        return;
-      }
-
-      if (isRecording) {
-        stopRecording();
-      } else {
-        await startRecording();
-      }
-    });
-
-    async function startRecording() {
-      try {
-        if (!navigator.mediaDevices?.getUserMedia) {
-          showToast("Voice recording is not supported here.");
+    messageInput.addEventListener(
+      "input",
+      () => {
+        if (
+          !state.socket ||
+          !state.selectedUser
+        ) {
           return;
         }
 
+        state.socket.emit(
+          "typing",
+          {
+            receiverId:
+              Number(state.selectedUser.id)
+          }
+        );
+
+        clearTimeout(typingTimer);
+
+        typingTimer =
+          setTimeout(() => {
+            state.socket.emit(
+              "stop_typing",
+              {
+                receiverId:
+                  Number(state.selectedUser.id)
+              }
+            );
+          }, 700);
+      }
+    );
+
+    /* =====================================================
+       PHOTO MESSAGES
+    ===================================================== */
+
+    imageBtn.addEventListener(
+      "click",
+      () => {
+        if (!state.selectedUser) {
+          showToast("Select a user first.");
+          return;
+        }
+
+        imageInput.click();
+      }
+    );
+
+    imageInput.addEventListener(
+      "change",
+      async () => {
+        const file =
+          imageInput.files[0];
+
+        if (!file) return;
+
+        if (!file.type.startsWith("image/")) {
+          showToast("Please select an image.");
+          imageInput.value = "";
+          return;
+        }
+
+        if (file.size > 5 * 1024 * 1024) {
+          showToast("Image must be 5 MB or smaller.");
+          imageInput.value = "";
+          return;
+        }
+
+        previewImage.src =
+          URL.createObjectURL(file);
+
+        previewName.textContent =
+          file.name;
+
+        imagePreview.classList.add("show");
+
+        try {
+          const dataUrl =
+            await fileToDataURL(file);
+
+          const uploaded =
+            await api("/api/media", {
+              method: "POST",
+              body: {
+                type: "image",
+                data: dataUrl
+              }
+            });
+
+          const mediaUrl =
+            uploaded.url ||
+            uploaded.media_url;
+
+          if (!mediaUrl) {
+            throw new Error(
+              "Upload did not return a media URL."
+            );
+          }
+
+          state.socket.emit(
+            "send_media_message",
+            {
+              receiverId:
+                Number(state.selectedUser.id),
+
+              mediaType: "image",
+
+              mediaUrl
+            }
+          );
+
+          clearImagePreview();
+        } catch (error) {
+          showToast(error.message);
+        }
+      }
+    );
+
+    function clearImagePreview() {
+      imagePreview.classList.remove("show");
+      previewImage.src = "";
+      previewName.textContent = "";
+      imageInput.value = "";
+    }
+
+    cancelImageBtn.addEventListener(
+      "click",
+      clearImagePreview
+    );
+
+    /* =====================================================
+       VOICE MESSAGES
+    ===================================================== */
+
+    voiceMessageBtn.addEventListener(
+      "click",
+      toggleVoiceRecording
+    );
+
+    async function toggleVoiceRecording() {
+      if (state.mediaRecorder) {
+        stopVoiceRecording();
+        return;
+      }
+
+      if (!state.selectedUser) {
+        showToast("Select a user first.");
+        return;
+      }
+
+      if (
+        !navigator.mediaDevices ||
+        !navigator.mediaDevices.getUserMedia
+      ) {
+        showToast(
+          "Voice recording is not supported here."
+        );
+        return;
+      }
+
+      try {
         const stream =
           await navigator.mediaDevices.getUserMedia({
             audio: true
           });
 
-        recordedChunks = [];
+        state.recordingChunks = [];
 
-        mediaRecorder = new MediaRecorder(stream);
+        state.mediaRecorder =
+          new MediaRecorder(stream);
 
-        mediaRecorder.ondataavailable = (event) => {
-          if (event.data.size > 0) {
-            recordedChunks.push(event.data);
-          }
-        };
+        state.mediaRecorder.ondataavailable =
+          (event) => {
+            if (event.data.size > 0) {
+              state.recordingChunks.push(
+                event.data
+              );
+            }
+          };
 
-        mediaRecorder.onstop = async () => {
-          stream.getTracks().forEach((track) => {
-            track.stop();
-          });
+        state.mediaRecorder.onstop =
+          async () => {
+            const blob =
+              new Blob(
+                state.recordingChunks,
+                {
+                  type:
+                    state.mediaRecorder.mimeType ||
+                    "audio/webm"
+                }
+              );
 
-          await finishRecording();
-        };
+            stream
+              .getTracks()
+              .forEach((track) => track.stop());
 
-        mediaRecorder.start();
+            state.mediaRecorder = null;
 
-        isRecording = true;
+            voiceMessageBtn.classList.remove(
+              "recording"
+            );
 
-        voiceButton.classList.add("recording");
-        voiceButton.textContent = "■";
+            voiceMessageBtn.textContent =
+              "Voice";
 
-        showToast("Recording...");
+            await uploadVoiceMessage(blob);
+          };
+
+        state.mediaRecorder.start();
+
+        voiceMessageBtn.classList.add(
+          "recording"
+        );
+
+        voiceMessageBtn.textContent =
+          "Stop";
+
+        showToast("Recording started.");
       } catch (error) {
-        console.error(error);
-        showToast("Microphone permission is required.");
+        showToast(
+          "Microphone permission was not granted."
+        );
       }
     }
 
-    function stopRecording() {
-      if (!mediaRecorder || mediaRecorder.state === "inactive") {
-        return;
+    function stopVoiceRecording() {
+      if (
+        state.mediaRecorder &&
+        state.mediaRecorder.state !== "inactive"
+      ) {
+        state.mediaRecorder.stop();
       }
-
-      mediaRecorder.stop();
-
-      isRecording = false;
-
-      voiceButton.classList.remove("recording");
-      voiceButton.textContent = "🎙";
     }
 
-    async function finishRecording() {
-      if (!selectedUser || !socket || !recordedChunks.length) {
+    async function uploadVoiceMessage(blob) {
+      if (!state.selectedUser) return;
+
+      if (blob.size > 5 * 1024 * 1024) {
+        showToast(
+          "Voice message is too large."
+        );
         return;
       }
 
       try {
-        const blob = new Blob(recordedChunks, {
-          type: mediaRecorder?.mimeType || "audio/webm"
-        });
+        const dataUrl =
+          await blobToDataURL(blob);
 
-        if (blob.size > 5 * 1024 * 1024) {
-          showToast("Voice message is too large.");
-          return;
+        const uploaded =
+          await api("/api/media", {
+            method: "POST",
+            body: {
+              type: "audio",
+              data: dataUrl
+            }
+          });
+
+        const mediaUrl =
+          uploaded.url ||
+          uploaded.media_url;
+
+        if (!mediaUrl) {
+          throw new Error(
+            "Voice upload failed."
+          );
         }
 
-        const dataUrl = await blobToDataURL(blob);
+        state.socket.emit(
+          "send_media_message",
+          {
+            receiverId:
+              Number(state.selectedUser.id),
 
-        showToast("Uploading voice message...");
+            mediaType: "audio",
 
-        const data = await api("/api/media", {
-          method: "POST",
-          body: JSON.stringify({
-            data: dataUrl,
-            type: "voice"
-          })
-        });
-
-        socket.emit("send_media_message", {
-          receiverId: selectedUser.id,
-          mediaUrl: data.url,
-          type: "voice"
-        });
-
-        showToast("Voice message sent.");
+            mediaUrl
+          }
+        );
       } catch (error) {
-        console.error(error);
-        showToast("Could not send voice message.");
+        showToast(error.message);
       }
     }
 
-    function blobToDataURL(blob) {
-      return new Promise((resolve, reject) => {
-        const reader = new FileReader();
-
-        reader.onloadend = () => resolve(reader.result);
-        reader.onerror = reject;
-
-        reader.readAsDataURL(blob);
-      });
-    }
-
-
     /* =====================================================
-       PROFILE
+       SOCKET
     ===================================================== */
 
-    function updateProfile() {
-      if (!currentUser) {
-        return;
+    function connectSocket() {
+      if (!state.token) return;
+
+      if (state.socket) {
+        state.socket.disconnect();
       }
 
-      profileUsername.textContent =
-        currentUser.username || "";
+      state.socket =
+        io({
+          auth: {
+            token: state.token
+          }
+        });
 
-      profileEmail.textContent =
-        currentUser.email || "";
-
-      profileAvatar.textContent =
-        getInitial(currentUser.username);
-    }
-
-    profileButton.addEventListener("click", () => {
-      updateProfile();
-      profileModal.classList.remove("hidden");
-    });
-
-    closeProfileButton.addEventListener("click", () => {
-      profileModal.classList.add("hidden");
-    });
-
-    profileModal.addEventListener("click", (event) => {
-      if (event.target === profileModal) {
-        profileModal.classList.add("hidden");
-      }
-    });
-
-
-    /* =====================================================
-       LOGOUT
-    ===================================================== */
-
-    logoutButton.addEventListener("click", logout);
-
-    function logout() {
-      closeCallScreen();
-
-      if (socket) {
-        socket.disconnect();
-        socket = null;
-      }
-
-      localStorage.removeItem(TOKEN_KEY);
-
-      token = null;
-      currentUser = null;
-      selectedUser = null;
-
-      app.classList.remove("logged-in");
-      app.classList.remove("chat-open");
-
-      authScreen.classList.remove("hidden");
-
-      profileModal.classList.add("hidden");
-
-      loginForm.reset();
-      registerForm.reset();
-
-      searchInput.value = "";
-
-      users = [];
-
-      userList.innerHTML = `
-        <div class="empty-users">
-          Search for a username to start a private conversation.
-        </div>
-      `;
-    }
-
-
-    /* =====================================================
-       MOBILE BACK BUTTON
-    ===================================================== */
-
-    backButton.addEventListener("click", () => {
-      app.classList.remove("chat-open");
-    });
-
-
-    /* =====================================================
-       DARK MODE
-    ===================================================== */
-
-    const savedTheme =
-      localStorage.getItem("tavlik_theme");
-
-    if (savedTheme === "dark") {
-      document.body.classList.add("dark");
-    }
-
-    themeButton.addEventListener("click", () => {
-      document.body.classList.toggle("dark");
-
-      localStorage.setItem(
-        "tavlik_theme",
-        document.body.classList.contains("dark")
-          ? "dark"
-          : "light"
+      state.socket.on(
+        "connect",
+        () => {
+          updateChatStatus();
+          loadUsers(userSearch.value);
+        }
       );
-    });
 
+      state.socket.on(
+        "disconnect",
+        () => {
+          updateChatStatus();
+        }
+      );
+
+      state.socket.on(
+        "connect_error",
+        () => {
+          showToast(
+            "Could not connect to server."
+          );
+        }
+      );
+
+      state.socket.on(
+        "new_message",
+        (message) => {
+          if (
+            isMessageForCurrentChat(message)
+          ) {
+            renderMessage(message);
+            scrollMessages();
+          }
+        }
+      );
+
+      state.socket.on(
+        "message",
+        (message) => {
+          if (
+            isMessageForCurrentChat(message)
+          ) {
+            renderMessage(message);
+            scrollMessages();
+          }
+        }
+      );
+
+      state.socket.on(
+        "user_online",
+        () => {
+          loadUsers(userSearch.value);
+          updateChatStatus();
+        }
+      );
+
+      state.socket.on(
+        "user_offline",
+        () => {
+          loadUsers(userSearch.value);
+          updateChatStatus();
+        }
+      );
+
+      state.socket.on(
+        "typing",
+        ({ senderId }) => {
+          if (
+            state.selectedUser &&
+            Number(senderId) ===
+              Number(state.selectedUser.id)
+          ) {
+            typing.textContent =
+              `${state.selectedUser.username} is typing...`;
+          }
+        }
+      );
+
+      state.socket.on(
+        "stop_typing",
+        ({ senderId }) => {
+          if (
+            state.selectedUser &&
+            Number(senderId) ===
+              Number(state.selectedUser.id)
+          ) {
+            typing.textContent = "";
+          }
+        }
+      );
+
+      /* Incoming voice/video call */
+
+      state.socket.on(
+        "incoming_call",
+        (data) => {
+          handleIncomingCall(data);
+        }
+      );
+
+      /* Call accepted */
+
+      state.socket.on(
+        "call_accepted",
+        async (data) => {
+          if (
+            !state.currentCall ||
+            Number(data.fromUserId) !==
+              Number(state.currentCall.userId)
+          ) {
+            return;
+          }
+
+          try {
+            showCallScreen(
+              state.currentCall.type,
+              state.currentCall.username,
+              "Connected"
+            );
+
+            const offer =
+              await createOffer();
+
+            state.socket.emit(
+              "call_user",
+              {
+                userId:
+                  Number(state.currentCall.userId),
+
+                offer,
+
+                callType:
+                  state.currentCall.type
+              }
+            );
+          } catch (error) {
+            endCall();
+          }
+        }
+      );
+
+      /* ICE candidate */
+
+      state.socket.on(
+        "ice_candidate",
+        async (data) => {
+          if (
+            !state.peerConnection ||
+            !data.candidate
+          ) {
+            return;
+          }
+
+          try {
+            await state.peerConnection.addIceCandidate(
+              data.candidate
+            );
+          } catch {}
+        }
+      );
+
+      /* WebRTC offer */
+
+      state.socket.on(
+        "call_offer",
+        async (data) => {
+          try {
+            await handleOffer(data);
+          } catch {
+            endCall();
+          }
+        }
+      );
+
+      /* Rejected */
+
+      state.socket.on(
+        "call_rejected",
+        () => {
+          showToast("Call declined.");
+          endCall(false);
+        }
+      );
+
+      /* Ended */
+
+      state.socket.on(
+        "end_call",
+        () => {
+          endCall(false);
+        }
+      );
+    }
 
     /* =====================================================
-       VIDEO CALL
+       ONLINE STATUS
     ===================================================== */
 
-    videoCallButton.addEventListener(
+    function isUserOnline(userId) {
+      /*
+       * The server may send online status through
+       * socket events. If the API later provides
+       * an online property, this also supports it.
+       */
+
+      const user =
+        state.users.find(
+          (item) =>
+            Number(item.id) ===
+            Number(userId)
+        );
+
+      return Boolean(
+        user &&
+        (
+          user.online === true ||
+          user.is_online === true
+        )
+      );
+    }
+
+    function updateChatStatus() {
+      if (!state.selectedUser) return;
+
+      if (
+        state.socket &&
+        state.socket.connected
+      ) {
+        chatUserStatus.textContent =
+          isUserOnline(
+            state.selectedUser.id
+          )
+            ? "Online"
+            : "Available";
+      } else {
+        chatUserStatus.textContent =
+          "Connecting";
+      }
+    }
+
+    /* =====================================================
+       VOICE / VIDEO CALLS
+    ===================================================== */
+
+    voiceCallBtn.addEventListener(
       "click",
-      startVideoCall
+      () => startCall("voice")
     );
 
-    async function createPeerConnection(targetUserId) {
-      peerConnection =
-        new RTCPeerConnection(peerConfig);
+    videoCallBtn.addEventListener(
+      "click",
+      () => startCall("video")
+    );
 
-      peerConnection.onicecandidate = (event) => {
-        if (!event.candidate || !socket) {
-          return;
-        }
+    async function startCall(type) {
+      if (!state.selectedUser) {
+        showToast("Select a user first.");
+        return;
+      }
 
-        socket.emit("ice_candidate", {
-          receiverId: targetUserId,
-          candidate: event.candidate
-        });
-      };
-
-      peerConnection.ontrack = (event) => {
-        if (event.streams && event.streams[0]) {
-          remoteVideo.srcObject = event.streams[0];
-        }
-      };
-
-      peerConnection.onconnectionstatechange = () => {
-        if (!peerConnection) {
-          return;
-        }
-
-        const state =
-          peerConnection.connectionState;
-
-        if (state === "connected") {
-          callStatus.textContent = "Connected";
-        }
-
-        if (state === "disconnected") {
-          callStatus.textContent = "Disconnected";
-        }
-
-        if (state === "failed") {
-          callStatus.textContent = "Connection failed.";
-        }
-      };
-    }
-
-    async function startVideoCall() {
-      if (!selectedUser || !socket) {
-        showToast("Select a person first.");
+      if (
+        !state.socket ||
+        !state.socket.connected
+      ) {
+        showToast(
+          "Not connected to server."
+        );
         return;
       }
 
       try {
-        if (!navigator.mediaDevices?.getUserMedia) {
-          showToast("Video calling is not supported here.");
-          return;
-        }
+        await prepareLocalMedia(type);
 
-        localStream =
-          await navigator.mediaDevices.getUserMedia({
-            video: true,
-            audio: true
-          });
+        state.currentCall = {
+          type,
+          userId:
+            Number(state.selectedUser.id),
+          username:
+            state.selectedUser.username,
+          caller: true
+        };
 
-        localVideo.srcObject = localStream;
-
-        await createPeerConnection(selectedUser.id);
-
-        localStream.getTracks().forEach((track) => {
-          peerConnection.addTrack(
-            track,
-            localStream
-          );
-        });
-
-        const offer =
-          await peerConnection.createOffer();
-
-        await peerConnection.setLocalDescription(
-          offer
+        showCallScreen(
+          type,
+          state.selectedUser.username,
+          "Calling"
         );
 
-        callTitle.textContent =
-          `Calling ${selectedUser.username}`;
+        state.socket.emit(
+          "call_user",
+          {
+            userId:
+              Number(state.selectedUser.id),
 
-        callStatus.textContent =
-          "Calling...";
+            callType: type
+          }
+        );
+      } catch {
+        cleanupCallMedia();
 
-        callScreen.classList.add("show");
-
-        socket.emit("call_user", {
-          receiverId: selectedUser.id,
-          offer
-        });
-
-      } catch (error) {
-        console.error(error);
         showToast(
-          "Could not start video call. Check your camera and microphone permissions."
+          type === "video"
+            ? "Camera or microphone permission was not granted."
+            : "Microphone permission was not granted."
         );
-
-        closeCallScreen();
       }
     }
 
+    async function prepareLocalMedia(type) {
+      cleanupCallMedia();
+
+      const constraints =
+        type === "video"
+          ? {
+              audio: true,
+              video: true
+            }
+          : {
+              audio: true,
+              video: false
+            };
+
+      state.localStream =
+        await navigator.mediaDevices.getUserMedia(
+          constraints
+        );
+
+      localVideo.srcObject =
+        state.localStream;
+
+      if (type === "video") {
+        localVideo.style.display =
+          "block";
+      } else {
+        localVideo.style.display =
+          "none";
+      }
+    }
+
+    function showCallScreen(
+      type,
+      username,
+      status
+    ) {
+      callOverlay.classList.add("show");
+
+      callType.textContent =
+        type === "video"
+          ? "Video Call"
+          : "Voice Call";
+
+      callTitle.textContent =
+        username || "Call";
+
+      callStatus.textContent =
+        status;
+
+      if (type === "video") {
+        remoteVideo.style.display =
+          "block";
+
+        voiceCallDisplay.style.display =
+          "none";
+
+        localVideo.style.display =
+          "block";
+      } else {
+        remoteVideo.style.display =
+          "none";
+
+        localVideo.style.display =
+          "none";
+
+        voiceCallDisplay.style.display =
+          "flex";
+      }
+    }
 
     /* =====================================================
        INCOMING CALL
     ===================================================== */
 
-    function handleIncomingCall(payload) {
-      incomingCallerId =
-        Number(payload.callerId);
+    function handleIncomingCall(data) {
+      if (!data) return;
 
-      incomingCallerName =
-        payload.callerUsername || "Someone";
+      state.incomingCall = data;
 
-      incomingOffer =
-        payload.offer;
+      const type =
+        data.callType === "video"
+          ? "video"
+          : "voice";
 
-      incomingCallerNameElement.textContent =
-        `${incomingCallerName} is calling you`;
+      const username =
+        data.username ||
+        data.fromUsername ||
+        "User";
 
-      incomingCall.classList.add("show");
+      incomingCallTitle.textContent =
+        type === "video"
+          ? "Incoming Video Call"
+          : "Incoming Voice Call";
+
+      incomingCallText.textContent =
+        `${username} is calling you.`;
+
+      incomingCall.classList.add(
+        "show"
+      );
     }
 
-
-    /* =====================================================
-       ACCEPT CALL
-    ===================================================== */
-
-    acceptCallButton.addEventListener(
+    acceptCallBtn.addEventListener(
       "click",
-      acceptIncomingCall
-    );
-
-    async function acceptIncomingCall() {
-      if (!incomingCallerId || !incomingOffer) {
-        return;
-      }
-
-      try {
-        incomingCall.classList.remove("show");
-
-        localStream =
-          await navigator.mediaDevices.getUserMedia({
-            video: true,
-            audio: true
-          });
-
-        localVideo.srcObject = localStream;
-
-        await createPeerConnection(
-          incomingCallerId
-        );
-
-        localStream.getTracks().forEach((track) => {
-          peerConnection.addTrack(
-            track,
-            localStream
-          );
-        });
-
-        await peerConnection.setRemoteDescription(
-          new RTCSessionDescription(incomingOffer)
-        );
-
-        const answer =
-          await peerConnection.createAnswer();
-
-        await peerConnection.setLocalDescription(
-          answer
-        );
-
-        callTitle.textContent =
-          `Video call with ${incomingCallerName}`;
-
-        callStatus.textContent =
-          "Connecting...";
-
-        callScreen.classList.add("show");
-
-        socket.emit("call_accepted", {
-          callerId: incomingCallerId,
-          answer
-        });
-
-      } catch (error) {
-        console.error(error);
-        showToast("Could not accept the call.");
-        closeCallScreen();
-      }
-    }
-
-
-    /* =====================================================
-       REJECT CALL
-    ===================================================== */
-
-    rejectCallButton.addEventListener(
-      "click",
-      () => {
-        if (socket && incomingCallerId) {
-          socket.emit("call_rejected", {
-            callerId: incomingCallerId
-          });
+      async () => {
+        if (!state.incomingCall) {
+          return;
         }
 
-        incomingCallerId = null;
-        incomingCallerName = "";
-        incomingOffer = null;
+        const call =
+          state.incomingCall;
 
-        incomingCall.classList.remove("show");
+        incomingCall.classList.remove(
+          "show"
+        );
+
+        try {
+          const type =
+            call.callType === "video"
+              ? "video"
+              : "voice";
+
+          await prepareLocalMedia(type);
+
+          state.currentCall = {
+            type,
+
+            userId:
+              Number(
+                call.fromUserId ||
+                call.userId
+              ),
+
+            username:
+              call.username ||
+              call.fromUsername ||
+              "User",
+
+            caller: false
+          };
+
+          showCallScreen(
+            type,
+            state.currentCall.username,
+            "Connecting"
+          );
+
+          state.socket.emit(
+            "call_accepted",
+            {
+              toUserId:
+                Number(
+                  call.fromUserId ||
+                  call.userId
+                ),
+
+              callType: type
+            }
+          );
+
+          if (call.offer) {
+            await handleOffer(call);
+          }
+        } catch {
+          endCall();
+        }
+
+        state.incomingCall = null;
       }
     );
 
+    rejectCallBtn.addEventListener(
+      "click",
+      () => {
+        if (state.incomingCall) {
+          state.socket.emit(
+            "call_rejected",
+            {
+              toUserId:
+                Number(
+                  state.incomingCall.fromUserId ||
+                  state.incomingCall.userId
+                )
+            }
+          );
+        }
+
+        incomingCall.classList.remove(
+          "show"
+        );
+
+        state.incomingCall = null;
+      }
+    );
 
     /* =====================================================
-       CALL ACCEPTED
+       WEBRTC
     ===================================================== */
 
-    async function handleCallAccepted(payload) {
-      if (!peerConnection || !payload?.answer) {
+    function createPeerConnection() {
+      const configuration = {
+        iceServers: [
+          {
+            urls:
+              "stun:stun.l.google.com:19302"
+          }
+        ]
+      };
+
+      const pc =
+        new RTCPeerConnection(
+          configuration
+        );
+
+      state.peerConnection = pc;
+
+      state.remoteStream =
+        new MediaStream();
+
+      remoteVideo.srcObject =
+        state.remoteStream;
+
+      if (state.localStream) {
+        state.localStream
+          .getTracks()
+          .forEach((track) => {
+            pc.addTrack(
+              track,
+              state.localStream
+            );
+          });
+      }
+
+      pc.ontrack =
+        (event) => {
+          event.streams[0]
+            .getTracks()
+            .forEach((track) => {
+              state.remoteStream.addTrack(
+                track
+              );
+            });
+
+          remoteVideo.srcObject =
+            state.remoteStream;
+
+          callStatus.textContent =
+            "Connected";
+        };
+
+      pc.onicecandidate =
+        (event) => {
+          if (
+            event.candidate &&
+            state.currentCall
+          ) {
+            state.socket.emit(
+              "ice_candidate",
+              {
+                toUserId:
+                  Number(
+                    state.currentCall.userId
+                  ),
+
+                candidate:
+                  event.candidate
+              }
+            );
+          }
+        };
+
+      pc.onconnectionstatechange =
+        () => {
+          if (
+            pc.connectionState ===
+              "connected"
+          ) {
+            callStatus.textContent =
+              "Connected";
+          }
+
+          if (
+            pc.connectionState ===
+              "failed"
+          ) {
+            endCall();
+          }
+
+          if (
+            pc.connectionState ===
+              "disconnected"
+          ) {
+            callStatus.textContent =
+              "Connection interrupted";
+          }
+        };
+
+      return pc;
+    }
+
+    async function createOffer() {
+      const pc =
+        createPeerConnection();
+
+      const offer =
+        await pc.createOffer();
+
+      await pc.setLocalDescription(
+        offer
+      );
+
+      return offer;
+    }
+
+    async function handleOffer(data) {
+      if (!state.currentCall) {
         return;
       }
 
-      try {
-        await peerConnection.setRemoteDescription(
-          new RTCSessionDescription(payload.answer)
-        );
+      const pc =
+        createPeerConnection();
 
-        callStatus.textContent =
-          "Connecting...";
-      } catch (error) {
-        console.error(
-          "Could not process call answer:",
-          error
-        );
-      }
+      await pc.setRemoteDescription(
+        new RTCSessionDescription(
+          data.offer
+        )
+      );
+
+      const answer =
+        await pc.createAnswer();
+
+      await pc.setLocalDescription(
+        answer
+      );
+
+      state.socket.emit(
+        "call_user",
+        {
+          userId:
+            Number(
+              data.fromUserId ||
+              data.userId ||
+              state.currentCall.userId
+            ),
+
+          answer,
+
+          callType:
+            state.currentCall.type
+        }
+      );
     }
-
-
-    /* =====================================================
-       ICE CANDIDATE
-    ===================================================== */
-
-    async function handleIceCandidate(payload) {
-      if (!peerConnection || !payload?.candidate) {
-        return;
-      }
-
-      try {
-        await peerConnection.addIceCandidate(
-          new RTCIceCandidate(payload.candidate)
-        );
-      } catch (error) {
-        console.error(
-          "Could not add ICE candidate:",
-          error
-        );
-      }
-    }
-
 
     /* =====================================================
        END CALL
     ===================================================== */
 
-    endCallButton.addEventListener(
+    endCallBtn.addEventListener(
       "click",
-      () => {
-        if (socket && selectedUser) {
-          socket.emit("end_call", {
-            receiverId: selectedUser.id
-          });
-        }
-
-        closeCallScreen();
-      }
+      () => endCall(true)
     );
 
-    function closeCallScreen() {
-      if (peerConnection) {
-        peerConnection.close();
-        peerConnection = null;
+    function endCall(notify = true) {
+      if (
+        notify &&
+        state.socket &&
+        state.currentCall
+      ) {
+        state.socket.emit(
+          "end_call",
+          {
+            toUserId:
+              Number(
+                state.currentCall.userId
+              )
+          }
+        );
       }
 
-      if (localStream) {
-        localStream.getTracks().forEach((track) => {
-          track.stop();
-        });
+      if (state.peerConnection) {
+        try {
+          state.peerConnection.close();
+        } catch {}
 
-        localStream = null;
+        state.peerConnection = null;
       }
+
+      cleanupCallMedia();
+
+      state.currentCall = null;
 
       remoteVideo.srcObject = null;
       localVideo.srcObject = null;
 
-      callScreen.classList.remove("show");
-      incomingCall.classList.remove("show");
+      callOverlay.classList.remove(
+        "show"
+      );
 
-      incomingCallerId = null;
-      incomingCallerName = "";
-      incomingOffer = null;
+      remoteVideo.style.display =
+        "none";
+
+      localVideo.style.display =
+        "none";
+
+      voiceCallDisplay.style.display =
+        "none";
+
+      incomingCall.classList.remove(
+        "show"
+      );
     }
 
+    function cleanupCallMedia() {
+      if (state.localStream) {
+        state.localStream
+          .getTracks()
+          .forEach((track) => {
+            track.stop();
+          });
+
+        state.localStream = null;
+      }
+    }
 
     /* =====================================================
-       INITIAL LOAD
+       PROFILE
     ===================================================== */
 
-    if (token) {
-      startApp();
+    profileBtn.addEventListener(
+      "click",
+      () => {
+        updateProfile();
+
+        profileModal.classList.remove(
+          "hidden"
+        );
+      }
+    );
+
+    closeProfileBtn.addEventListener(
+      "click",
+      () => {
+        profileModal.classList.add(
+          "hidden"
+        );
+      }
+    );
+
+    profileModal.addEventListener(
+      "click",
+      (event) => {
+        if (
+          event.target === profileModal
+        ) {
+          profileModal.classList.add(
+            "hidden"
+          );
+        }
+      }
+    );
+
+    function updateProfile() {
+      if (!state.currentUser) return;
+
+      const name =
+        state.currentUser.username ||
+        "User";
+
+      profileAvatar.textContent =
+        getInitial(name);
+
+      profileUsername.textContent =
+        name;
+
+      profileEmail.textContent =
+        state.currentUser.email ||
+        "";
     }
 
+    /* =====================================================
+       LOGOUT
+    ===================================================== */
+
+    logoutBtn.addEventListener(
+      "click",
+      () => {
+        endCall(false);
+
+        if (state.socket) {
+          state.socket.disconnect();
+          state.socket = null;
+        }
+
+        localStorage.removeItem(
+          "tavlik_token"
+        );
+
+        state.token = null;
+        state.currentUser = null;
+        state.selectedUser = null;
+
+        app.classList.remove(
+          "logged-in",
+          "chat-open"
+        );
+
+        profileModal.classList.add(
+          "hidden"
+        );
+
+        chatContent.classList.add(
+          "hidden"
+        );
+
+        chatEmpty.classList.remove(
+          "hidden"
+        );
+
+        authScreen.style.display =
+          "flex";
+
+        authForm.reset();
+
+        setAuthMode("login");
+      }
+    );
+
+    /* =====================================================
+       THEME
+    ===================================================== */
+
+    themeBtn.addEventListener(
+      "click",
+      () => {
+        document.body.classList.toggle(
+          "dark"
+        );
+
+        localStorage.setItem(
+          "tavlik_theme",
+          document.body.classList.contains(
+            "dark"
+          )
+            ? "dark"
+            : "light"
+        );
+      }
+    );
+
+    function loadTheme() {
+      const theme =
+        localStorage.getItem(
+          "tavlik_theme"
+        );
+
+      if (theme === "dark") {
+        document.body.classList.add(
+          "dark"
+        );
+      }
+    }
+
+    /* =====================================================
+       HELPERS
+    ===================================================== */
+
+    function fileToDataURL(file) {
+      return new Promise(
+        (resolve, reject) => {
+          const reader =
+            new FileReader();
+
+          reader.onload =
+            () => resolve(
+              reader.result
+            );
+
+          reader.onerror =
+            reject;
+
+          reader.readAsDataURL(file);
+        }
+      );
+    }
+
+    function blobToDataURL(blob) {
+      return new Promise(
+        (resolve, reject) => {
+          const reader =
+            new FileReader();
+
+          reader.onload =
+            () => resolve(
+              reader.result
+            );
+
+          reader.onerror =
+            reject;
+
+          reader.readAsDataURL(blob);
+        }
+      );
+    }
+
+    function debounce(
+      callback,
+      delay
+    ) {
+      let timer;
+
+      return (...args) => {
+        clearTimeout(timer);
+
+        timer =
+          setTimeout(
+            () => callback(...args),
+            delay
+          );
+      };
+    }
+
+    let toastTimer = null;
+
+    function showToast(message) {
+      toast.textContent =
+        message;
+
+      toast.classList.add(
+        "show"
+      );
+
+      clearTimeout(toastTimer);
+
+      toastTimer =
+        setTimeout(() => {
+          toast.classList.remove(
+            "show"
+          );
+        }, 2500);
+    }
+
+    /* =====================================================
+       START
+    ===================================================== */
+
+    loadTheme();
+    setAuthMode("login");
+
+    if (state.token) {
+      startApplication();
+    }
   </script>
 
 </body>
