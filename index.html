@@ -3,45 +3,51 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#176b5b">
   <title>TAVLIK</title>
 
-  <script src="/socket.io/socket.io.js"></script>
-
   <style>
+    :root {
+      --primary: #176b5b;
+      --primary-dark: #0f5145;
+      --accent: #31b58c;
+      --background: #f4f7f6;
+      --surface: #ffffff;
+      --surface-2: #eef3f1;
+      --text: #17201e;
+      --muted: #6f7d79;
+      --border: #dce5e1;
+      --danger: #d64545;
+      --shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+    }
+
+    body.dark {
+      --background: #101715;
+      --surface: #17211e;
+      --surface-2: #202c28;
+      --text: #edf5f2;
+      --muted: #9baaa5;
+      --border: #30403a;
+      --shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+    }
+
     * {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
     }
 
-    :root {
-      --primary: #176b5b;
-      --accent: #31b58c;
-      --bg: #eef5f2;
-      --card: #ffffff;
-      --text: #17201e;
-      --muted: #71807b;
-      --border: #dce7e3;
-      --danger: #d9534f;
-      --message: #dcf8c6;
-      --incoming: #ffffff;
-    }
-
-    body.dark {
-      --bg: #101716;
-      --card: #17211f;
-      --text: #f1f5f3;
-      --muted: #9baaa5;
-      --border: #2a3734;
-      --message: #174d3d;
-      --incoming: #202c29;
+    html,
+    body {
+      width: 100%;
+      height: 100%;
     }
 
     body {
       font-family: Arial, Helvetica, sans-serif;
-      background: var(--bg);
+      background: var(--background);
       color: var(--text);
-      min-height: 100vh;
+      overflow: hidden;
     }
 
     button,
@@ -57,7 +63,9 @@
       display: none !important;
     }
 
-    /* AUTH */
+    /* =====================================================
+       AUTH
+    ===================================================== */
 
     .auth-screen {
       min-height: 100vh;
@@ -65,122 +73,127 @@
       align-items: center;
       justify-content: center;
       padding: 20px;
-
       background:
-        linear-gradient(rgba(7, 38, 31, .72), rgba(7, 38, 31, .72)),
-        radial-gradient(circle at top left, #39b995, transparent 35%),
-        linear-gradient(135deg, #092d25, #176b5b 50%, #0b3b31);
+        radial-gradient(circle at top right, rgba(49, 181, 140, 0.22), transparent 35%),
+        var(--background);
     }
 
     .auth-card {
       width: 100%;
       max-width: 430px;
-      background: rgba(255,255,255,.97);
-      color: #17201e;
+      background: var(--surface);
+      border: 1px solid var(--border);
       border-radius: 22px;
-      padding: 32px;
-      box-shadow: 0 25px 70px rgba(0,0,0,.28);
+      padding: 30px;
+      box-shadow: var(--shadow);
     }
 
-    .logo {
+    .brand {
       text-align: center;
-      font-size: 38px;
-      font-weight: 900;
-      letter-spacing: 3px;
+      margin-bottom: 25px;
+    }
+
+    .brand h1 {
       color: var(--primary);
-      margin-bottom: 6px;
+      font-size: 38px;
+      letter-spacing: 2px;
     }
 
-    .tagline {
-      text-align: center;
-      color: #71807b;
-      margin-bottom: 28px;
+    .brand p {
+      color: var(--muted);
+      margin-top: 6px;
     }
 
     .auth-tabs {
       display: flex;
-      background: #edf3f1;
-      border-radius: 12px;
-      padding: 4px;
+      gap: 8px;
       margin-bottom: 22px;
     }
 
-    .auth-tabs button {
+    .auth-tab {
       flex: 1;
-      border: 0;
+      border: none;
       padding: 12px;
-      border-radius: 9px;
-      background: transparent;
-      color: #60706b;
+      border-radius: 10px;
+      background: var(--surface-2);
+      color: var(--muted);
       font-weight: bold;
     }
 
-    .auth-tabs button.active {
-      background: white;
-      color: var(--primary);
-      box-shadow: 0 2px 8px rgba(0,0,0,.08);
+    .auth-tab.active {
+      background: var(--primary);
+      color: white;
     }
 
-    .field {
+    .form-group {
       margin-bottom: 15px;
     }
 
-    .field label {
+    .form-group label {
       display: block;
-      font-size: 13px;
-      font-weight: bold;
       margin-bottom: 7px;
+      font-size: 14px;
+      font-weight: bold;
     }
 
-    .field input {
+    .form-group input {
       width: 100%;
       padding: 13px 14px;
-      border: 1px solid #d5dfdc;
-      border-radius: 11px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
       outline: none;
+      background: var(--surface);
+      color: var(--text);
     }
 
-    .field input:focus {
+    .form-group input:focus {
       border-color: var(--accent);
     }
 
-    .main-btn {
+    .primary-btn {
       width: 100%;
-      border: 0;
-      padding: 14px;
-      border-radius: 11px;
+      border: none;
+      padding: 13px;
+      border-radius: 10px;
       background: var(--primary);
       color: white;
       font-weight: bold;
       margin-top: 5px;
     }
 
-    .main-btn:hover {
-      background: #125547;
+    .primary-btn:hover {
+      background: var(--primary-dark);
     }
 
     .auth-error {
       color: var(--danger);
-      font-size: 13px;
-      margin: 10px 0;
+      font-size: 14px;
+      margin-bottom: 12px;
       min-height: 18px;
     }
 
-    /* APP */
+    /* =====================================================
+       MAIN APP
+    ===================================================== */
 
     .app {
+      width: 100%;
       height: 100vh;
+      display: none;
+    }
+
+    .app.logged-in {
       display: flex;
-      overflow: hidden;
     }
 
     .sidebar {
-      width: 360px;
-      background: var(--card);
+      width: 370px;
+      height: 100%;
+      background: var(--surface);
       border-right: 1px solid var(--border);
       display: flex;
       flex-direction: column;
-      z-index: 5;
+      flex-shrink: 0;
     }
 
     .sidebar-header {
@@ -188,18 +201,18 @@
       border-bottom: 1px solid var(--border);
     }
 
-    .brand-row {
+    .sidebar-top {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      margin-bottom: 16px;
+      margin-bottom: 15px;
     }
 
-    .brand {
+    .sidebar-brand {
       font-size: 25px;
-      font-weight: 900;
-      letter-spacing: 2px;
+      font-weight: bold;
       color: var(--primary);
+      letter-spacing: 1px;
     }
 
     .header-actions {
@@ -208,58 +221,34 @@
     }
 
     .icon-btn {
-      width: 38px;
-      height: 38px;
-      border: 0;
+      width: 40px;
+      height: 40px;
+      border: none;
       border-radius: 50%;
-      background: var(--bg);
+      background: var(--surface-2);
       color: var(--text);
-    }
-
-    .profile-mini {
-      display: flex;
-      align-items: center;
-      gap: 11px;
-      margin-bottom: 15px;
-    }
-
-    .avatar {
-      width: 45px;
-      height: 45px;
-      border-radius: 50%;
-      object-fit: cover;
-      background: linear-gradient(135deg, var(--primary), var(--accent));
-      display: flex;
+      display: inline-flex;
       align-items: center;
       justify-content: center;
-      color: white;
-      font-weight: bold;
-      flex-shrink: 0;
+      font-size: 18px;
     }
 
-    .profile-mini strong {
-      display: block;
-    }
-
-    .profile-mini small {
-      color: var(--muted);
+    .icon-btn:hover {
+      background: var(--border);
     }
 
     .search-box {
-      display: flex;
-      align-items: center;
-      background: var(--bg);
-      border-radius: 12px;
-      padding: 0 12px;
+      position: relative;
     }
 
     .search-box input {
       width: 100%;
-      border: 0;
-      outline: 0;
-      padding: 12px 8px;
-      background: transparent;
+      padding: 12px 14px;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      background: var(--surface-2);
       color: var(--text);
+      outline: none;
     }
 
     .user-list {
@@ -268,17 +257,30 @@
     }
 
     .user-item {
+      padding: 13px 17px;
       display: flex;
       align-items: center;
       gap: 12px;
-      padding: 13px 17px;
       border-bottom: 1px solid var(--border);
       cursor: pointer;
     }
 
     .user-item:hover,
     .user-item.active {
-      background: var(--bg);
+      background: var(--surface-2);
+    }
+
+    .avatar {
+      width: 46px;
+      height: 46px;
+      border-radius: 50%;
+      background: var(--primary);
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      flex-shrink: 0;
     }
 
     .user-info {
@@ -286,52 +288,65 @@
       flex: 1;
     }
 
-    .user-info strong {
-      display: block;
+    .user-name {
+      font-weight: bold;
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
     }
 
-    .user-info small {
+    .user-subtitle {
       color: var(--muted);
+      font-size: 13px;
+      margin-top: 4px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
 
-    .unread {
-      min-width: 22px;
-      height: 22px;
-      padding: 0 6px;
-      border-radius: 20px;
-      background: var(--accent);
-      color: white;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 11px;
-      font-weight: bold;
+    .empty-users {
+      text-align: center;
+      color: var(--muted);
+      padding: 35px 20px;
+      line-height: 1.5;
     }
 
-    /* CHAT */
+    /* =====================================================
+       CHAT
+    ===================================================== */
 
     .chat {
       flex: 1;
+      height: 100%;
       min-width: 0;
       display: flex;
       flex-direction: column;
-      background:
-        radial-gradient(circle at 20% 20%, rgba(49,181,140,.08), transparent 25%),
-        radial-gradient(circle at 80% 80%, rgba(23,107,91,.08), transparent 25%),
-        var(--bg);
+      background: var(--background);
+    }
+
+    .chat-empty {
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      color: var(--muted);
+      padding: 25px;
+    }
+
+    .chat-empty h2 {
+      color: var(--text);
+      margin-bottom: 8px;
     }
 
     .chat-header {
-      min-height: 72px;
-      padding: 12px 18px;
-      background: var(--card);
+      height: 70px;
+      padding: 10px 16px;
+      background: var(--surface);
       border-bottom: 1px solid var(--border);
       display: flex;
       align-items: center;
-      gap: 12px;
+      gap: 10px;
     }
 
     .back-btn {
@@ -343,279 +358,352 @@
       min-width: 0;
     }
 
-    .chat-user strong {
-      display: block;
+    .chat-user-name {
+      font-weight: bold;
+      font-size: 17px;
     }
 
-    .chat-user small {
+    .chat-user-status {
       color: var(--muted);
+      font-size: 12px;
+      margin-top: 3px;
     }
 
     .messages {
       flex: 1;
       overflow-y: auto;
-      padding: 22px;
+      padding: 18px;
       display: flex;
       flex-direction: column;
       gap: 8px;
     }
 
-    .empty-chat {
-      margin: auto;
-      text-align: center;
-      color: var(--muted);
-    }
-
-    .empty-chat h2 {
-      color: var(--text);
-      margin-bottom: 7px;
-    }
-
-    .message {
-      max-width: min(70%, 600px);
-      padding: 9px 12px;
-      border-radius: 12px;
-      position: relative;
-      word-break: break-word;
-    }
-
-    .message.mine {
-      align-self: flex-end;
-      background: var(--message);
-      border-bottom-right-radius: 3px;
-    }
-
-    .message.theirs {
-      align-self: flex-start;
-      background: var(--incoming);
-      border-bottom-left-radius: 3px;
-    }
-
-    .message-text {
-      white-space: pre-wrap;
-      line-height: 1.4;
-    }
-
-    .message-meta {
+    .message-row {
       display: flex;
-      align-items: center;
+      width: 100%;
+    }
+
+    .message-row.mine {
       justify-content: flex-end;
-      gap: 5px;
-      margin-top: 4px;
-      color: var(--muted);
-      font-size: 10px;
     }
 
-    .checks {
-      color: #2586c7;
-      font-weight: bold;
+    .message-bubble {
+      max-width: min(75%, 600px);
+      padding: 10px 13px;
+      border-radius: 15px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      word-wrap: break-word;
+      overflow-wrap: anywhere;
     }
 
-    .media-img {
+    .message-row.mine .message-bubble {
+      background: var(--primary);
+      color: white;
+      border-color: var(--primary);
+      border-bottom-right-radius: 4px;
+    }
+
+    .message-row:not(.mine) .message-bubble {
+      border-bottom-left-radius: 4px;
+    }
+
+    .message-image {
       max-width: 280px;
-      max-height: 320px;
-      border-radius: 9px;
+      max-height: 350px;
+      border-radius: 10px;
       display: block;
-      margin-bottom: 5px;
     }
 
     .voice-player {
-      width: 230px;
+      width: 250px;
       max-width: 100%;
     }
 
+    .message-time {
+      display: block;
+      margin-top: 5px;
+      font-size: 10px;
+      opacity: 0.7;
+      text-align: right;
+    }
+
     .typing {
-      min-height: 22px;
-      padding: 0 22px;
+      height: 24px;
+      padding: 0 18px;
       color: var(--muted);
       font-size: 12px;
     }
 
+    /* =====================================================
+       COMPOSER
+    ===================================================== */
+
     .composer {
-      padding: 10px 15px;
-      background: var(--card);
+      background: var(--surface);
       border-top: 1px solid var(--border);
+      padding: 10px;
+    }
+
+    .composer-row {
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 7px;
     }
 
-    .composer input {
+    .composer-input {
       flex: 1;
-      border: 0;
-      outline: 0;
-      background: var(--bg);
-      color: var(--text);
-      border-radius: 22px;
-      padding: 13px 16px;
       min-width: 0;
+      padding: 12px 14px;
+      border: 1px solid var(--border);
+      border-radius: 22px;
+      outline: none;
+      background: var(--surface-2);
+      color: var(--text);
     }
 
-    .round-btn {
-      width: 43px;
-      height: 43px;
-      border: 0;
-      border-radius: 50%;
-      background: var(--bg);
-      color: var(--text);
-      flex-shrink: 0;
+    .composer-input:focus {
+      border-color: var(--accent);
     }
 
     .send-btn {
+      width: 43px;
+      height: 43px;
+      border: none;
+      border-radius: 50%;
       background: var(--primary);
       color: white;
+      font-size: 18px;
     }
 
     .recording {
-      background: #c93e3e;
-      color: white;
+      background: var(--danger) !important;
     }
 
-    .file-input {
+    .image-preview {
+      padding: 10px;
       display: none;
+      align-items: center;
+      gap: 10px;
     }
 
-    /* MODAL */
+    .image-preview.show {
+      display: flex;
+    }
+
+    .image-preview img {
+      width: 70px;
+      height: 70px;
+      object-fit: cover;
+      border-radius: 10px;
+    }
+
+    .preview-name {
+      flex: 1;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    /* =====================================================
+       PROFILE MODAL
+    ===================================================== */
 
     .modal {
       position: fixed;
       inset: 0;
-      background: rgba(0,0,0,.55);
+      background: rgba(0, 0, 0, 0.55);
       display: flex;
       align-items: center;
       justify-content: center;
       padding: 20px;
-      z-index: 100;
+      z-index: 1000;
     }
 
     .modal-card {
       width: 100%;
       max-width: 420px;
-      background: var(--card);
-      color: var(--text);
+      background: var(--surface);
       border-radius: 18px;
-      padding: 22px;
-      box-shadow: 0 25px 70px rgba(0,0,0,.3);
+      padding: 25px;
+      box-shadow: var(--shadow);
     }
 
-    .modal-card h2 {
-      margin-bottom: 17px;
-    }
-
-    .modal-actions {
+    .modal-header {
       display: flex;
-      gap: 8px;
-      margin-top: 18px;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
     }
 
-    .modal-actions button {
-      flex: 1;
+    .profile-avatar {
+      width: 90px;
+      height: 90px;
+      border-radius: 50%;
+      background: var(--primary);
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 32px;
+      font-weight: bold;
+      margin: 0 auto 18px;
+    }
+
+    .profile-info {
+      text-align: center;
+      line-height: 1.8;
+    }
+
+    .logout-btn {
+      width: 100%;
+      margin-top: 20px;
       padding: 12px;
+      border: none;
       border-radius: 10px;
-      border: 0;
-    }
-
-    .secondary {
-      background: var(--bg);
-      color: var(--text);
-    }
-
-    .danger {
       background: var(--danger);
       color: white;
+      font-weight: bold;
     }
 
-    .status {
-      text-align: center;
-      color: var(--muted);
-      padding: 10px;
-      font-size: 12px;
-    }
+    /* =====================================================
+       CALL UI
+    ===================================================== */
 
-    /* CALL */
-
-    .call-screen {
+    .call-overlay {
       position: fixed;
       inset: 0;
-      background: #071310;
-      z-index: 200;
-      display: flex;
+      z-index: 2000;
+      background: rgba(0, 0, 0, 0.88);
+      color: white;
+      display: none;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      color: white;
+      padding: 20px;
+    }
+
+    .call-overlay.show {
+      display: flex;
+    }
+
+    .call-title {
+      font-size: 22px;
+      margin-bottom: 8px;
+    }
+
+    .call-status {
+      color: #c9d5d1;
+      margin-bottom: 20px;
     }
 
     #remoteVideo {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      background: #111;
+      width: min(900px, 95vw);
+      max-height: 65vh;
+      background: #000;
+      border-radius: 15px;
+      object-fit: contain;
     }
 
     #localVideo {
-      position: absolute;
-      width: 150px;
-      height: 210px;
-      right: 20px;
-      top: 20px;
-      object-fit: cover;
-      border-radius: 14px;
-      background: #222;
+      position: fixed;
+      right: 25px;
+      bottom: 100px;
+      width: 180px;
+      max-width: 30vw;
+      border-radius: 12px;
+      background: #000;
+      border: 2px solid white;
     }
 
-    .call-controls {
-      position: absolute;
-      bottom: 30px;
+    .call-actions {
       display: flex;
-      gap: 15px;
+      gap: 12px;
+      margin-top: 25px;
     }
 
-    .call-controls button {
-      width: 55px;
-      height: 55px;
-      border: 0;
-      border-radius: 50%;
-      background: white;
-      color: #111;
-    }
-
-    .call-controls .end {
-      background: #d9534f;
+    .call-action {
+      min-width: 110px;
+      border: none;
+      border-radius: 25px;
+      padding: 12px 18px;
       color: white;
+      font-weight: bold;
     }
 
-    @media (max-width: 750px) {
+    .accept-call {
+      background: var(--accent);
+    }
+
+    .reject-call,
+    .end-call {
+      background: var(--danger);
+    }
+
+    /* =====================================================
+       TOAST
+    ===================================================== */
+
+    .toast {
+      position: fixed;
+      left: 50%;
+      bottom: 25px;
+      transform: translateX(-50%) translateY(100px);
+      background: #222;
+      color: white;
+      padding: 12px 18px;
+      border-radius: 10px;
+      z-index: 3000;
+      opacity: 0;
+      transition: 0.25s;
+      pointer-events: none;
+    }
+
+    .toast.show {
+      transform: translateX(-50%) translateY(0);
+      opacity: 1;
+    }
+
+    /* =====================================================
+       MOBILE
+    ===================================================== */
+
+    @media (max-width: 700px) {
       .sidebar {
         width: 100%;
       }
 
       .chat {
-        display: none;
+        position: fixed;
+        inset: 0;
+        z-index: 20;
+        transform: translateX(100%);
+        transition: transform 0.2s ease;
+      }
+
+      .app.chat-open .chat {
+        transform: translateX(0);
       }
 
       .app.chat-open .sidebar {
         display: none;
       }
 
-      .app.chat-open .chat {
-        display: flex;
-      }
-
       .back-btn {
-        display: block;
+        display: inline-flex;
       }
 
-      .message {
+      .message-bubble {
         max-width: 85%;
       }
 
-      .sidebar-header {
-        padding: 14px;
+      #localVideo {
+        right: 12px;
+        bottom: 90px;
+        width: 130px;
       }
 
-      .messages {
-        padding: 14px;
+      .auth-card {
+        padding: 22px;
       }
     }
   </style>
@@ -623,598 +711,582 @@
 
 <body>
 
-  <!-- AUTH -->
+  <!-- =====================================================
+       AUTH SCREEN
+  ====================================================== -->
+
   <section id="authScreen" class="auth-screen">
     <div class="auth-card">
-      <div class="logo">TAVLIK</div>
-      <div class="tagline">Private conversations. Real connections.</div>
 
-      <div class="auth-tabs">
-        <button id="loginTab" class="active">Login</button>
-        <button id="registerTab">Create account</button>
+      <div class="brand">
+        <h1>TAVLIK</h1>
+        <p>Private messaging made simple</p>
       </div>
 
+      <div class="auth-tabs">
+        <button id="loginTab" class="auth-tab active" type="button">
+          Login
+        </button>
+
+        <button id="registerTab" class="auth-tab" type="button">
+          Register
+        </button>
+      </div>
+
+      <div id="authError" class="auth-error"></div>
+
+      <!-- LOGIN -->
+
       <form id="loginForm">
-        <div class="field">
-          <label>Email</label>
-          <input id="loginEmail" type="email" required autocomplete="email">
+        <div class="form-group">
+          <label for="loginIdentifier">Username or Email</label>
+          <input
+            id="loginIdentifier"
+            type="text"
+            autocomplete="username"
+            required
+          >
         </div>
 
-        <div class="field">
-          <label>Password</label>
-          <input id="loginPassword" type="password" required autocomplete="current-password">
+        <div class="form-group">
+          <label for="loginPassword">Password</label>
+          <input
+            id="loginPassword"
+            type="password"
+            autocomplete="current-password"
+            required
+          >
         </div>
 
-        <div id="loginError" class="auth-error"></div>
-        <button class="main-btn" type="submit">Login to TAVLIK</button>
+        <button class="primary-btn" type="submit">
+          Login
+        </button>
       </form>
+
+      <!-- REGISTER -->
 
       <form id="registerForm" class="hidden">
-        <div class="field">
-          <label>Username</label>
-          <input id="registerUsername" maxlength="30" required autocomplete="username">
+        <div class="form-group">
+          <label for="registerUsername">Username</label>
+          <input
+            id="registerUsername"
+            type="text"
+            autocomplete="username"
+            minlength="3"
+            maxlength="30"
+            required
+          >
         </div>
 
-        <div class="field">
-          <label>Email</label>
-          <input id="registerEmail" type="email" required autocomplete="email">
+        <div class="form-group">
+          <label for="registerEmail">Email</label>
+          <input
+            id="registerEmail"
+            type="email"
+            autocomplete="email"
+            required
+          >
         </div>
 
-        <div class="field">
-          <label>Password</label>
-          <input id="registerPassword" type="password" minlength="8" required autocomplete="new-password">
+        <div class="form-group">
+          <label for="registerPassword">Password</label>
+          <input
+            id="registerPassword"
+            type="password"
+            autocomplete="new-password"
+            minlength="8"
+            required
+          >
         </div>
 
-        <div id="registerError" class="auth-error"></div>
-        <button class="main-btn" type="submit">Create TAVLIK account</button>
+        <button class="primary-btn" type="submit">
+          Create Account
+        </button>
       </form>
+
     </div>
   </section>
 
-  <!-- APP -->
-  <main id="app" class="app hidden">
+
+  <!-- =====================================================
+       MAIN APP
+  ====================================================== -->
+
+  <section id="app" class="app">
+
+    <!-- SIDEBAR -->
 
     <aside class="sidebar">
+
       <div class="sidebar-header">
 
-        <div class="brand-row">
-          <div class="brand">TAVLIK</div>
+        <div class="sidebar-top">
+          <div class="sidebar-brand">TAVLIK</div>
 
           <div class="header-actions">
-            <button id="themeBtn" class="icon-btn" title="Dark mode">🌙</button>
-            <button id="profileBtn" class="icon-btn" title="Profile">⚙️</button>
-            <button id="logoutBtn" class="icon-btn" title="Logout">↪</button>
-          </div>
-        </div>
+            <button
+              id="themeButton"
+              class="icon-btn"
+              type="button"
+              title="Toggle theme"
+            >
+              ◐
+            </button>
 
-        <div class="profile-mini">
-          <div id="myAvatar" class="avatar">T</div>
-          <div>
-            <strong id="myUsername">User</strong>
-            <small>Online</small>
+            <button
+              id="profileButton"
+              class="icon-btn"
+              type="button"
+              title="Profile"
+            >
+              ●
+            </button>
           </div>
         </div>
 
         <div class="search-box">
-          🔎
-          <input id="searchInput" placeholder="Search username..." autocomplete="off">
+          <input
+            id="searchInput"
+            type="search"
+            placeholder="Search username..."
+            autocomplete="off"
+          >
         </div>
+
       </div>
 
       <div id="userList" class="user-list">
-        <div class="status">Search for someone to start chatting.</div>
+        <div class="empty-users">
+          Search for a username to start a private conversation.
+        </div>
       </div>
+
     </aside>
 
-    <section class="chat">
 
-      <header class="chat-header">
-        <button id="backBtn" class="icon-btn back-btn">←</button>
+    <!-- CHAT -->
 
-        <div id="chatAvatar" class="avatar">T</div>
+    <main class="chat">
 
-        <div class="chat-user">
-          <strong id="chatUsername">Select a person</strong>
-          <small id="chatStatus">Choose someone to chat privately</small>
-        </div>
-
-        <button id="callBtn" class="icon-btn hidden" title="Video call">📹</button>
-      </header>
-
-      <div id="messages" class="messages">
-        <div class="empty-chat">
-          <h2>Welcome to TAVLIK</h2>
-          <p>Search for a username to start a private conversation.</p>
-        </div>
-      </div>
-
-      <div id="typing" class="typing"></div>
-
-      <div class="composer">
-        <input id="photoInput" class="file-input" type="file" accept="image/jpeg,image/png,image/webp,image/gif">
-
-        <button id="photoBtn" class="round-btn" title="Send photo">📷</button>
-        <button id="voiceBtn" class="round-btn" title="Voice message">🎙️</button>
-
-        <input id="messageInput" placeholder="Write a message..." maxlength="2000" disabled>
-
-        <button id="sendBtn" class="round-btn send-btn" title="Send">➤</button>
-      </div>
-    </section>
-  </main>
-
-  <!-- PROFILE MODAL -->
-  <div id="profileModal" class="modal hidden">
-    <div class="modal-card">
-      <h2>My TAVLIK Profile</h2>
-
-      <div class="profile-mini">
-        <div id="modalAvatar" class="avatar">T</div>
+      <div id="chatEmpty" class="chat-empty">
         <div>
-          <strong id="modalUsername">User</strong>
-          <small id="modalEmail">email</small>
+          <h2>Welcome to TAVLIK</h2>
+          <p>Select a person to start a private conversation.</p>
         </div>
       </div>
 
-      <div class="field">
-        <label>Profile picture</label>
-        <input id="profilePhotoInput" type="file" accept="image/jpeg,image/png,image/webp,image/gif">
+      <div id="chatContent" class="hidden" style="height:100%;display:flex;flex-direction:column;">
+
+        <header class="chat-header">
+
+          <button
+            id="backButton"
+            class="icon-btn back-btn"
+            type="button"
+          >
+            ←
+          </button>
+
+          <div id="chatAvatar" class="avatar">
+            ?
+          </div>
+
+          <div class="chat-user">
+            <div id="chatUserName" class="chat-user-name">
+              User
+            </div>
+
+            <div id="chatUserStatus" class="chat-user-status">
+              Private conversation
+            </div>
+          </div>
+
+          <button
+            id="videoCallButton"
+            class="icon-btn"
+            type="button"
+            title="Video call"
+          >
+            ▣
+          </button>
+
+        </header>
+
+
+        <div id="messages" class="messages"></div>
+
+        <div id="typingIndicator" class="typing"></div>
+
+
+        <div class="composer">
+
+          <div id="imagePreview" class="image-preview">
+            <img id="previewImage" alt="Selected image">
+            <div id="previewName" class="preview-name"></div>
+
+            <button
+              id="cancelImageButton"
+              class="icon-btn"
+              type="button"
+            >
+              ×
+            </button>
+          </div>
+
+          <div class="composer-row">
+
+            <input
+              id="messageInput"
+              class="composer-input"
+              type="text"
+              maxlength="2000"
+              placeholder="Type a message..."
+              autocomplete="off"
+            >
+
+            <input
+              id="imageInput"
+              type="file"
+              accept="image/jpeg,image/png,image/webp,image/gif"
+              class="hidden"
+            >
+
+            <button
+              id="imageButton"
+              class="icon-btn"
+              type="button"
+              title="Send photo"
+            >
+              ▧
+            </button>
+
+            <button
+              id="voiceButton"
+              class="icon-btn"
+              type="button"
+              title="Record voice"
+            >
+              🎙
+            </button>
+
+            <button
+              id="sendButton"
+              class="send-btn"
+              type="button"
+              title="Send"
+            >
+              ➤
+            </button>
+
+          </div>
+
+        </div>
+
       </div>
 
-      <div class="modal-actions">
-        <button id="closeProfileBtn" class="secondary">Close</button>
-      </div>
-    </div>
-  </div>
+    </main>
 
-  <!-- INCOMING CALL -->
-  <div id="incomingCall" class="modal hidden">
+  </section>
+
+
+  <!-- =====================================================
+       PROFILE MODAL
+  ====================================================== -->
+
+  <div id="profileModal" class="modal hidden">
+
     <div class="modal-card">
-      <h2>Incoming video call</h2>
-      <p id="callerText">Someone is calling you.</p>
 
-      <div class="modal-actions">
-        <button id="rejectCallBtn" class="danger">Decline</button>
-        <button id="acceptCallBtn" class="main-btn">Accept</button>
+      <div class="modal-header">
+        <h2>My Profile</h2>
+
+        <button
+          id="closeProfileButton"
+          class="icon-btn"
+          type="button"
+        >
+          ×
+        </button>
       </div>
+
+      <div id="profileAvatar" class="profile-avatar">
+        ?
+      </div>
+
+      <div class="profile-info">
+        <div>
+          <strong>Username:</strong>
+          <span id="profileUsername"></span>
+        </div>
+
+        <div>
+          <strong>Email:</strong>
+          <span id="profileEmail"></span>
+        </div>
+      </div>
+
+      <button
+        id="logoutButton"
+        class="logout-btn"
+        type="button"
+      >
+        Logout
+      </button>
+
     </div>
+
   </div>
 
-  <!-- CALL SCREEN -->
-  <div id="callScreen" class="call-screen hidden">
-    <video id="remoteVideo" autoplay playsinline></video>
-    <video id="localVideo" autoplay muted playsinline></video>
 
-    <div class="call-controls">
-      <button id="muteCallBtn">🎙️</button>
-      <button id="cameraCallBtn">📹</button>
-      <button id="endCallBtn" class="end">☎</button>
+  <!-- =====================================================
+       INCOMING CALL
+  ====================================================== -->
+
+  <div id="incomingCall" class="call-overlay">
+
+    <div class="call-title">
+      Incoming video call
     </div>
+
+    <div id="incomingCallerName" class="call-status">
+      Someone is calling...
+    </div>
+
+    <div class="call-actions">
+
+      <button
+        id="acceptCallButton"
+        class="call-action accept-call"
+        type="button"
+      >
+        Accept
+      </button>
+
+      <button
+        id="rejectCallButton"
+        class="call-action reject-call"
+        type="button"
+      >
+        Reject
+      </button>
+
+    </div>
+
   </div>
+
+
+  <!-- =====================================================
+       ACTIVE CALL
+  ====================================================== -->
+
+  <div id="callScreen" class="call-overlay">
+
+    <div id="callTitle" class="call-title">
+      Video call
+    </div>
+
+    <div id="callStatus" class="call-status">
+      Connecting...
+    </div>
+
+    <video
+      id="remoteVideo"
+      autoplay
+      playsinline
+    ></video>
+
+    <video
+      id="localVideo"
+      autoplay
+      muted
+      playsinline
+    ></video>
+
+    <div class="call-actions">
+
+      <button
+        id="endCallButton"
+        class="call-action end-call"
+        type="button"
+      >
+        End call
+      </button>
+
+    </div>
+
+  </div>
+
+
+  <!-- =====================================================
+       TOAST
+  ====================================================== -->
+
+  <div id="toast" class="toast"></div>
+
+
+  <!-- =====================================================
+       SOCKET.IO
+  ====================================================== -->
+
+  <script src="/socket.io/socket.io.js"></script>
 
   <script>
-    const $ = id => document.getElementById(id);
+    "use strict";
 
-    let token = localStorage.getItem("tavlik_token");
+    /* =====================================================
+       STATE
+    ===================================================== */
+
+    const TOKEN_KEY = "tavlik_token";
+
+    let token = localStorage.getItem(TOKEN_KEY);
     let currentUser = null;
-    let selectedUser = null;
     let socket = null;
 
-    const unread = {};
+    let selectedUser = null;
+    let users = [];
+
     let typingTimer = null;
+    let isTyping = false;
+
+    let selectedImageData = null;
 
     let mediaRecorder = null;
-    let audioChunks = [];
+    let recordedChunks = [];
+    let isRecording = false;
 
-    let peerConnection = null;
     let localStream = null;
-    let incomingOffer = null;
-    let incomingCallerId = null;
+    let peerConnection = null;
 
-    const iceServers = {
+    let incomingCallerId = null;
+    let incomingCallerName = "";
+    let incomingOffer = null;
+
+    const peerConfig = {
       iceServers: [
-        { urls: "stun:stun.l.google.com:19302" }
+        {
+          urls: "stun:stun.l.google.com:19302"
+        }
       ]
     };
 
-    function escapeHtml(text) {
-      const div = document.createElement("div");
-      div.textContent = text ?? "";
-      return div.innerHTML;
+
+    /* =====================================================
+       DOM
+    ===================================================== */
+
+    const authScreen = document.getElementById("authScreen");
+    const app = document.getElementById("app");
+
+    const loginTab = document.getElementById("loginTab");
+    const registerTab = document.getElementById("registerTab");
+
+    const loginForm = document.getElementById("loginForm");
+    const registerForm = document.getElementById("registerForm");
+
+    const authError = document.getElementById("authError");
+
+    const loginIdentifier = document.getElementById("loginIdentifier");
+    const loginPassword = document.getElementById("loginPassword");
+
+    const registerUsername = document.getElementById("registerUsername");
+    const registerEmail = document.getElementById("registerEmail");
+    const registerPassword = document.getElementById("registerPassword");
+
+    const searchInput = document.getElementById("searchInput");
+    const userList = document.getElementById("userList");
+
+    const chatEmpty = document.getElementById("chatEmpty");
+    const chatContent = document.getElementById("chatContent");
+
+    const backButton = document.getElementById("backButton");
+
+    const chatAvatar = document.getElementById("chatAvatar");
+    const chatUserName = document.getElementById("chatUserName");
+    const chatUserStatus = document.getElementById("chatUserStatus");
+
+    const messagesContainer = document.getElementById("messages");
+    const typingIndicator = document.getElementById("typingIndicator");
+
+    const messageInput = document.getElementById("messageInput");
+    const sendButton = document.getElementById("sendButton");
+
+    const imageInput = document.getElementById("imageInput");
+    const imageButton = document.getElementById("imageButton");
+
+    const imagePreview = document.getElementById("imagePreview");
+    const previewImage = document.getElementById("previewImage");
+    const previewName = document.getElementById("previewName");
+    const cancelImageButton = document.getElementById("cancelImageButton");
+
+    const voiceButton = document.getElementById("voiceButton");
+
+    const themeButton = document.getElementById("themeButton");
+
+    const profileButton = document.getElementById("profileButton");
+    const profileModal = document.getElementById("profileModal");
+    const closeProfileButton = document.getElementById("closeProfileButton");
+
+    const profileAvatar = document.getElementById("profileAvatar");
+    const profileUsername = document.getElementById("profileUsername");
+    const profileEmail = document.getElementById("profileEmail");
+
+    const logoutButton = document.getElementById("logoutButton");
+
+    const videoCallButton = document.getElementById("videoCallButton");
+
+    const incomingCall = document.getElementById("incomingCall");
+    const incomingCallerNameElement =
+      document.getElementById("incomingCallerName");
+
+    const acceptCallButton = document.getElementById("acceptCallButton");
+    const rejectCallButton = document.getElementById("rejectCallButton");
+
+    const callScreen = document.getElementById("callScreen");
+    const callTitle = document.getElementById("callTitle");
+    const callStatus = document.getElementById("callStatus");
+
+    const remoteVideo = document.getElementById("remoteVideo");
+    const localVideo = document.getElementById("localVideo");
+
+    const endCallButton = document.getElementById("endCallButton");
+
+    const toast = document.getElementById("toast");
+
+
+    /* =====================================================
+       HELPERS
+    ===================================================== */
+
+    function showToast(message) {
+      toast.textContent = message;
+      toast.classList.add("show");
+
+      setTimeout(() => {
+        toast.classList.remove("show");
+      }, 2500);
     }
 
-    function avatarLetter(username) {
-      return (username || "T").charAt(0).toUpperCase();
+    function showAuthError(message) {
+      authError.textContent = message || "";
     }
 
-    function setAvatar(element, username) {
-      if (!element) return;
-      element.textContent = avatarLetter(username);
+    function getInitial(username) {
+      if (!username) return "?";
+      return username.charAt(0).toUpperCase();
     }
 
-    function authHeaders() {
-      return {
-        "Content-Type": "application/json",
-        "Authorization": "Bearer " + token
-      };
+    function escapeHtml(value) {
+      return String(value || "")
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
     }
 
-    async function api(url, options = {}) {
-      const response = await fetch(url, {
-        ...options,
-        headers: {
-          ...(options.body instanceof FormData ? {} : { "Content-Type": "application/json" }),
-          "Authorization": "Bearer " + token,
-          ...(options.headers || {})
-        }
-      });
-
-      let data = {};
-      try {
-        data = await response.json();
-      } catch {}
-
-      if (!response.ok) {
-        throw new Error(data.error || "Request failed");
-      }
-
-      return data;
-    }
-
-    function showAuth() {
-      $("authScreen").classList.remove("hidden");
-      $("app").classList.add("hidden");
-    }
-
-    function showApp() {
-      $("authScreen").classList.add("hidden");
-      $("app").classList.remove("hidden");
-    }
-
-    $("loginTab").onclick = () => {
-      $("loginTab").classList.add("active");
-      $("registerTab").classList.remove("active");
-      $("loginForm").classList.remove("hidden");
-      $("registerForm").classList.add("hidden");
-    };
-
-    $("registerTab").onclick = () => {
-      $("registerTab").classList.add("active");
-      $("loginTab").classList.remove("active");
-      $("registerForm").classList.remove("hidden");
-      $("loginForm").classList.add("hidden");
-    };
-
-    $("registerForm").addEventListener("submit", async e => {
-      e.preventDefault();
-
-      $("registerError").textContent = "";
-
-      try {
-        const data = await fetch("/api/auth/register", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            username: $("registerUsername").value.trim(),
-            email: $("registerEmail").value.trim(),
-            password: $("registerPassword").value
-          })
-        }).then(async r => {
-          const d = await r.json();
-          if (!r.ok) throw new Error(d.error || "Registration failed");
-          return d;
-        });
-
-        token = data.token;
-        localStorage.setItem("tavlik_token", token);
-        await startApp();
-      } catch (err) {
-        $("registerError").textContent = err.message;
-      }
-    });
-
-    $("loginForm").addEventListener("submit", async e => {
-      e.preventDefault();
-
-      $("loginError").textContent = "";
-
-      try {
-        const data = await fetch("/api/auth/login", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            email: $("loginEmail").value.trim(),
-            password: $("loginPassword").value
-          })
-        }).then(async r => {
-          const d = await r.json();
-          if (!r.ok) throw new Error(d.error || "Login failed");
-          return d;
-        });
-
-        token = data.token;
-        localStorage.setItem("tavlik_token", token);
-        await startApp();
-      } catch (err) {
-        $("loginError").textContent = err.message;
-      }
-    });
-
-    async function startApp() {
-      try {
-        const data = await api("/api/me");
-        currentUser = data.user;
-
-        $("myUsername").textContent = currentUser.username;
-        setAvatar($("myAvatar"), currentUser.username);
-
-        showApp();
-        connectSocket();
-      } catch {
-        logout();
-      }
-    }
-
-    function connectSocket() {
-      if (socket) socket.disconnect();
-
-      socket = io({
-        auth: { token }
-      });
-
-      socket.on("connect", () => {
-        console.log("Connected to TAVLIK server");
-      });
-
-      socket.on("connect_error", err => {
-        console.error("Socket connection error:", err.message);
-      });
-
-      socket.on("new_message", message => {
-        handleIncomingMessage(message);
-      });
-
-      socket.on("user_typing", data => {
-        if (selectedUser && Number(data.userId) === Number(selectedUser.id)) {
-          $("typing").textContent = selectedUser.username + " is typing...";
-        }
-      });
-
-      socket.on("user_stopped_typing", data => {
-        if (selectedUser && Number(data.userId) === Number(selectedUser.id)) {
-          $("typing").textContent = "";
-        }
-      });
-
-      socket.on("incoming_call", data => {
-        incomingCallerId = data.callerId;
-        incomingOffer = data.offer;
-
-        $("callerText").textContent =
-          data.callerUsername + " is calling you.";
-
-        $("incomingCall").classList.remove("hidden");
-      });
-
-      socket.on("call_accepted", async data => {
-        if (!peerConnection) return;
-
-        await peerConnection.setRemoteDescription(
-          new RTCSessionDescription(data.answer)
-        );
-      });
-
-      socket.on("ice_candidate", async data => {
-        if (!peerConnection || !data.candidate) return;
-
-        try {
-          await peerConnection.addIceCandidate(
-            new RTCIceCandidate(data.candidate)
-          );
-        } catch {}
-      });
-
-      socket.on("call_rejected", () => {
-        endCall();
-        alert("The call was declined.");
-      });
-
-      socket.on("end_call", () => {
-        endCall();
-      });
-    }
-
-    $("searchInput").addEventListener("input", async () => {
-      const q = $("searchInput").value.trim();
-
-      if (!q) {
-        $("userList").innerHTML =
-          '<div class="status">Search for someone to start chatting.</div>';
-        return;
-      }
-
-      try {
-        const data = await api("/api/users/search?q=" + encodeURIComponent(q));
-
-        $("userList").innerHTML = "";
-
-        if (!data.users.length) {
-          $("userList").innerHTML =
-            '<div class="status">No users found.</div>';
-          return;
-        }
-
-        data.users.forEach(user => addUserToList(user));
-      } catch (err) {
-        $("userList").innerHTML =
-          '<div class="status">' + escapeHtml(err.message) + "</div>";
-      }
-    });
-
-    function addUserToList(user) {
-      const item = document.createElement("div");
-      item.className = "user-item";
-
-      const avatar = document.createElement("div");
-      avatar.className = "avatar";
-      setAvatar(avatar, user.username);
-
-      const info = document.createElement("div");
-      info.className = "user-info";
-
-      const name = document.createElement("strong");
-      name.textContent = user.username;
-
-      const small = document.createElement("small");
-      small.textContent = "Private conversation";
-
-      info.appendChild(name);
-      info.appendChild(small);
-
-      item.appendChild(avatar);
-      item.appendChild(info);
-
-      if (unread[user.id]) {
-        const badge = document.createElement("span");
-        badge.className = "unread";
-        badge.textContent = unread[user.id];
-        item.appendChild(badge);
-      }
-
-      item.onclick = () => openChat(user);
-
-      $("userList").appendChild(item);
-    }
-
-    async function openChat(user) {
-      selectedUser = user;
-
-      unread[user.id] = 0;
-
-      $("app").classList.add("chat-open");
-
-      $("chatUsername").textContent = user.username;
-      $("chatStatus").textContent = "Private conversation";
-      setAvatar($("chatAvatar"), user.username);
-
-      $("messageInput").disabled = false;
-      $("callBtn").classList.remove("hidden");
-
-      $("messages").innerHTML = "";
-
-      try {
-        const data = await api("/api/messages/" + user.id);
-
-        data.messages.forEach(message => {
-          if (
-            (Number(message.sender_id) === Number(currentUser.id) &&
-             Number(message.receiver_id) === Number(user.id)) ||
-            (Number(message.sender_id) === Number(user.id) &&
-             Number(message.receiver_id) === Number(currentUser.id))
-          ) {
-            renderMessage(message);
-          }
-        });
-
-        scrollMessages();
-      } catch (err) {
-        $("messages").innerHTML =
-          '<div class="empty-chat"><p>' +
-          escapeHtml(err.message) +
-          "</p></div>";
-      }
-    }
-
-    function renderMessage(message) {
-      if (!selectedUser) return;
-
-      const mine =
-        Number(message.sender_id) === Number(currentUser.id);
-
-      const correctConversation =
-        (Number(message.sender_id) === Number(currentUser.id) &&
-         Number(message.receiver_id) === Number(selectedUser.id)) ||
-        (Number(message.sender_id) === Number(selectedUser.id) &&
-         Number(message.receiver_id) === Number(currentUser.id));
-
-      if (!correctConversation) return;
-
-      const box = document.createElement("div");
-      box.className = "message " + (mine ? "mine" : "theirs");
-
-      if (message.message_type === "image" && message.media_url) {
-        const img = document.createElement("img");
-        img.className = "media-img";
-        img.src = message.media_url;
-        img.alt = "Photo";
-        box.appendChild(img);
-      } else if (message.message_type === "audio" && message.media_url) {
-        const audio = document.createElement("audio");
-        audio.className = "voice-player";
-        audio.controls = true;
-        audio.src = message.media_url;
-        box.appendChild(audio);
-      } else {
-        const text = document.createElement("div");
-        text.className = "message-text";
-        text.textContent = message.content || "";
-        box.appendChild(text);
-      }
-
-      const meta = document.createElement("div");
-      meta.className = "message-meta";
-
-      const time = document.createElement("span");
-      time.textContent = formatTime(message.created_at);
-
-      meta.appendChild(time);
-
-      if (mine) {
-        const checks = document.createElement("span");
-        checks.className = "checks";
-        checks.textContent = "✓✓";
-        meta.appendChild(checks);
-      }
-
-      box.appendChild(meta);
-      $("messages").appendChild(box);
-    }
-
-    function handleIncomingMessage(message) {
-      const belongsToCurrentConversation =
-        selectedUser &&
-        (
-          (Number(message.sender_id) === Number(currentUser.id) &&
-           Number(message.receiver_id) === Number(selectedUser.id)) ||
-          (Number(message.sender_id) === Number(selectedUser.id) &&
-           Number(message.receiver_id) === Number(currentUser.id))
-        );
-
-      if (belongsToCurrentConversation) {
-        renderMessage(message);
-        scrollMessages();
-      } else if (
-        Number(message.receiver_id) === Number(currentUser.id)
-      ) {
-        const senderId = Number(message.sender_id);
-
-        unread[senderId] = (unread[senderId] || 0) + 1;
-
-        if ("Notification" in window &&
-            Notification.permission === "granted") {
-          new Notification("New TAVLIK message");
-        }
-
-        if (selectedUser && selectedUser.id === senderId) {
-          unread[senderId] = 0;
-        }
-      }
-    }
-
-    function formatTime(value) {
-      if (!value) return "";
-
-      const date = new Date(value.replace(" ", "T") + "Z");
+    function formatTime(dateString) {
+      const date = new Date(dateString);
 
       if (Number.isNaN(date.getTime())) {
         return "";
@@ -1226,29 +1298,535 @@
       });
     }
 
-    function scrollMessages() {
-      $("messages").scrollTop = $("messages").scrollHeight;
+    async function api(url, options = {}) {
+      const headers = {
+        ...(options.headers || {})
+      };
+
+      if (!(options.body instanceof FormData)) {
+        headers["Content-Type"] = "application/json";
+      }
+
+      if (token) {
+        headers.Authorization = `Bearer ${token}`;
+      }
+
+      const response = await fetch(url, {
+        ...options,
+        headers
+      });
+
+      let data = {};
+
+      try {
+        data = await response.json();
+      } catch {
+        data = {};
+      }
+
+      if (!response.ok) {
+        throw new Error(data.error || "Request failed.");
+      }
+
+      return data;
     }
 
-    $("sendBtn").onclick = sendTextMessage;
 
-    $("messageInput").addEventListener("keydown", e => {
-      if (e.key === "Enter") {
-        e.preventDefault();
+    /* =====================================================
+       AUTH TABS
+    ===================================================== */
+
+    loginTab.addEventListener("click", () => {
+      loginTab.classList.add("active");
+      registerTab.classList.remove("active");
+
+      loginForm.classList.remove("hidden");
+      registerForm.classList.add("hidden");
+
+      showAuthError("");
+    });
+
+    registerTab.addEventListener("click", () => {
+      registerTab.classList.add("active");
+      loginTab.classList.remove("active");
+
+      registerForm.classList.remove("hidden");
+      loginForm.classList.add("hidden");
+
+      showAuthError("");
+    });
+
+
+    /* =====================================================
+       LOGIN
+    ===================================================== */
+
+    loginForm.addEventListener("submit", async (event) => {
+      event.preventDefault();
+
+      showAuthError("");
+
+      try {
+        const data = await api("/api/auth/login", {
+          method: "POST",
+          body: JSON.stringify({
+            identifier: loginIdentifier.value.trim(),
+            password: loginPassword.value
+          })
+        });
+
+        token = data.token;
+
+        localStorage.setItem(TOKEN_KEY, token);
+
+        await startApp();
+
+        loginForm.reset();
+      } catch (error) {
+        showAuthError(error.message);
+      }
+    });
+
+
+    /* =====================================================
+       REGISTER
+    ===================================================== */
+
+    registerForm.addEventListener("submit", async (event) => {
+      event.preventDefault();
+
+      showAuthError("");
+
+      try {
+        const data = await api("/api/auth/register", {
+          method: "POST",
+          body: JSON.stringify({
+            username: registerUsername.value.trim(),
+            email: registerEmail.value.trim(),
+            password: registerPassword.value
+          })
+        });
+
+        token = data.token;
+
+        localStorage.setItem(TOKEN_KEY, token);
+
+        await startApp();
+
+        registerForm.reset();
+      } catch (error) {
+        showAuthError(error.message);
+      }
+    });
+
+
+    /* =====================================================
+       START APP
+    ===================================================== */
+
+    async function startApp() {
+      try {
+        const data = await api("/api/me");
+
+        currentUser = data.user;
+
+        authScreen.classList.add("hidden");
+        app.classList.add("logged-in");
+
+        updateProfile();
+
+        connectSocket();
+
+      } catch (error) {
+        localStorage.removeItem(TOKEN_KEY);
+        token = null;
+        currentUser = null;
+
+        authScreen.classList.remove("hidden");
+        app.classList.remove("logged-in");
+
+        showAuthError("Your session has expired. Please log in again.");
+      }
+    }
+
+
+    /* =====================================================
+       SOCKET CONNECTION
+    ===================================================== */
+
+    function connectSocket() {
+      if (socket) {
+        socket.disconnect();
+      }
+
+      socket = io({
+        auth: {
+          token
+        }
+      });
+
+      socket.on("connect", () => {
+        console.log("Connected to TAVLIK server.");
+      });
+
+      socket.on("connect_error", (error) => {
+        console.error("Socket connection error:", error.message);
+
+        if (error.message.toLowerCase().includes("authentication")) {
+          logout();
+        }
+      });
+
+      socket.on("new_message", (message) => {
+        handleIncomingMessage(message);
+      });
+
+      socket.on("user_typing", ({ userId }) => {
+        if (
+          selectedUser &&
+          Number(selectedUser.id) === Number(userId)
+        ) {
+          typingIndicator.textContent = `${selectedUser.username} is typing...`;
+        }
+      });
+
+      socket.on("user_stopped_typing", ({ userId }) => {
+        if (
+          selectedUser &&
+          Number(selectedUser.id) === Number(userId)
+        ) {
+          typingIndicator.textContent = "";
+        }
+      });
+
+      socket.on("incoming_call", (payload) => {
+        handleIncomingCall(payload);
+      });
+
+      socket.on("call_accepted", async (payload) => {
+        await handleCallAccepted(payload);
+      });
+
+      socket.on("ice_candidate", async (payload) => {
+        await handleIceCandidate(payload);
+      });
+
+      socket.on("call_rejected", () => {
+        callStatus.textContent = "Call rejected.";
+        setTimeout(closeCallScreen, 1500);
+      });
+
+      socket.on("end_call", () => {
+        closeCallScreen();
+      });
+    }
+
+
+    /* =====================================================
+       SEARCH USERS
+    ===================================================== */
+
+    let searchTimer = null;
+
+    searchInput.addEventListener("input", () => {
+      clearTimeout(searchTimer);
+
+      searchTimer = setTimeout(() => {
+        searchUsers(searchInput.value.trim());
+      }, 250);
+    });
+
+    async function searchUsers(query) {
+      if (!query) {
+        users = [];
+
+        userList.innerHTML = `
+          <div class="empty-users">
+            Search for a username to start a private conversation.
+          </div>
+        `;
+
+        return;
+      }
+
+      try {
+        const data = await api(
+          `/api/users/search?q=${encodeURIComponent(query)}`
+        );
+
+        users = data.users || [];
+
+        renderUsers();
+      } catch (error) {
+        userList.innerHTML = `
+          <div class="empty-users">
+            ${escapeHtml(error.message)}
+          </div>
+        `;
+      }
+    }
+
+    function renderUsers() {
+      if (!users.length) {
+        userList.innerHTML = `
+          <div class="empty-users">
+            No users found.
+          </div>
+        `;
+
+        return;
+      }
+
+      userList.innerHTML = "";
+
+      users.forEach((user) => {
+        const item = document.createElement("div");
+
+        item.className = "user-item";
+
+        if (
+          selectedUser &&
+          Number(selectedUser.id) === Number(user.id)
+        ) {
+          item.classList.add("active");
+        }
+
+        item.innerHTML = `
+          <div class="avatar">
+            ${escapeHtml(getInitial(user.username))}
+          </div>
+
+          <div class="user-info">
+            <div class="user-name">
+              ${escapeHtml(user.username)}
+            </div>
+
+            <div class="user-subtitle">
+              Private conversation
+            </div>
+          </div>
+        `;
+
+        item.addEventListener("click", () => {
+          openChat(user);
+        });
+
+        userList.appendChild(item);
+      });
+    }
+
+
+    /* =====================================================
+       OPEN PRIVATE CHAT
+    ===================================================== */
+
+    async function openChat(user) {
+      if (!user || !user.id) {
+        return;
+      }
+
+      selectedUser = {
+        id: Number(user.id),
+        username: user.username,
+        email: user.email || ""
+      };
+
+      chatEmpty.classList.add("hidden");
+      chatContent.classList.remove("hidden");
+
+      chatContent.style.display = "flex";
+
+      chatAvatar.textContent = getInitial(selectedUser.username);
+      chatUserName.textContent = selectedUser.username;
+      chatUserStatus.textContent = "Private conversation";
+
+      messagesContainer.innerHTML = `
+        <div class="empty-users">
+          Loading messages...
+        </div>
+      `;
+
+      typingIndicator.textContent = "";
+
+      renderUsers();
+
+      app.classList.add("chat-open");
+
+      try {
+        const data = await api(
+          `/api/messages/${encodeURIComponent(selectedUser.id)}`
+        );
+
+        /*
+          Only render messages belonging to this exact conversation.
+        */
+
+        const safeMessages = (data.messages || []).filter((message) => {
+          const sender = Number(message.sender_id);
+          const receiver = Number(message.receiver_id);
+          const other = Number(selectedUser.id);
+          const me = Number(currentUser.id);
+
+          return (
+            (sender === me && receiver === other) ||
+            (sender === other && receiver === me)
+          );
+        });
+
+        renderMessages(safeMessages);
+      } catch (error) {
+        messagesContainer.innerHTML = `
+          <div class="empty-users">
+            ${escapeHtml(error.message)}
+          </div>
+        `;
+      }
+    }
+
+
+    /* =====================================================
+       RENDER MESSAGES
+    ===================================================== */
+
+    function renderMessages(messages) {
+      messagesContainer.innerHTML = "";
+
+      if (!messages.length) {
+        messagesContainer.innerHTML = `
+          <div class="empty-users">
+            No messages yet. Say hello!
+          </div>
+        `;
+
+        return;
+      }
+
+      messages.forEach((message) => {
+        renderMessage(message, false);
+      });
+
+      scrollMessages();
+    }
+
+    function renderMessage(message, scroll = true) {
+      if (!selectedUser || !currentUser) {
+        return;
+      }
+
+      const senderId = Number(message.sender_id);
+      const receiverId = Number(message.receiver_id);
+
+      const me = Number(currentUser.id);
+      const other = Number(selectedUser.id);
+
+      /*
+        Extra client-side protection:
+        never render a message from an unrelated conversation.
+      */
+
+      const belongsToConversation =
+        (senderId === me && receiverId === other) ||
+        (senderId === other && receiverId === me);
+
+      if (!belongsToConversation) {
+        return;
+      }
+
+      const row = document.createElement("div");
+
+      row.className = "message-row";
+
+      if (senderId === me) {
+        row.classList.add("mine");
+      }
+
+      const bubble = document.createElement("div");
+
+      bubble.className = "message-bubble";
+
+      const type = message.message_type || "text";
+
+      if (type === "image" && message.media_url) {
+        const image = document.createElement("img");
+
+        image.className = "message-image";
+        image.src = message.media_url;
+        image.alt = "Photo";
+        image.loading = "lazy";
+
+        bubble.appendChild(image);
+
+      } else if (type === "voice" && message.media_url) {
+        const audio = document.createElement("audio");
+
+        audio.className = "voice-player";
+        audio.controls = true;
+        audio.preload = "metadata";
+        audio.src = message.media_url;
+
+        bubble.appendChild(audio);
+
+      } else {
+        const text = document.createElement("div");
+
+        text.textContent = message.content || "";
+
+        bubble.appendChild(text);
+      }
+
+      const time = document.createElement("span");
+
+      time.className = "message-time";
+      time.textContent = formatTime(message.created_at);
+
+      bubble.appendChild(time);
+      row.appendChild(bubble);
+      messagesContainer.appendChild(row);
+
+      if (scroll) {
+        scrollMessages();
+      }
+    }
+
+    function scrollMessages() {
+      requestAnimationFrame(() => {
+        messagesContainer.scrollTop =
+          messagesContainer.scrollHeight;
+      });
+    }
+
+
+    /* =====================================================
+       SEND TEXT MESSAGE
+    ===================================================== */
+
+    sendButton.addEventListener("click", sendTextMessage);
+
+    messageInput.addEventListener("keydown", (event) => {
+      if (event.key === "Enter" && !event.shiftKey) {
+        event.preventDefault();
         sendTextMessage();
       }
     });
 
-    $("messageInput").addEventListener("input", () => {
-      if (!selectedUser || !socket) return;
+    messageInput.addEventListener("input", () => {
+      if (!socket || !selectedUser) {
+        return;
+      }
 
-      socket.emit("typing", {
-        receiverId: selectedUser.id
-      });
+      if (!isTyping) {
+        isTyping = true;
+
+        socket.emit("typing", {
+          receiverId: selectedUser.id
+        });
+      }
 
       clearTimeout(typingTimer);
 
       typingTimer = setTimeout(() => {
+        isTyping = false;
+
         socket.emit("stop_typing", {
           receiverId: selectedUser.id
         });
@@ -1256,82 +1834,175 @@
     });
 
     function sendTextMessage() {
-      const content = $("messageInput").value.trim();
+      const content = messageInput.value.trim();
 
-      if (!content || !selectedUser || !socket) return;
-
-      socket.emit(
-        "send_message",
-        {
-          receiverId: selectedUser.id,
-          content
-        },
-        result => {
-          if (!result || !result.success) {
-            alert(result?.error || "Message could not be sent.");
-            return;
-          }
-
-          $("messageInput").value = "";
-        }
-      );
-    }
-
-    /* PHOTO */
-
-    $("photoBtn").onclick = () => {
-      if (!selectedUser) {
-        alert("Select someone first.");
+      if (!content || !selectedUser || !socket) {
         return;
       }
 
-      $("photoInput").click();
-    };
+      if (content.length > 2000) {
+        showToast("Message is too long.");
+        return;
+      }
 
-    $("photoInput").addEventListener("change", async () => {
-      const file = $("photoInput").files[0];
+      socket.emit("send_message", {
+        receiverId: selectedUser.id,
+        content
+      });
 
-      if (!file || !selectedUser) return;
+      messageInput.value = "";
+
+      if (isTyping) {
+        isTyping = false;
+
+        socket.emit("stop_typing", {
+          receiverId: selectedUser.id
+        });
+      }
+
+      messageInput.focus();
+    }
+
+
+    /* =====================================================
+       INCOMING MESSAGE
+    ===================================================== */
+
+    function handleIncomingMessage(message) {
+      if (!selectedUser || !currentUser) {
+        return;
+      }
+
+      const senderId = Number(message.sender_id);
+      const receiverId = Number(message.receiver_id);
+
+      const me = Number(currentUser.id);
+      const other = Number(selectedUser.id);
+
+      const belongsToCurrentConversation =
+        (senderId === me && receiverId === other) ||
+        (senderId === other && receiverId === me);
+
+      if (!belongsToCurrentConversation) {
+        return;
+      }
+
+      /*
+        Remove empty-state text if it is present.
+      */
+
+      const emptyMessage = messagesContainer.querySelector(
+        ".empty-users"
+      );
+
+      if (emptyMessage) {
+        emptyMessage.remove();
+      }
+
+      renderMessage(message, true);
+    }
+
+
+    /* =====================================================
+       IMAGE UPLOAD
+    ===================================================== */
+
+    imageButton.addEventListener("click", () => {
+      if (!selectedUser) {
+        showToast("Select a person first.");
+        return;
+      }
+
+      imageInput.click();
+    });
+
+    imageInput.addEventListener("change", async () => {
+      const file = imageInput.files?.[0];
+
+      if (!file) {
+        return;
+      }
+
+      if (!file.type.startsWith("image/")) {
+        showToast("Please select an image.");
+        imageInput.value = "";
+        return;
+      }
 
       if (file.size > 5 * 1024 * 1024) {
-        alert("Please choose a photo smaller than 5 MB.");
-        $("photoInput").value = "";
+        showToast("Image must be 5MB or smaller.");
+        imageInput.value = "";
         return;
       }
 
       try {
-        const dataUrl = await fileToDataUrl(file);
+        selectedImageData = await readFileAsDataURL(file);
+
+        previewImage.src = selectedImageData;
+        previewName.textContent = file.name;
+
+        imagePreview.classList.add("show");
+
+        await uploadSelectedImage();
+
+      } catch (error) {
+        console.error(error);
+        showToast("Could not upload image.");
+        clearImageSelection();
+      }
+    });
+
+    async function uploadSelectedImage() {
+      if (!selectedImageData || !selectedUser || !socket) {
+        return;
+      }
+
+      try {
+        showToast("Uploading photo...");
 
         const data = await api("/api/media", {
           method: "POST",
           body: JSON.stringify({
-            type: "image",
-            mimeType: file.type,
-            data: dataUrl
+            data: selectedImageData,
+            type: "image"
           })
         });
 
-        socket.emit(
-          "send_media_message",
-          {
-            receiverId: selectedUser.id,
-            type: "image",
-            mediaUrl: data.url
-          },
-          result => {
-            if (!result?.success) {
-              alert(result?.error || "Photo could not be sent.");
-            }
-          }
-        );
-      } catch (err) {
-        alert(err.message);
+        socket.emit("send_media_message", {
+          receiverId: selectedUser.id,
+          mediaUrl: data.url,
+          type: "image"
+        });
+
+        showToast("Photo sent.");
+
+      } catch (error) {
+        console.error(error);
+        showToast(error.message || "Photo upload failed.");
+      } finally {
+        clearImageSelection();
       }
+    }
 
-      $("photoInput").value = "";
-    });
+    function clearImageSelection() {
+      selectedImageData = null;
+      imageInput.value = "";
+      previewImage.removeAttribute("src");
+      previewName.textContent = "";
+      imagePreview.classList.remove("show");
+    }
 
-    function fileToDataUrl(file) {
+    cancelImageButton.addEventListener(
+      "click",
+      clearImageSelection
+    );
+
+
+    /* =====================================================
+       FILE READER
+    ===================================================== */
+
+    function readFileAsDataURL(file) {
       return new Promise((resolve, reject) => {
         const reader = new FileReader();
 
@@ -1342,323 +2013,563 @@
       });
     }
 
-    /* VOICE */
 
-    $("voiceBtn").onclick = async () => {
+    /* =====================================================
+       VOICE RECORDING
+    ===================================================== */
+
+    voiceButton.addEventListener("click", async () => {
       if (!selectedUser) {
-        alert("Select someone first.");
+        showToast("Select a person first.");
         return;
       }
 
-      if (mediaRecorder && mediaRecorder.state === "recording") {
-        mediaRecorder.stop();
-        return;
+      if (isRecording) {
+        stopRecording();
+      } else {
+        await startRecording();
       }
+    });
 
+    async function startRecording() {
       try {
-        const stream = await navigator.mediaDevices.getUserMedia({
-          audio: true
-        });
+        if (!navigator.mediaDevices?.getUserMedia) {
+          showToast("Voice recording is not supported here.");
+          return;
+        }
+
+        const stream =
+          await navigator.mediaDevices.getUserMedia({
+            audio: true
+          });
+
+        recordedChunks = [];
 
         mediaRecorder = new MediaRecorder(stream);
-        audioChunks = [];
 
-        mediaRecorder.ondataavailable = event => {
+        mediaRecorder.ondataavailable = (event) => {
           if (event.data.size > 0) {
-            audioChunks.push(event.data);
+            recordedChunks.push(event.data);
           }
         };
 
         mediaRecorder.onstop = async () => {
-          stream.getTracks().forEach(track => track.stop());
-
-          const blob = new Blob(audioChunks, {
-            type: "audio/webm"
+          stream.getTracks().forEach((track) => {
+            track.stop();
           });
 
-          try {
-            const dataUrl = await fileToDataUrl(blob);
-
-            const data = await api("/api/media", {
-              method: "POST",
-              body: JSON.stringify({
-                type: "audio",
-                mimeType: "audio/webm",
-                data: dataUrl
-              })
-            });
-
-            socket.emit(
-              "send_media_message",
-              {
-                receiverId: selectedUser.id,
-                type: "audio",
-                mediaUrl: data.url
-              }
-            );
-          } catch (err) {
-            alert(err.message);
-          }
-
-          $("voiceBtn").classList.remove("recording");
-          $("voiceBtn").textContent = "🎙️";
+          await finishRecording();
         };
 
         mediaRecorder.start();
 
-        $("voiceBtn").classList.add("recording");
-        $("voiceBtn").textContent = "⏹";
-      } catch {
-        alert("Microphone permission was not available.");
+        isRecording = true;
+
+        voiceButton.classList.add("recording");
+        voiceButton.textContent = "■";
+
+        showToast("Recording...");
+      } catch (error) {
+        console.error(error);
+        showToast("Microphone permission is required.");
       }
-    };
-
-    /* NOTIFICATIONS */
-
-    document.addEventListener("click", async () => {
-      if (
-        "Notification" in window &&
-        Notification.permission === "default"
-      ) {
-        try {
-          await Notification.requestPermission();
-        } catch {}
-      }
-    }, { once: true });
-
-    /* DARK MODE */
-
-    $("themeBtn").onclick = () => {
-      document.body.classList.toggle("dark");
-
-      localStorage.setItem(
-        "tavlik_dark",
-        document.body.classList.contains("dark")
-          ? "1"
-          : "0"
-      );
-    };
-
-    if (localStorage.getItem("tavlik_dark") === "1") {
-      document.body.classList.add("dark");
     }
 
-    /* PROFILE */
+    function stopRecording() {
+      if (!mediaRecorder || mediaRecorder.state === "inactive") {
+        return;
+      }
 
-    $("profileBtn").onclick = () => {
-      $("modalUsername").textContent = currentUser.username;
-      $("modalEmail").textContent = currentUser.email;
-      setAvatar($("modalAvatar"), currentUser.username);
+      mediaRecorder.stop();
 
-      $("profileModal").classList.remove("hidden");
-    };
+      isRecording = false;
 
-    $("closeProfileBtn").onclick = () => {
-      $("profileModal").classList.add("hidden");
-    };
+      voiceButton.classList.remove("recording");
+      voiceButton.textContent = "🎙";
+    }
 
-    $("profileModal").addEventListener("click", e => {
-      if (e.target === $("profileModal")) {
-        $("profileModal").classList.add("hidden");
+    async function finishRecording() {
+      if (!selectedUser || !socket || !recordedChunks.length) {
+        return;
+      }
+
+      try {
+        const blob = new Blob(recordedChunks, {
+          type: mediaRecorder?.mimeType || "audio/webm"
+        });
+
+        if (blob.size > 5 * 1024 * 1024) {
+          showToast("Voice message is too large.");
+          return;
+        }
+
+        const dataUrl = await blobToDataURL(blob);
+
+        showToast("Uploading voice message...");
+
+        const data = await api("/api/media", {
+          method: "POST",
+          body: JSON.stringify({
+            data: dataUrl,
+            type: "voice"
+          })
+        });
+
+        socket.emit("send_media_message", {
+          receiverId: selectedUser.id,
+          mediaUrl: data.url,
+          type: "voice"
+        });
+
+        showToast("Voice message sent.");
+      } catch (error) {
+        console.error(error);
+        showToast("Could not send voice message.");
+      }
+    }
+
+    function blobToDataURL(blob) {
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+
+        reader.onloadend = () => resolve(reader.result);
+        reader.onerror = reject;
+
+        reader.readAsDataURL(blob);
+      });
+    }
+
+
+    /* =====================================================
+       PROFILE
+    ===================================================== */
+
+    function updateProfile() {
+      if (!currentUser) {
+        return;
+      }
+
+      profileUsername.textContent =
+        currentUser.username || "";
+
+      profileEmail.textContent =
+        currentUser.email || "";
+
+      profileAvatar.textContent =
+        getInitial(currentUser.username);
+    }
+
+    profileButton.addEventListener("click", () => {
+      updateProfile();
+      profileModal.classList.remove("hidden");
+    });
+
+    closeProfileButton.addEventListener("click", () => {
+      profileModal.classList.add("hidden");
+    });
+
+    profileModal.addEventListener("click", (event) => {
+      if (event.target === profileModal) {
+        profileModal.classList.add("hidden");
       }
     });
 
-    /* MOBILE */
 
-    $("backBtn").onclick = () => {
-      $("app").classList.remove("chat-open");
-    };
+    /* =====================================================
+       LOGOUT
+    ===================================================== */
 
-    /* LOGOUT */
-
-    $("logoutBtn").onclick = () => {
-      logout();
-    };
+    logoutButton.addEventListener("click", logout);
 
     function logout() {
-      if (socket) socket.disconnect();
+      closeCallScreen();
 
-      if (peerConnection) {
-        peerConnection.close();
-        peerConnection = null;
+      if (socket) {
+        socket.disconnect();
+        socket = null;
       }
 
-      if (localStream) {
-        localStream.getTracks().forEach(track => track.stop());
-        localStream = null;
-      }
+      localStorage.removeItem(TOKEN_KEY);
 
       token = null;
       currentUser = null;
       selectedUser = null;
 
-      localStorage.removeItem("tavlik_token");
+      app.classList.remove("logged-in");
+      app.classList.remove("chat-open");
 
-      $("app").classList.add("hidden");
-      $("authScreen").classList.remove("hidden");
+      authScreen.classList.remove("hidden");
+
+      profileModal.classList.add("hidden");
+
+      loginForm.reset();
+      registerForm.reset();
+
+      searchInput.value = "";
+
+      users = [];
+
+      userList.innerHTML = `
+        <div class="empty-users">
+          Search for a username to start a private conversation.
+        </div>
+      `;
     }
 
-    /* VIDEO CALL */
 
-    $("callBtn").onclick = async () => {
-      if (!selectedUser || !socket) return;
+    /* =====================================================
+       MOBILE BACK BUTTON
+    ===================================================== */
+
+    backButton.addEventListener("click", () => {
+      app.classList.remove("chat-open");
+    });
+
+
+    /* =====================================================
+       DARK MODE
+    ===================================================== */
+
+    const savedTheme =
+      localStorage.getItem("tavlik_theme");
+
+    if (savedTheme === "dark") {
+      document.body.classList.add("dark");
+    }
+
+    themeButton.addEventListener("click", () => {
+      document.body.classList.toggle("dark");
+
+      localStorage.setItem(
+        "tavlik_theme",
+        document.body.classList.contains("dark")
+          ? "dark"
+          : "light"
+      );
+    });
+
+
+    /* =====================================================
+       VIDEO CALL
+    ===================================================== */
+
+    videoCallButton.addEventListener(
+      "click",
+      startVideoCall
+    );
+
+    async function createPeerConnection(targetUserId) {
+      peerConnection =
+        new RTCPeerConnection(peerConfig);
+
+      peerConnection.onicecandidate = (event) => {
+        if (!event.candidate || !socket) {
+          return;
+        }
+
+        socket.emit("ice_candidate", {
+          receiverId: targetUserId,
+          candidate: event.candidate
+        });
+      };
+
+      peerConnection.ontrack = (event) => {
+        if (event.streams && event.streams[0]) {
+          remoteVideo.srcObject = event.streams[0];
+        }
+      };
+
+      peerConnection.onconnectionstatechange = () => {
+        if (!peerConnection) {
+          return;
+        }
+
+        const state =
+          peerConnection.connectionState;
+
+        if (state === "connected") {
+          callStatus.textContent = "Connected";
+        }
+
+        if (state === "disconnected") {
+          callStatus.textContent = "Disconnected";
+        }
+
+        if (state === "failed") {
+          callStatus.textContent = "Connection failed.";
+        }
+      };
+    }
+
+    async function startVideoCall() {
+      if (!selectedUser || !socket) {
+        showToast("Select a person first.");
+        return;
+      }
 
       try {
-        await startLocalMedia();
-        createPeerConnection();
+        if (!navigator.mediaDevices?.getUserMedia) {
+          showToast("Video calling is not supported here.");
+          return;
+        }
 
-        const offer = await peerConnection.createOffer();
+        localStream =
+          await navigator.mediaDevices.getUserMedia({
+            video: true,
+            audio: true
+          });
 
-        await peerConnection.setLocalDescription(offer);
+        localVideo.srcObject = localStream;
+
+        await createPeerConnection(selectedUser.id);
+
+        localStream.getTracks().forEach((track) => {
+          peerConnection.addTrack(
+            track,
+            localStream
+          );
+        });
+
+        const offer =
+          await peerConnection.createOffer();
+
+        await peerConnection.setLocalDescription(
+          offer
+        );
+
+        callTitle.textContent =
+          `Calling ${selectedUser.username}`;
+
+        callStatus.textContent =
+          "Calling...";
+
+        callScreen.classList.add("show");
 
         socket.emit("call_user", {
           receiverId: selectedUser.id,
           offer
         });
 
-        $("callScreen").classList.remove("hidden");
-      } catch (err) {
-        alert("Camera or microphone could not be opened.");
+      } catch (error) {
+        console.error(error);
+        showToast(
+          "Could not start video call. Check your camera and microphone permissions."
+        );
+
+        closeCallScreen();
       }
-    };
-
-    async function startLocalMedia() {
-      localStream = await navigator.mediaDevices.getUserMedia({
-        video: true,
-        audio: true
-      });
-
-      $("localVideo").srcObject = localStream;
     }
 
-    function createPeerConnection() {
-      peerConnection = new RTCPeerConnection(iceServers);
 
-      localStream.getTracks().forEach(track => {
-        peerConnection.addTrack(track, localStream);
-      });
+    /* =====================================================
+       INCOMING CALL
+    ===================================================== */
 
-      peerConnection.ontrack = event => {
-        $("remoteVideo").srcObject = event.streams[0];
-      };
+    function handleIncomingCall(payload) {
+      incomingCallerId =
+        Number(payload.callerId);
 
-      peerConnection.onicecandidate = event => {
-        if (event.candidate && selectedUser) {
-          socket.emit("ice_candidate", {
-            receiverId: selectedUser.id,
-            candidate: event.candidate
-          });
-        }
-      };
+      incomingCallerName =
+        payload.callerUsername || "Someone";
+
+      incomingOffer =
+        payload.offer;
+
+      incomingCallerNameElement.textContent =
+        `${incomingCallerName} is calling you`;
+
+      incomingCall.classList.add("show");
     }
 
-    $("acceptCallBtn").onclick = async () => {
-      $("incomingCall").classList.add("hidden");
+
+    /* =====================================================
+       ACCEPT CALL
+    ===================================================== */
+
+    acceptCallButton.addEventListener(
+      "click",
+      acceptIncomingCall
+    );
+
+    async function acceptIncomingCall() {
+      if (!incomingCallerId || !incomingOffer) {
+        return;
+      }
 
       try {
-        const caller = {
-          id: incomingCallerId
-        };
+        incomingCall.classList.remove("show");
 
-        selectedUser = caller;
+        localStream =
+          await navigator.mediaDevices.getUserMedia({
+            video: true,
+            audio: true
+          });
 
-        await startLocalMedia();
-        createPeerConnection();
+        localVideo.srcObject = localStream;
+
+        await createPeerConnection(
+          incomingCallerId
+        );
+
+        localStream.getTracks().forEach((track) => {
+          peerConnection.addTrack(
+            track,
+            localStream
+          );
+        });
 
         await peerConnection.setRemoteDescription(
           new RTCSessionDescription(incomingOffer)
         );
 
-        const answer = await peerConnection.createAnswer();
+        const answer =
+          await peerConnection.createAnswer();
 
-        await peerConnection.setLocalDescription(answer);
+        await peerConnection.setLocalDescription(
+          answer
+        );
+
+        callTitle.textContent =
+          `Video call with ${incomingCallerName}`;
+
+        callStatus.textContent =
+          "Connecting...";
+
+        callScreen.classList.add("show");
 
         socket.emit("call_accepted", {
           callerId: incomingCallerId,
           answer
         });
 
-        $("callScreen").classList.remove("hidden");
-      } catch {
-        alert("Could not accept the call.");
-        endCall();
+      } catch (error) {
+        console.error(error);
+        showToast("Could not accept the call.");
+        closeCallScreen();
       }
-    };
+    }
 
-    $("rejectCallBtn").onclick = () => {
-      $("incomingCall").classList.add("hidden");
 
-      if (socket && incomingCallerId) {
-        socket.emit("call_rejected", {
-          callerId: incomingCallerId
-        });
+    /* =====================================================
+       REJECT CALL
+    ===================================================== */
+
+    rejectCallButton.addEventListener(
+      "click",
+      () => {
+        if (socket && incomingCallerId) {
+          socket.emit("call_rejected", {
+            callerId: incomingCallerId
+          });
+        }
+
+        incomingCallerId = null;
+        incomingCallerName = "";
+        incomingOffer = null;
+
+        incomingCall.classList.remove("show");
+      }
+    );
+
+
+    /* =====================================================
+       CALL ACCEPTED
+    ===================================================== */
+
+    async function handleCallAccepted(payload) {
+      if (!peerConnection || !payload?.answer) {
+        return;
       }
 
-      incomingOffer = null;
-      incomingCallerId = null;
-    };
+      try {
+        await peerConnection.setRemoteDescription(
+          new RTCSessionDescription(payload.answer)
+        );
 
-    $("endCallBtn").onclick = () => {
-      if (socket && selectedUser) {
-        socket.emit("end_call", {
-          receiverId: selectedUser.id
-        });
+        callStatus.textContent =
+          "Connecting...";
+      } catch (error) {
+        console.error(
+          "Could not process call answer:",
+          error
+        );
+      }
+    }
+
+
+    /* =====================================================
+       ICE CANDIDATE
+    ===================================================== */
+
+    async function handleIceCandidate(payload) {
+      if (!peerConnection || !payload?.candidate) {
+        return;
       }
 
-      endCall();
-    };
-
-    $("muteCallBtn").onclick = () => {
-      if (!localStream) return;
-
-      const track = localStream.getAudioTracks()[0];
-
-      if (track) {
-        track.enabled = !track.enabled;
-        $("muteCallBtn").textContent =
-          track.enabled ? "🎙️" : "🔇";
+      try {
+        await peerConnection.addIceCandidate(
+          new RTCIceCandidate(payload.candidate)
+        );
+      } catch (error) {
+        console.error(
+          "Could not add ICE candidate:",
+          error
+        );
       }
-    };
+    }
 
-    $("cameraCallBtn").onclick = () => {
-      if (!localStream) return;
 
-      const track = localStream.getVideoTracks()[0];
+    /* =====================================================
+       END CALL
+    ===================================================== */
 
-      if (track) {
-        track.enabled = !track.enabled;
-        $("cameraCallBtn").textContent =
-          track.enabled ? "📹" : "🚫";
+    endCallButton.addEventListener(
+      "click",
+      () => {
+        if (socket && selectedUser) {
+          socket.emit("end_call", {
+            receiverId: selectedUser.id
+          });
+        }
+
+        closeCallScreen();
       }
-    };
+    );
 
-    function endCall() {
+    function closeCallScreen() {
       if (peerConnection) {
         peerConnection.close();
         peerConnection = null;
       }
 
       if (localStream) {
-        localStream.getTracks().forEach(track => track.stop());
+        localStream.getTracks().forEach((track) => {
+          track.stop();
+        });
+
         localStream = null;
       }
 
-      $("localVideo").srcObject = null;
-      $("remoteVideo").srcObject = null;
-      $("callScreen").classList.add("hidden");
-      $("incomingCall").classList.add("hidden");
+      remoteVideo.srcObject = null;
+      localVideo.srcObject = null;
 
-      incomingOffer = null;
+      callScreen.classList.remove("show");
+      incomingCall.classList.remove("show");
+
       incomingCallerId = null;
+      incomingCallerName = "";
+      incomingOffer = null;
     }
 
-    /* START */
+
+    /* =====================================================
+       INITIAL LOAD
+    ===================================================== */
 
     if (token) {
       startApp();
-    } else {
-      showAuth();
     }
+
   </script>
 
 </body>
