@@ -1,7 +1,7 @@
 {
-  "name": "talkora",
+  "name": "tavlik",
   "version": "1.0.0",
-  "description": "Talkora real-time messaging platform",
+  "description": "TAVLIK real-time private messaging platform",
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
@@ -10,10 +10,11 @@
   "keywords": [
     "chat",
     "messaging",
-    "talkora",
-    "realtime"
+    "tavlik",
+    "realtime",
+    "private-messaging"
   ],
-  "author": "Talkora",
+  "author": "TAVLIK",
   "license": "MIT",
   "dependencies": {
     "bcryptjs": "^3.0.2",
